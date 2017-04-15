@@ -1,2 +1,8 @@
 # webstorm generated file
-.idea
+.idea/
+
+# npm package
+node_modules/
+
+# personnal testing file
+Test.coffee
