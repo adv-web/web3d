@@ -7,4 +7,4 @@ web 3d game framework
 
 ## Documentations
 
-1. [Run CoffeeScript in WebStorm](docs/Run CoffeeScript in WebStorm.md)
+1. [Run CoffeeScript in WebStorm](/docs/Run CoffeeScript in WebStorm.md)
