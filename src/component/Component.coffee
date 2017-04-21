@@ -6,3 +6,4 @@ class Component
 
   receive: (args...) =>
 
+window.Component = Component

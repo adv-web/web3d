@@ -14,5 +14,6 @@ class GameObject
   removeComponent: (name) =>
     components[name] = null
 
+
   broadcast: (args...) =>
     comp.receive(args...) for name, comp of components
