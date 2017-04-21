@@ -1,8 +1,7 @@
 class Component
 
-  constructor: ->
+  constructor: (@name) ->
     @gameObject = null
-    @name = "component"
 
   receive: (args...) =>
 
