@@ -6,3 +6,4 @@ class Component
 
   receive: (args...) =>
 
+module.exports = Component

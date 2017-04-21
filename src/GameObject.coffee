@@ -1,6 +1,7 @@
 class GameObject
 
   constructor: ->
+    alert "hello, world"
     @mesh = null
     @components = {}
 
@@ -16,3 +17,5 @@ class GameObject
 
   broadcast: (args...) =>
     comp.receive(args...) for name, comp of components
+
+module.exports = GameObject
