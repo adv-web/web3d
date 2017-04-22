@@ -27,14 +27,15 @@ function scene1(scene) {
         scene.addObject(character);
     });
 
-    geometry = new THREE.BoxGeometry( 1, 1, 1 )
-    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
-    cubeMesh = new THREE.Mesh( geometry, material )
-    cube = new GameObject(cubeMesh)
-    scene.addObject(cube)
+    geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    cubeMesh = new THREE.Mesh( geometry, material );
+    cube = new GameObject(cubeMesh);
+    scene.addObject(cube);
 
-    rotateScript = new Rotate()
-    cube.addComponent(rotateScript)
+    var Rotate = require("./Script");
+    rotateScript = new Rotate();
+    cube.addComponent(rotateScript);
 }
 
 var scene = new Scene(scene1);
