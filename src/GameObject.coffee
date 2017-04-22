@@ -1,19 +1,20 @@
 class GameObject
 
-  constructor: ->
-    @mesh = null
+  constructor: (@mesh) ->
     @components = {}
 
   addComponent: (comp) =>
     comp.gameObject = this
-    components[comp.name] = comp
+    @components[comp.name] = comp
 
   getComponent: (name) =>
-    components[name]
+    @components[name]
 
   removeComponent: (name) =>
-    components[name] = null
+    @components[name] = null
 
 
   broadcast: (args...) =>
-    comp.receive(args...) for name, comp of components
+    comp.receive(args...) for name, comp of @components
+
+module.exports = GameObject
