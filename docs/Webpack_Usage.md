@@ -35,3 +35,5 @@ new Game().func()
 
 ## Pack
 when code is modified and you want to run in brower, run `webpack` in cmd to create the bundle.js file
+
+NOTE: if you use some libraries like Three.js, which can use directly (in window object, not have to require it), you can use without require but should include it in your html file.
