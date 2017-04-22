@@ -18,25 +18,32 @@ class Game
 
   start: (name)=>
     @nowTime = @prevTime = Date.now()
-    @curScene = @scenes[name]
     @_initialize()
     @_loop()
 
+  setScene: (@scene) =>
+    return this
+
   _initialize: =>
-    @curScene.init()
-    @renderer =  new THREE.WebGLRenderer()
+    # set renderer, is it reasonable to put renderer here? or in scene?
+    @renderer = new THREE.WebGLRenderer({antialias: true})
     @renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(@renderer.domElement)
+    # set event listener
+    window.addEventListener('resize', @_onWindowResize, false);
 
   _loop: =>
     @nowTime = Date.now()
-    @deltaTime = @nowTime - @prevTime
+    deltaTime = @nowTime - @prevTime
+    # TODO process input
+    @scene?.update()
+    @renderer.render(@scene?.pscene, @scene?.camera)  #
+    requestAnimationFrame(@_loop)
     @prevTime = @nowTime
 
-    # scripts update
-    script.update() for script in @scripts
+  _onWindowResize: =>
+    @scene?.camera.aspect = window.innerWidth / window.innerHeight;
+    @scene?.camera.updateProjectionMatrix();
+    @renderer.setSize(window.innerWidth, window.innerHeight);
 
-    @renderer.render(@curScene.scene, @curScene.camera)
-    requestAnimationFrame(@_loop)
-
-window.Game = Game
+module.exports = Game

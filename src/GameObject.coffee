@@ -1,13 +1,11 @@
 class GameObject
 
-  constructor: (@mesh)->
+  constructor: (@mesh) ->
     @components = {}
 
   addComponent: (comp) =>
     comp.gameObject = this
     @components[comp.name] = comp
-    if comp.update
-      Game.instance().addScript(comp)
 
   getComponent: (name) =>
     @components[name]
@@ -19,5 +17,4 @@ class GameObject
   broadcast: (args...) =>
     comp.receive(args...) for name, comp of @components
 
-
-window.GameObject = GameObject;
+module.exports = GameObject

@@ -1,26 +1,22 @@
 
 
 class Scene
-  constructor: (@name) ->
-    @camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 )
-    @scene = new THREE.Scene()
+  constructor: (initializer) ->
+    @pscene = new Physijs.Scene()
+    @camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
+    @camera.position.set(0, -0.5, 1);
+    @objects = []
+    initializer(this)
 
-  add: (gameObject) ->
-    @scene.add(gameObject.mesh)
+  addObject: (object) =>
+    @objects << object
+    @pscene.add(object.mesh)
 
-  init: ->
-    geometry = new THREE.BoxGeometry( 1, 1, 1 )
-    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
-    cubeMesh = new THREE.Mesh( geometry, material )
-    cube = new GameObject(cubeMesh)
-    @add(cube)
+  addLight: (light) =>
+    @pscene.add(light)
 
-    rotateScript = new Rotate()
-    cube.addComponent(rotateScript)
+  update: () =>
+    comp.update?() for name, comp of object.components for object in @objects
+    @pscene.simulate()  # for physical simulation
 
-    @camera.position.z = 5
-
-
-
-window.Scene = Scene
-Game.instance().addScene(new Scene('first'))
+module.exports = Scene

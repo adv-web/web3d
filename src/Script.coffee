@@ -1,13 +1,5 @@
-class Script extends Component
 
-  constructor: (@name) ->
-    super @name
-
-  update: ->
-
-window.Script = Script
-
-class Rotate extends Script
+class Rotate extends Component
 
   constructor: ->
     super "Rotate"
@@ -17,4 +9,6 @@ class Rotate extends Script
     trans.rotation.x += 0.1;
     trans.rotation.y += 0.1;
 
-window.Rotate = Rotate
+
+module.exports = Rotate
+

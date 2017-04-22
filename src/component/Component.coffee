@@ -5,4 +5,4 @@ class Component
 
   receive: (args...) =>
 
-window.Component = Component
+module.exports = Component
