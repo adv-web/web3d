@@ -2,7 +2,7 @@ class Component
 
   constructor: ->
     @gameObject = null
-    @name = "component"
+    @name = "component" # subclass should override it
 
   receive: (args...) =>
 
