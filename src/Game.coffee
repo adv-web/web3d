@@ -34,7 +34,7 @@ class Game
     deltaTime = @nowTime - @prevTime
     # TODO process input
     @scene?.update()
-    @renderer.render(@scene?.pscene, @scene?.camera)  # é«˜è?¦åˆ
+    @renderer.render(@scene?.pscene, @scene?.camera)  #
     requestAnimationFrame(@_loop)
     @prevTime = @nowTime
 
