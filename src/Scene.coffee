@@ -1,4 +1,4 @@
-class Scene
+module.exports = class #Scene
 
   constructor: (initializer) ->
     @pscene = new Physijs.Scene()
@@ -17,5 +17,3 @@ class Scene
   update: () =>
     comp.update?() for name, comp of object.components for object in @objects
     @pscene.simulate()  # for physical simulation
-
-module.exports = Scene

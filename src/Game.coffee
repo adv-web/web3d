@@ -1,4 +1,4 @@
-class Game
+module.exports = class #Game
 
   start: =>
     @nowTime = @prevTime = Date.now()
@@ -30,4 +30,3 @@ class Game
     @scene?.camera.updateProjectionMatrix();
     @renderer.setSize(window.innerWidth, window.innerHeight);
 
-module.exports = Game

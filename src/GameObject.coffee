@@ -1,4 +1,4 @@
-class GameObject
+module.exports = class #GameObject
 
   constructor: (@mesh) ->
     @components = {}
@@ -15,5 +15,3 @@ class GameObject
 
   broadcast: (args...) =>
     comp.receive(args...) for name, comp of @components
-
-module.exports = GameObject
