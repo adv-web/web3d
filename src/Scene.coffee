@@ -8,7 +8,7 @@ module.exports = class #Scene
     initializer(this)
 
   addObject: (object) =>
-    @objects << object
+    @objects.push(object)
     @pscene.add(object.mesh)
 
   addLight: (light) =>
