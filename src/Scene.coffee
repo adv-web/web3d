@@ -1,4 +1,6 @@
 
+module.exports = class #Scene
+
 
 class Scene
   constructor: (initializer) ->
@@ -9,7 +11,7 @@ class Scene
     initializer(this)
 
   addObject: (object) =>
-    @objects << object
+    @objects.push(object)
     @pscene.add(object.mesh)
 
   addLight: (light) =>
@@ -19,4 +21,4 @@ class Scene
     comp.update?() for name, comp of object.components for object in @objects
     @pscene.simulate()  # for physical simulation
 
-module.exports = Scene
+

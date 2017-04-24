@@ -4,6 +4,7 @@
 var Game = require("./Game");
 var Scene = require("./Scene");
 var GameObject = require("./GameObject");
+var Test = require("./component/Test");
 
 var voxParser = new vox.Parser();
 function scene1(scene) {
@@ -24,6 +25,7 @@ function scene1(scene) {
         var mesh = new Physijs.ConvexMesh(threeMesh.geometry, threeMesh.material);
         var character = new GameObject(mesh);
         // TODO add components on character
+        character.addComponent(new Test());
         scene.addObject(character);
     });
 
