@@ -25,7 +25,7 @@ module.exports = class #Game
     deltaTime = @nowTime - @prevTime
     # TODO process input
     @scene?.update()
-    @renderer.render(@scene?.pscene, @scene?.camera)  #
+    @renderer.render(@scene?._scene, @scene?.camera)  #
     requestAnimationFrame(@_loop)
     @prevTime = @nowTime
 
@@ -33,4 +33,3 @@ module.exports = class #Game
     @scene?.camera.aspect = window.innerWidth / window.innerHeight;
     @scene?.camera.updateProjectionMatrix();
     @renderer.setSize(window.innerWidth, window.innerHeight);
-

@@ -7,6 +7,9 @@ node_modules/
 # personnal testing file
 test_scripts/
 
+# auto-generated doc
+doc/
+
 # complie file
 src/Game.js
 src/Scene.js

@@ -1,7 +1,7 @@
 module.exports = class #Scene
 
   constructor: (initializer) ->
-    @pscene = new Physijs.Scene()
+    @_scene = new Physijs.Scene()
     @camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
     @camera.position.set(0, -0.5, 1);
     @objects = []
@@ -9,13 +9,11 @@ module.exports = class #Scene
 
   addObject: (object) =>
     @objects.push(object)
-    @pscene.add(object.mesh)
+    @_scene.add(object.mesh)
 
   addLight: (light) =>
-    @pscene.add(light)
+    @_scene.add(light)
 
   update: () =>
     comp.update?() for name, comp of object.components for object in @objects
-    @pscene.simulate()  # for physical simulation
-
-
+    @_scene.simulate()  # for physical simulation
