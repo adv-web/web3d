@@ -9,11 +9,11 @@ test_scripts/
 
 # complie file
 src/Game.js
-src/Game.js.map
 src/Scene.js
-src/Scene.js.map
 src/Script.js
-src/Script.js.map
 src/GameObject.js
-src/GameObject.js.map
+src/Component.js
+src/component/Test.js
+src/*.map
+src/component/*.map
 bundle.js

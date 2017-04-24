@@ -4,7 +4,7 @@ module.exports = class #Game
     @scenes = {}
     @scripts = []
 
-  start: (name)=>
+  start: ()=>
     @nowTime = @prevTime = Date.now()
     @_initialize()
     @_loop()

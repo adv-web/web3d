@@ -1,5 +1,4 @@
-
-module.exports = class
+module.exports = class #Scene
 
   constructor: (initializer) ->
     @pscene = new Physijs.Scene()
