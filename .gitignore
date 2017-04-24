@@ -14,8 +14,6 @@ src/Scene.js
 src/Scene.js.map
 src/Script.js
 src/Script.js.map
-src/component/Component.js
-src/component/Component.js.map
 src/GameObject.js
 src/GameObject.js.map
-npm-debug.log
+bundle.js
