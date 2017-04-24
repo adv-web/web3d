@@ -9,7 +9,7 @@ class GameObject
   components: {}
 
   # Construct a new game object.
-  # @param mesh [THREE.Mesh, Physijs.Mesh] the mesh of the game object
+  # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of the game object
   constructor: (@mesh) ->
 
   # Add a component to the game object.

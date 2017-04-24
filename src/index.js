@@ -22,22 +22,13 @@ function scene1(scene) {
     voxParser.parse('vox/chr_knight.vox').then(function (voxelData) {
         var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.03});
         var threeMesh = builder.createMesh();
-        var mesh = new Physijs.ConvexMesh(threeMesh.geometry, threeMesh.material);
+        var mesh = new Physijs.BoxMesh(threeMesh.geometry, threeMesh.material);
         var character = new GameObject(mesh);
         // TODO add components on character
-        character.addComponent(new Test());
+        //character.addComponent(new Test());
         scene.addObject(character);
     });
 
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    var cubeMesh = new THREE.Mesh( geometry, material );
-    var cube = new GameObject(cubeMesh);
-    scene.addObject(cube);
-
-    var Rotate = require("./Script");
-    var rotateScript = new Rotate();
-    cube.addComponent(rotateScript);
 }
 
 var scene = new Scene(scene1);
