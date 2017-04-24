@@ -1,8 +1,6 @@
 
 module.exports = class
 
-
-class Scene
   constructor: (initializer) ->
     @pscene = new Physijs.Scene()
     @camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
