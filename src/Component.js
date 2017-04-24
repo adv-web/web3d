@@ -4,10 +4,10 @@
     slice = [].slice;
 
   module.exports = (function() {
-    function _Class() {
+    function _Class(name) {
+      this.name = name;
       this.receive = bind(this.receive, this);
       this.gameObject = null;
-      this.name = "component";
     }
 
     _Class.prototype.receive = function() {

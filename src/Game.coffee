@@ -1,6 +1,10 @@
 module.exports = class #Game
 
-  start: =>
+  constructor: ->
+    @scenes = {}
+    @scripts = []
+
+  start: ()=>
     @nowTime = @prevTime = Date.now()
     @_initialize()
     @_loop()
@@ -21,7 +25,7 @@ module.exports = class #Game
     deltaTime = @nowTime - @prevTime
     # TODO process input
     @scene?.update()
-    @renderer.render(@scene?.pscene, @scene?.camera)  # 高耦合
+    @renderer.render(@scene?.pscene, @scene?.camera)  #
     requestAnimationFrame(@_loop)
     @prevTime = @nowTime
 

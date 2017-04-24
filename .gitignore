@@ -5,4 +5,15 @@
 node_modules/
 
 # personnal testing file
-Test.coffee
+test_scripts/
+
+# complie file
+src/Game.js
+src/Scene.js
+src/Script.js
+src/GameObject.js
+src/Component.js
+src/component/Test.js
+src/*.map
+src/component/*.map
+bundle.js

@@ -1,7 +1,6 @@
 module.exports = class #Component
 
-  constructor: ->
+  constructor: (@name) ->
     @gameObject = null
-    @name = "component" # subclass should override it
 
   receive: (args...) =>

@@ -17,3 +17,5 @@ module.exports = class #Scene
   update: () =>
     comp.update?() for name, comp of object.components for object in @objects
     @pscene.simulate()  # for physical simulation
+
+

@@ -28,6 +28,16 @@ function scene1(scene) {
         character.addComponent(new Test());
         scene.addObject(character);
     });
+
+    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    var cubeMesh = new THREE.Mesh( geometry, material );
+    var cube = new GameObject(cubeMesh);
+    scene.addObject(cube);
+
+    var Rotate = require("./Script");
+    var rotateScript = new Rotate();
+    cube.addComponent(rotateScript);
 }
 
 var scene = new Scene(scene1);

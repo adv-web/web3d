@@ -9,6 +9,8 @@
       this._initialize = bind(this._initialize, this);
       this.setScene = bind(this.setScene, this);
       this.start = bind(this.start, this);
+      this.scenes = {};
+      this.scripts = [];
     }
 
     _Class.prototype.start = function() {
