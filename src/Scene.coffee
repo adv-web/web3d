@@ -1,5 +1,5 @@
 
-module.exports = class #Scene
+module.exports = class
 
 
 class Scene

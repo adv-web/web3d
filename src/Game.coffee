@@ -4,18 +4,6 @@ module.exports = class #Game
     @scenes = {}
     @scripts = []
 
-  @instance: ->
-    if not @game
-      @game = new Game()
-    else
-      @game
-
-  addScene: (scene) ->
-    @scenes[scene.name] = scene
-
-  addScript: (script) ->
-    @scripts.push(script)
-
   start: (name)=>
     @nowTime = @prevTime = Date.now()
     @_initialize()

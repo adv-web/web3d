@@ -1,4 +1,4 @@
-Component = require("./component/Component")
+Component = require("./Component")
 
 class Rotate extends Component
 
