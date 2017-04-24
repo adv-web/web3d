@@ -1,5 +1,7 @@
 {
   "name": "web3d",
-  "version": "0.0.1"
-  
+  "version": "0.0.1",
+  "devDependencies": {
+    "webpack": "^2.4.1"
+  }
 }
