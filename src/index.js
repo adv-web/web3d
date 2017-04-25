@@ -5,6 +5,7 @@ var Game = require("./Game");
 var Scene = require("./Scene");
 var GameObject = require("./GameObject");
 var Camera = require("./component/Camera");
+var PointerLockController = require("./component/PointerLockController");
 
 var voxParser = new vox.Parser();
 function scene1(scene) {
@@ -33,9 +34,12 @@ function scene1(scene) {
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(0, -0.5, 1);
     var player = new GameObject(mesh);
-    player.addComponent(new Camera());
+    var camera = new Camera();
+    player.addComponent(camera);
+    player.addComponent(new PointerLockController(camera));
     scene.addObject(player);
+    Game.requestPointerLock();
 }
-
+// 异步变同步？
 var scene = new Scene(scene1);
 new Game().setScene(scene).start();

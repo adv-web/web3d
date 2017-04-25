@@ -18,7 +18,7 @@ class Scene
   addObject: (object) =>
     @_objects.push(object)
     @_scene.add(object.mesh)
-    @_cameras.push(object.getComponent("camera")._camera) if object.getComponent("camera")?
+    @_cameras.push(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
 
   # Add a light to the scene
   # @param light [THREE.Light] the light to be added
