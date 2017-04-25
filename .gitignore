@@ -11,11 +11,9 @@ test_scripts/
 doc/
 
 # complie file
-src/Game.js
-src/Scene.js
-src/GameObject.js
-src/Component.js
-src/component/Test.js
-src/*.map
-src/component/*.map
+/src/*.map
+/src/component/*.map
+/src/*.js
+/src/component/*.js
+!/src/index.js
 bundle.js

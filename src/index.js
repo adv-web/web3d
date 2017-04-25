@@ -4,7 +4,7 @@
 var Game = require("./Game");
 var Scene = require("./Scene");
 var GameObject = require("./GameObject");
-var Test = require("./component/Test");
+var Camera = require("./component/Camera");
 
 var voxParser = new vox.Parser();
 function scene1(scene) {
@@ -22,13 +22,19 @@ function scene1(scene) {
     voxParser.parse('vox/chr_knight.vox').then(function (voxelData) {
         var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.03});
         var threeMesh = builder.createMesh();
-        var mesh = new Physijs.BoxMesh(threeMesh.geometry, threeMesh.material);
+        var mesh = new Physijs.ConvexMesh(threeMesh.geometry, threeMesh.material);
         var character = new GameObject(mesh);
         // TODO add components on character
         //character.addComponent(new Test());
         scene.addObject(character);
     });
-
+    var geometry = new THREE.BoxGeometry( 2, 2, 2);
+    var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, -0.5, 1);
+    var player = new GameObject(mesh);
+    player.addComponent(new Camera());
+    scene.addObject(player);
 }
 
 var scene = new Scene(scene1);

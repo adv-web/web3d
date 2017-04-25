@@ -2,12 +2,11 @@
 #
 # A component has its lifecycle, you can alternatively implement these methods as you need:
 #
-# afterAdded():    Called when the component added to a game object.
+# - afterAdded():    Called when the component added to a game object.
 #
-# update():        Called when the game update every frame.
+# - update():        Called when the game update every frame.
 #
-# beforeRemoved(): Called when the component ready to detach from its game object.
-#
+# - beforeRemoved(): Called when the component ready to detach from its game object.
 class Component
   module.exports = this
 
@@ -20,6 +19,7 @@ class Component
   # Construct a new component.
   # @param name [String] the name of the component
   constructor: (@name) ->
+    @gameObject = null
 
   # Receive a message from its game object.
   #
