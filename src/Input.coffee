@@ -7,15 +7,15 @@ class Input
 
   # @private
   @_onKeyDown: (event) ->
-    @_keyBitmap[event.keyCode] = true
+    Input._keyBitmap[event.keyCode] = true
 
   # @private
   @_onKeyUp: (event) ->
-    @_keyBitmap[event.keyCode] = false
+    Input._keyBitmap[event.keyCode] = false
 
   # @overload isPressed(keyCode)
   #   Tell whether the key of given key code is pressed.
-  #   @param keyCode [number] the given key code
+  #   @param keyCode [number] the given key code, if refer to a letter, use upper case
   #   @return [boolean] the key is pressed or not
   #
   # @overload isPressed(key)
@@ -24,7 +24,7 @@ class Input
   #   @return [boolean] the key is pressed or not
   @isPressed: (arg) ->
     code = if isNaN(arg) then arg.toUpperCase().charCodeAt(0) else arg
-    return !!@_keyBitmap[code]
+    return !!Input._keyBitmap[code]
 
   document.addEventListener('keydown', @_onKeyDown, false);
   document.addEventListener('keyup', @_onKeyUp, false);

@@ -4,7 +4,7 @@
 #
 # - afterAdded():    Called when the component added to a game object.
 #
-# - update():        Called when the game update every frame.
+# - update(deltaTime):        Called when the game update every frame.
 #
 # - beforeRemoved(): Called when the component ready to detach from its game object.
 class Component
