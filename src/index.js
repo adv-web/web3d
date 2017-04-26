@@ -5,6 +5,7 @@ var Game = require("./Game");
 var Scene = require("./Scene");
 var GameObject = require("./GameObject");
 var Camera = require("./component/Camera");
+var Test = require("./component/Test");
 var PointerLockController = require("./component/PointerLockController");
 
 var voxParser = new vox.Parser();
@@ -37,9 +38,10 @@ function scene1(scene) {
     var camera = new Camera();
     player.addComponent(camera);
     player.addComponent(new PointerLockController(camera));
+    player.addComponent(new Test());
     scene.addObject(player);
     Game.requestPointerLock();
 }
-// 异步变同步？
+// 异步变同步？用同一个方法而且可以做进度条
 var scene = new Scene(scene1);
 new Game().setScene(scene).start();

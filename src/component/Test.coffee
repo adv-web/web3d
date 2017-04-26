@@ -4,5 +4,5 @@ module.exports = class extends require('../Component')
     @name = "Test"
 
   update: =>
-    @gameObject.mesh.rotation.y += 1
-    @gameObject.mesh.__dirtyRotation = true
+    @gameObject.mesh.translateX(0.001)
+    #@gameObject.mesh.__dirtyRotation = true
