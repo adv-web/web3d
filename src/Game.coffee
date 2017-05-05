@@ -40,6 +40,7 @@ class Game
     deltaTime = @nowTime - @prevTime
     # TODO process input
     @scene?.update(deltaTime)
+
     @renderer.render(@scene._scene, @scene._cameras[0]) if @scene?._cameras[0]?
     requestAnimationFrame(@_loop)
     @prevTime = @nowTime
@@ -59,6 +60,7 @@ class Game
   @requestFullScreen: ->
     document.documentElement.requestFullscreen = document.documentElement.requestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.webkitRequestFullScreen || document.documentElement.msRequestFullscreen
     document.documentElement.requestFullscreen()
+    Game.requestPointerLock()
 
   # Exit full screen.
   @exitFullScreen: ->

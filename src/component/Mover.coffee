@@ -24,3 +24,6 @@ class Mover extends Component
     @gameObject.mesh.translateZ(distance) if Input.isPressed('S')
     @gameObject.mesh.translateZ(-distance) if Input.isPressed('W')
     @gameObject.mesh.__dirtyPosition = true
+    #@gameObject.mesh.setAngularFactor(new THREE.Vector3(0, 0, 0))
+    #@gameObject.mesh.__dirtyRotation = true
+    #console.log @gameObject.mesh.rotation
