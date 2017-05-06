@@ -13,7 +13,7 @@ class Camera extends Component
   # It will create a new THREE.PerspectiveCamera.
   constructor: ->
     super("Camera")
-    @_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000)
+    @_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000)
 
   # @nodoc
   afterAdded: =>
