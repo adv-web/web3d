@@ -95,4 +95,7 @@ class FirstPersonController extends Component
       @_canJump = false
       @gameObject.mesh.setLinearVelocity(new THREE.Vector3(0, @jump_velocity, 0))
 
-    @gameObject.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+    #@gameObject.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+    # important: 解决了移动卡顿还有人物会侧翻的问题
+    @gameObject.mesh.rotation.set(0, 0, 0)
+    @gameObject.mesh.__dirtyRotation = true
