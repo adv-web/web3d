@@ -45,7 +45,7 @@ class FirstPersonController extends Component
     mesh.position.set(0.25, 0, -0.2)
     @enabled = true
     @sensitivity = if options.sensitivity? then options.sensitivity else 4
-    @move_velocity = if options.move_velocity? then options.move_velocity else 1
+    @move_velocity = if options.move_velocity? then options.move_velocity else 3
     @jump_velocity = if options.jump_velocity? then options.jump_velocity else 3
 
     @_canJump = true
