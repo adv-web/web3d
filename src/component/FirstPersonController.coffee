@@ -62,8 +62,8 @@ class FirstPersonController extends Component
 
   # @private
   _onCollision: (other_object, linear_velocity, angular_velocity) =>
-    @_canJump = true if other_object.name == "ground"
-    # TODO 判断高度
+    # can jump if player is on the top of other object
+    @_canJump = true if @gameObject.mesh.position.y - other_object.position.y > 0
 
   # @nodoc
   afterAdded: =>
@@ -80,7 +80,7 @@ class FirstPersonController extends Component
   # @nodoc
   update: (deltaTime) =>
     distance = @move_velocity * deltaTime / 1000
-
+    # WASD 移动
     @_yaw2.translateX(distance) if Input.isPressed('D')
     @_yaw2.translateX(-distance) if Input.isPressed('A')
     @_yaw2.translateZ(distance) if Input.isPressed('S')
@@ -90,12 +90,10 @@ class FirstPersonController extends Component
     @gameObject.mesh.position.z = p.z
     @_yaw2.position.set(0,0,0)
     @gameObject.mesh.__dirtyPosition = true
-
+    # 空格跳跃
     if @_canJump and Input.isPressed(32)
       @_canJump = false
       @gameObject.mesh.setLinearVelocity(new THREE.Vector3(0, @jump_velocity, 0))
-
-    #@gameObject.mesh.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     # important: 解决了移动卡顿还有人物会侧翻的问题
     @gameObject.mesh.rotation.set(0, 0, 0)
     @gameObject.mesh.__dirtyRotation = true

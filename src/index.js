@@ -21,34 +21,33 @@ function scene1(scene) {
         mesh.name = "ground";
         scene.addObject(new GameObject(mesh));
     });
-    voxParser.parse('vox/chr_knight.vox').then(function (voxelData) {
-        var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.03});
+    voxParser.parse('vox/cube.vox').then(function (voxelData) {
+        var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.005});
         var threeMesh = builder.createMesh();
         var mesh = new Physijs.BoxMesh(threeMesh.geometry, threeMesh.material);
         mesh.name = "npc";
+        window.mesh = mesh;
         var character = new GameObject(mesh);
         scene.addObject(character);
     });
-    voxParser.parse('vox/chr_knight.vox').then(function (voxelData) {
-        //var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.03});
-        //var threeMesh = builder.createMesh();
-        var geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2);
-        var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
-        //var mesh = new THREE.Mesh(geometry, material);
-        var mesh = new Physijs.BoxMesh(geometry, material);
-        //var mesh = new THREE.Mesh(threeMesh.geometry, threeMesh.material);
-        mesh.position.set(0, -0.5, 1);
-        mesh.name = "player";
-
-        var player = new GameObject(mesh);
-
-        var camera = new Camera();
-        camera._camera.position.set(0, 0.25, 0);
-        player.addComponent(camera);
-        scene.addObject(player);
-        player.addComponent(new FirstPersonController(camera));
-
-    });
+    // player
+    var geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2);
+    var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+    var mesh = new Physijs.BoxMesh(geometry, material);
+    mesh.position.set(0, -0.5, 1);
+    mesh.name = "player";
+    var player = new GameObject(mesh);
+    var camera = new Camera();
+    camera._camera.position.set(0, 0.25, 0);
+    player.addComponent(camera);
+    var fpc = new FirstPersonController(camera);
+    player.addComponent(fpc);
+    scene.addObject(player);
+    // dat
+    var gui = new dat.GUI();
+    gui.add(fpc, 'sensitivity').min(0).step(0.5);
+    gui.add(fpc, 'move_velocity').min(0).step(0.5);
+    gui.add(fpc, 'jump_velocity').min(0).step(0.5);
 
 }
 // 异步变同步？用同一个方法而且可以做进度条
