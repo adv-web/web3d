@@ -70,12 +70,12 @@ class FirstPersonController extends Component
     @gameObject.mesh.add(@_yaw)
     @gameObject.mesh.add(@_yaw2)
     document.addEventListener('mousemove', @_onMouseMove, false)
-    @gameObject.mesh.addEventListener('collision', @_onCollision);
+    @gameObject.mesh.addEventListener('collision', @_onCollision)
 
   # @nodoc
   beforeRemoved: =>
     document.removeEventListener('mousemove', @_onMouseMove, false)
-    @gameObject.mesh.removeEventListener('collision', @_onCollision);
+    @gameObject.mesh.removeEventListener('collision', @_onCollision)
 
   # @nodoc
   update: (deltaTime) =>
@@ -88,7 +88,7 @@ class FirstPersonController extends Component
     p = @_yaw2.getWorldPosition()
     @gameObject.mesh.position.x = p.x
     @gameObject.mesh.position.z = p.z
-    @_yaw2.position.set(0,0,0)
+    @_yaw2.position.set(0, 0, 0)
     @gameObject.mesh.__dirtyPosition = true
     # 空格跳跃
     if @_canJump and Input.isPressed(32)

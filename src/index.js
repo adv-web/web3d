@@ -7,6 +7,8 @@ var GameObject = require("./GameObject");
 var Camera = require("./component/Camera");
 var FirstPersonController = require("./component/FirstPersonController");
 var HUD = require("./component/HUD");
+var FirstPersonShooter = require("./component/FirstPersonShooter");
+var TreeCollider = require("./component/TreeCollider");
 // 公用资源
 var voxParser = new vox.Parser();
 var meshes = {};
@@ -29,7 +31,7 @@ voxParser.parse('vox/cube2.vox').then(function (voxelData) {
     checkLoad();
 });
 voxParser.parse('vox/ground.vox').then(function (voxelData) {
-    var threeMesh = (new vox.MeshBuilder(voxelData, {voxelSize: 0.06})).createMesh();
+    var threeMesh = (new vox.MeshBuilder(voxelData, {voxelSize: 0.08})).createMesh();
     meshes.ground = new Physijs.BoxMesh(threeMesh.geometry, threeMesh.material, 0);
     checkLoad();
 });
@@ -50,7 +52,9 @@ function scene1(scene) {
             var mesh = meshes.tree.clone();
             mesh.position.set(x, -0.9, y);
             mesh._physijs.mass = 0;
-            scene.addObject(new GameObject(mesh));
+            var tree = new GameObject(mesh);
+            tree.addComponent(new TreeCollider(scene));
+            scene.addObject(tree);
         }
     };
     var loadWall = function (x, y) {
@@ -125,6 +129,7 @@ function scene1(scene) {
     var fpc = new FirstPersonController(camera, {sensitivity: 1});
     player.addComponent(fpc);
     player.addComponent(new HUD());
+    player.addComponent(new FirstPersonShooter(scene, fpc));
     scene.addObject(player);
     // dat
     gui.add(fpc, 'sensitivity').min(0).step(0.5);

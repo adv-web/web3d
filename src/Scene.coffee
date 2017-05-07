@@ -20,6 +20,14 @@ class Scene
     @_scene.add(object.mesh)
     @_cameras.push(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
 
+  removeObject: (object) =>
+    @_scene.remove(object.mesh)
+    # TODO
+
+  removeObjectByMesh: (mesh) =>
+    @_scene.remove(mesh)
+    # TODO 根据 uuid 判断删除
+
   # Add a light to the scene
   # @param light [THREE.Light] the light to be added
   addLight: (light) =>
