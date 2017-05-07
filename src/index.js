@@ -6,6 +6,7 @@ var Scene = require("./Scene");
 var GameObject = require("./GameObject");
 var Camera = require("./component/Camera");
 var FirstPersonController = require("./component/FirstPersonController");
+var HUD = require("./component/HUD");
 
 var voxParser = new vox.Parser();
 function scene1(scene) {
@@ -22,7 +23,7 @@ function scene1(scene) {
         scene.addObject(new GameObject(mesh));
     });
     voxParser.parse('vox/cube.vox').then(function (voxelData) {
-        var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.005});
+        var builder = new vox.MeshBuilder(voxelData, {voxelSize: 0.008});
         var threeMesh = builder.createMesh();
         var mesh = new Physijs.BoxMesh(threeMesh.geometry, threeMesh.material);
         mesh.name = "npc";
@@ -31,7 +32,7 @@ function scene1(scene) {
         scene.addObject(character);
     });
     // player
-    var geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2);
+    var geometry = new THREE.BoxGeometry( 0.4, 0.4, 0.4);
     var material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
     var mesh = new Physijs.BoxMesh(geometry, material);
     mesh.position.set(0, -0.5, 1);
@@ -42,6 +43,7 @@ function scene1(scene) {
     player.addComponent(camera);
     var fpc = new FirstPersonController(camera);
     player.addComponent(fpc);
+    player.addComponent(new HUD());
     scene.addObject(player);
     // dat
     var gui = new dat.GUI();
