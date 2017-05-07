@@ -30,4 +30,3 @@ class Scene
     comp.update?(deltaTime) for name, comp of object.components for object in @_objects
     @_scene.simulate()  # for physical simulation
 
-
