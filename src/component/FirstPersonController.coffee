@@ -15,16 +15,16 @@ class FirstPersonController extends Component
 
   PI_2 = Math.PI / 2
 
-  # @property [boolean] tell whether the controller is enabled
+  # @property [boolean] tell whether the controller is enabled, initially true
   enabled: true
 
-  # @property [number] how fast the rotation when mouse move
-  sensitivity: 4
+  # @property [number] how fast the rotation when mouse move, initially 1
+  sensitivity: 1
 
-  # @property [number] the move velocity
-  move_velocity: 1
+  # @property [number] the move velocity, initially 3
+  move_velocity: 3
 
-  # @property [number] the jump velocity
+  # @property [number] the jump velocity, initially 3
   jump_velocity: 3
 
   # Construct a pointer lock controller. It's initially enabled.
@@ -38,13 +38,13 @@ class FirstPersonController extends Component
     (@_pitch = new THREE.Object3D()).add(@camera._camera)
     (@_yaw = new THREE.Object3D()).add(@_pitch)
     @_yaw2 = new THREE.Object3D()
-    geometry = new THREE.BoxGeometry( 0.08, 0.08, 0.5);
-    material = new THREE.MeshBasicMaterial({ color: 0xffcc99});
+    geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5);
+    material = new THREE.MeshBasicMaterial({color: 0xffcc99});
     mesh = new THREE.Mesh(geometry, material);
     @_pitch.add(mesh)
     mesh.position.set(0.25, 0, -0.2)
     @enabled = true
-    @sensitivity = if options.sensitivity? then options.sensitivity else 4
+    @sensitivity = if options.sensitivity? then options.sensitivity else 1
     @move_velocity = if options.move_velocity? then options.move_velocity else 3
     @jump_velocity = if options.jump_velocity? then options.jump_velocity else 3
 

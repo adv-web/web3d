@@ -13,17 +13,21 @@ class Scene
     @_objects = []
     initializer(this)
 
-  # Add a game object to the scene
+  # Add a game object to the scene.
   # @param object [GameObject] the game object to be added
   addObject: (object) =>
     @_objects.push(object)
     @_scene.add(object.mesh)
     @_cameras.push(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
 
+  # Remove a game object.
+  # @param object [GameObject] the game object to be removed
   removeObject: (object) =>
     @_scene.remove(object.mesh)
     # TODO
 
+  # Remove a game object by its mesh.
+  # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of game object to be removed
   removeObjectByMesh: (mesh) =>
     @_scene.remove(mesh)
     # TODO 根据 uuid 判断删除

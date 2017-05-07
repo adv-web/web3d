@@ -17,3 +17,5 @@ doc/
 /src/component/*.js
 !/src/index.js
 bundle.js
+
+phrase1_doc.md
