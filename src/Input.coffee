@@ -8,10 +8,12 @@ class Input
   # @private
   @_onKeyDown: (event) ->
     Input._keyBitmap[event.keyCode] = true
+    # console.log("keydown")
 
   # @private
   @_onKeyUp: (event) ->
     Input._keyBitmap[event.keyCode] = false
+    # console.log("keyup")
 
   # @overload isPressed(keyCode)
   #   Tell whether the key of given key code is pressed.

@@ -1,7 +1,13 @@
 {
   "name": "web3d",
   "version": "0.0.1",
+  "scripts": {
+    "build": "webpack",
+    "serve": "lite-server",
+    "start": "npm run build & npm run serve"
+  },
   "devDependencies": {
+    "lite-server": "^2.3.0",
     "webpack": "^2.4.1"
   }
 }
