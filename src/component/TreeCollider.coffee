@@ -23,6 +23,6 @@ class TreeCollider extends Component
   # @private
   _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     if other_mesh.name == "bullet"
-      @_scene.removeObject(@gameObject)
-      @_scene.removeObjectByMesh(other_mesh)
+      @_scene.remove(@gameObject)
+      @_scene.remove(other_mesh)
       PlayerInfo.hitCount += 1

@@ -8,6 +8,13 @@ Component = require('../Component')
 class Camera extends Component
   module.exports = this
 
+  # @property [THREE.Vector3] the position of camera
+  position: null
+
+  @property 'position',
+    get: -> @_camera.position
+    set: (position) -> @_camera.position = position
+
   # Construct a camera component.
   #
   # It will create a new THREE.PerspectiveCamera.

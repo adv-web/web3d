@@ -58,7 +58,7 @@ class FirstPersonShooter extends Component
     worldPosition = @gameObject.mesh.position
     mesh.position.set(worldPosition.x, worldPosition.y + 0.5, worldPosition.z)
     mesh.name = "bullet"
-    @_scene.addObject(new GameObject(mesh))
+    @_scene.add(new GameObject(mesh))
     rot_y = @_controller._yaw.rotation.y
     rot_x = @_controller._pitch.rotation.x
     # 这里的设置速度是世界坐标系。好不容易调出来的方向

@@ -16,11 +16,11 @@ class Scene
   # This is a generic Scene add method.
   #
   # @overload add(gameObject)
-  #   Add a game object to the scene
+  #   Add a game object to the scene.
   #   @param [GameObject] gameObject the game object to be added
   #
   # @overload add(object)
-  #   Add a light/skybox or any not GameObject to the scene
+  #   Add a light/skybox or any not GameObject to the scene.
   #   @param [Object] object the object to be added
   add: (object) =>
     if object.isGameObject
@@ -30,17 +30,31 @@ class Scene
     else
       @_scene.add(object)
 
-  # Remove a game object.
-  # @param object [GameObject] the game object to be removed
-  removeObject: (object) =>
-    @_scene.remove(object.mesh)
-    # TODO
+  # This is a generic Scene remove method.
+  #
+  # @overload remove(gameObject)
+  #   Remove a game object to the scene.
+  #   @param [GameObject] gameObject the game object to be removed
+  #
+  # @overload remove(mesh)
+  #   Remove a game object of this mesh to the scene.
+  #   @param [THREE.Mesh | Physijs.Mesh] mesh the mesh of the game object to be removed
+  #
+  # @overload remove(object)
+  #   Remove a light/skybox or any not GameObject or Mesh to the scene.
+  #   @param [Object] object the object to be removed
+  remove: (object) =>
+    return @_removeGameObject(object) if object.isGameObject
+    if object.isMesh
+      for obj in @_objects
+        return @_removeGameObject(obj) if obj.mesh.uuid == object.uuid
+    @_scene.remove(object)  # not game object or mesh
 
-  # Remove a game object by its mesh.
-  # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of game object to be removed
-  removeObjectByMesh: (mesh) =>
-    @_scene.remove(mesh)
-    # TODO 根据 uuid 判断删除
+  # @private
+  _removeGameObject: (object) =>
+    @_cameras.remove(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
+    @_scene.remove(object.mesh)
+    @_objects.remove(object)
 
   # @nodoc
   update: (deltaTime) =>

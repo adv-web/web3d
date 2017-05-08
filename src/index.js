@@ -71,13 +71,13 @@ function scene1(scene) {
         scene.add(new GameObject(mesh));
     };
     var loadCube = function (x, y, z) {
-        var mesh = meshes.cube.clone();
-        mesh.position.set(x, y, z);
-        mesh._physijs.mass = 0;
-        scene.add(new GameObject(mesh));
-    };
+    var mesh = meshes.cube.clone();
+    mesh.position.set(x, y, z);
+    mesh._physijs.mass = 0;
+    scene.add(new GameObject(mesh));
+};
     // sky box
-    scene.add(THREEx.makeSkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
+    scene.add(THREE.SkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
     // light
     scene.add(new THREE.AmbientLight(0x800000));
     var directionalLight = new THREE.DirectionalLight(0xff5808);
@@ -90,19 +90,19 @@ function scene1(scene) {
     // ground
     var mesh = meshes.ground.clone();
     mesh.position.set(0, -1, -1);
-    mesh._physijs.mass = 0;     // mesh clone 的时候有 bug， 无法 clone _physijs 属性
+    mesh.mass = 0;     // mesh clone 的时候有 bug， 无法 clone _physijs 属性
     mesh.name = "ground";
     scene.add(new GameObject(mesh));
     // 8x8x8
     mesh = meshes.x8.clone();
     mesh.position.set(0, -0.9, -3);
     mesh.rotation.set(0, Math.PI / 2.0, 0);
-    mesh._physijs.mass = 0;
+    mesh.mass = 0;
     scene.add(new GameObject(mesh));
     // chest
     mesh = meshes.chest.clone();
     mesh.position.set(0, -0.9, -4);
-    mesh._physijs.mass = 0;
+    mesh.mass = 0;
     scene.add(new GameObject(mesh));
     // tree
     for (var i = 9; i < 15; i++) {
@@ -126,7 +126,7 @@ function scene1(scene) {
     mesh.name = "player";
     var player = new GameObject(mesh);
     var camera = new Camera();
-    camera._camera.position.set(0, 0.25, 0);
+    camera.position.set(0, 0.25, 0);
     player.addComponent(camera);
     var fpc = new FirstPersonController(camera, {sensitivity: 1});
     player.addComponent(fpc);
