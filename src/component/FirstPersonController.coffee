@@ -38,9 +38,9 @@ class FirstPersonController extends Component
     (@_pitch = new THREE.Object3D()).add(@camera._camera)
     (@_yaw = new THREE.Object3D()).add(@_pitch)
     @_yaw2 = new THREE.Object3D()
-    geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5);
-    material = new THREE.MeshBasicMaterial({color: 0xffcc99});
-    mesh = new THREE.Mesh(geometry, material);
+    geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5)
+    material = new THREE.MeshBasicMaterial({color: 0xffcc99})
+    mesh = new THREE.Mesh(geometry, material)
     @_pitch.add(mesh)
     mesh.position.set(0.25, 0, -0.2)
     @enabled = true
