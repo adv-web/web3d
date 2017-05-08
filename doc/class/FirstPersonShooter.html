@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Web3d'>
+      Web3d
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>FirstPersonShooter</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        FirstPersonShooter
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src\component\FirstPersonShooter.coffee</td>
+        </tr>
+        <tr>
+          <td>Inherits:</td>
+          <td>
+            <a href='../class/Component.html'>Component</a>
+          </td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>The first-person shooter, give you the ability that,
+when you click mouse, a small ball will be generated and fly to your first-person direction.
+The ball has it collider, you can detect it by assert other_mesh.name = &#39;bullet&#39;.</p><p>name = &quot;FirstPersonShooter&quot;</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Property Summary</h2>
+      <dl class='properties'>
+        <dt id='cooldown-property'>
+          <span class='signature'>
+            (number)
+            <b>
+              cooldown
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          the cool down time (ms), initially 1000 
+        </dd>
+        <dt id='bullet_speed-property'>
+          <span class='signature'>
+            (number)
+            <b>
+              bullet_speed
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          the initial speed of bullet, initially 10 
+        </dd>
+        <dt id='bullet_size-property'>
+          <span class='signature'>
+            (number)
+            <b>
+              bullet_size
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          the radius of bullet, initially 0.05 
+        </dd>
+        <dt id='bullet_color-property'>
+          <span class='signature'>
+            (number)
+            <b>
+              bullet_color
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          the color of bullet, initially 0xffff00 (yellow) 
+        </dd>
+      </dl>
+      <h3 class='inherited'>
+        Properties inherited from
+        <a href='../class/Component.html'>Component</a>
+      </h3>
+      <p class='inherited'>
+        <a href='../class/Component.html#name-property'>name</a>
+        <a href='../class/Component.html#gameObject-property'>gameObject</a>
+      </p>
+      <h2>
+        <small>Inherited Method Summary</small>
+        <h3 class='inherited'>
+          Methods inherited from
+          <a href='../class/Component.html'>Component</a>
+        </h3>
+        <p class='inherited'>
+          <a href='../class/Component.html#receive-dynamic'>#receive</a>
+        </p>
+      </h2>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-dynamic'>
+      #
+(void)
+<b>constructor</b><span>(_scene, _controller, options = {})</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Constructor a first-person shooter.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>scene</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Scene.html'>Scene</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the scene its game object in </span>
+    </li>
+    <li>
+      <span class='name'>controller</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/FirstPersonController.html'>FirstPersonController</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the first-person controller it relates to </span>
+    </li>
+    <li>
+      <span class='name'>options</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the optional parameters </span>
+    </li>
+  </ul>
+  <h3>
+    Options Hash:
+    (options):
+  </h3>
+  <ul class='options'>
+    <li>
+      <span class='name'>cooldown</span>
+      <span class='type'>
+        (
+          <tt>number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the cool down time (ms) </span>
+    </li>
+    <li>
+      <span class='name'>bullet_speed</span>
+      <span class='type'>
+        (
+          <tt>number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the initial speed of bullet </span>
+    </li>
+    <li>
+      <span class='name'>bullet_size</span>
+      <span class='type'>
+        (
+          <tt>number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the radius of bullet </span>
+    </li>
+    <li>
+      <span class='name'>bullet_color</span>
+      <span class='type'>
+        (
+          <tt>number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the color of bullet </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

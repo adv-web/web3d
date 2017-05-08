@@ -7,9 +7,6 @@ node_modules/
 # personnal testing file
 test_scripts/
 
-# auto-generated doc
-doc/
-
 # complie file
 /src/*.map
 /src/component/*.map
