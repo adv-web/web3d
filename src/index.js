@@ -54,54 +54,56 @@ function scene1(scene) {
             mesh._physijs.mass = 0;
             var tree = new GameObject(mesh);
             tree.addComponent(new TreeCollider(scene));
-            scene.addObject(tree);
+            scene.add(tree);
         }
     };
     var loadWall = function (x, y) {
         var mesh = meshes.wall.clone();
         mesh.position.set(x, -2.6, y);
         mesh._physijs.mass = 0;
-        scene.addObject(new GameObject(mesh));
+        scene.add(new GameObject(mesh));
     };
     var loadWall2 = function (x, y) {
         var mesh = meshes.wall.clone();
         mesh.position.set(x, -2.6, y);
         mesh.rotation.set(0, Math.PI / 2, 0);
         mesh._physijs.mass = 0;
-        scene.addObject(new GameObject(mesh));
+        scene.add(new GameObject(mesh));
     };
     var loadCube = function (x, y, z) {
         var mesh = meshes.cube.clone();
         mesh.position.set(x, y, z);
         mesh._physijs.mass = 0;
-        scene.addObject(new GameObject(mesh));
+        scene.add(new GameObject(mesh));
     };
+    // sky box
+    scene.add(THREEx.makeSkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
     // light
-    scene.addLight(new THREE.AmbientLight(0x800000));
+    scene.add(new THREE.AmbientLight(0x800000));
     var directionalLight = new THREE.DirectionalLight(0xff5808);
     directionalLight.position.set(0, 0, 1);
     directionalLight.castShadow = true;
-    scene.addLight(directionalLight);
-    var hemiLight = new THREE.HemisphereLight(0x87CEEB,0x32CD32,1);
+    scene.add(directionalLight);
+    var hemiLight = new THREE.HemisphereLight(0x87CEEB, 0x32CD32, 1);
     hemiLight.position.set(0, -1, -1);
-    scene.addLight(hemiLight);
+    scene.add(hemiLight);
     // ground
     var mesh = meshes.ground.clone();
     mesh.position.set(0, -1, -1);
     mesh._physijs.mass = 0;     // mesh clone 的时候有 bug， 无法 clone _physijs 属性
     mesh.name = "ground";
-    scene.addObject(new GameObject(mesh));
+    scene.add(new GameObject(mesh));
     // 8x8x8
     mesh = meshes.x8.clone();
     mesh.position.set(0, -0.9, -3);
     mesh.rotation.set(0, Math.PI / 2.0, 0);
     mesh._physijs.mass = 0;
-    scene.addObject(new GameObject(mesh));
+    scene.add(new GameObject(mesh));
     // chest
     mesh = meshes.chest.clone();
     mesh.position.set(0, -0.9, -4);
     mesh._physijs.mass = 0;
-    scene.addObject(new GameObject(mesh));
+    scene.add(new GameObject(mesh));
     // tree
     for (var i = 9; i < 15; i++) {
         for (var j = 9; j < 15; j++) {
@@ -130,7 +132,7 @@ function scene1(scene) {
     player.addComponent(fpc);
     player.addComponent(new HUD());
     player.addComponent(new FirstPersonShooter(scene, fpc));
-    scene.addObject(player);
+    scene.add(player);
     // dat
     gui.add(fpc, 'sensitivity').min(0).step(0.5);
     gui.add(fpc, 'move_velocity').min(0).step(0.5);

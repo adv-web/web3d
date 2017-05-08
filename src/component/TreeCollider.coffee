@@ -14,7 +14,7 @@ class TreeCollider extends Component
 
   # @nodoc
   afterAdded: =>
-    @gameObject.mesh.addEventListener('collision', @_onCollision);
+    @gameObject.mesh.addEventListener('collision', @_onCollision)
 
   # @nodoc
   beforeRemoved: =>
@@ -25,4 +25,4 @@ class TreeCollider extends Component
     if other_mesh.name == "bullet"
       @_scene.removeObject(@gameObject)
       @_scene.removeObjectByMesh(other_mesh)
-      PlayerInfo.hitCount += 1;
+      PlayerInfo.hitCount += 1

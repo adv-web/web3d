@@ -2,6 +2,9 @@
 class GameObject
   module.exports = this
 
+  # @property [boolean] to identify whether it is a game object, you should not change it
+  isGameObject: true
+
   # @property [THREE.Mesh] the mesh of the game object
   mesh: null
 
@@ -12,6 +15,7 @@ class GameObject
   # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of the game object
   constructor: (@mesh) ->
     @components = {}
+    @isGameObject = true
 
   # Add a component to the game object.
   # @param component [Component] the component to be added

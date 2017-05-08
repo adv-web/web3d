@@ -13,12 +13,22 @@ class Scene
     @_objects = []
     initializer(this)
 
-  # Add a game object to the scene.
-  # @param object [GameObject] the game object to be added
-  addObject: (object) =>
-    @_objects.push(object)
-    @_scene.add(object.mesh)
-    @_cameras.push(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
+  # This is a generic Scene add method.
+  #
+  # @overload add(gameObject)
+  #   Add a game object to the scene
+  #   @param [GameObject] gameObject the game object to be added
+  #
+  # @overload add(object)
+  #   Add a light/skybox or any not GameObject to the scene
+  #   @param [Object] object the object to be added
+  add: (object) =>
+    if object.isGameObject
+      @_objects.push(object)
+      @_scene.add(object.mesh)
+      @_cameras.push(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
+    else
+      @_scene.add(object)
 
   # Remove a game object.
   # @param object [GameObject] the game object to be removed
@@ -31,11 +41,6 @@ class Scene
   removeObjectByMesh: (mesh) =>
     @_scene.remove(mesh)
     # TODO 根据 uuid 判断删除
-
-  # Add a light to the scene
-  # @param light [THREE.Light] the light to be added
-  addLight: (light) =>
-    @_scene.add(light)
 
   # @nodoc
   update: (deltaTime) =>
