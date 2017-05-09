@@ -2,11 +2,14 @@
   "name": "web3d",
   "version": "0.0.1",
   "scripts": {
-    "build": "webpack",
+    "build": "coffee -c -m src/",
+    "build:watch": "coffee -c -m -w src/",
+    "pack": "webpack",
     "serve": "lite-server",
-    "start": "npm run build & npm run serve"
+    "start": "npm run build && npm run pack & npm run serve"
   },
   "devDependencies": {
+    "coffee-script": "^1.12.5",
     "lite-server": "^2.3.0",
     "webpack": "^2.4.1"
   }
