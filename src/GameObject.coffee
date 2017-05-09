@@ -1,3 +1,4 @@
+Game = require("./Game")
 # The basic object in scene, can contain many components.
 class GameObject
   module.exports = this
@@ -14,9 +15,13 @@ class GameObject
   @property 'mesh',
     get: -> @_mesh
     set: (mesh) ->
-      @_mesh?.gameObject = null
-      @_mesh = mesh
-      mesh.gameObject = this
+      if @_mesh?
+        @_mesh.gameObject = null
+        Game.scene?._scene.remove(@_mesh) # scene.remove 会 remove gameObject， 而这里只是切换 mesh
+      @_mesh = mesh # 切换 mesh
+      if mesh?
+        mesh.gameObject = this
+        Game.scene?._scene.add(mesh)
 
   # Construct a new game object.
   # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of the game object

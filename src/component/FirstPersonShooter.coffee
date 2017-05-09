@@ -1,5 +1,6 @@
 Component = require("../Component")
 GameObject = require("../GameObject")
+Game = require("../Game")
 Bullet = require("./Bullet")
 # The first-person shooter, give you the ability that,
 # when you click mouse, a small ball will be generated and fly to your first-person direction.
@@ -22,14 +23,13 @@ class FirstPersonShooter extends Component
   bullet_color: 0xffff00
 
   # Constructor a first-person shooter.
-  # @param scene [Scene] the scene its game object in
   # @param controller [FirstPersonController] the first-person controller it relates to
   # @param options [Object] the optional parameters
   # @option options [number] cooldown the cool down time (ms)
   # @option options [number] bullet_speed the initial speed of bullet
   # @option options [number] bullet_size the radius of bullet
   # @option options [number] bullet_color the color of bullet
-  constructor: (@_scene, @_controller, options = {}) ->
+  constructor: (@_controller, options = {}) ->
     super("FirstPersonShooter")
     @_lastFireTime = 0
     @cooldown = if options.cooldown? then options.cooldown else 1000
@@ -51,13 +51,14 @@ class FirstPersonShooter extends Component
     currentTime = new Date()
     return if currentTime - @_lastFireTime < @cooldown
     @_lastFireTime = currentTime
-    # 创造子弹，此处可以考虑使用对象池优化
-    @_scene.add(bullet = @_makeBullet())
+    # 创造子弹
+    Game.scene.add(bullet = @_makeBullet())
     rot_y = @_controller._yaw.rotation.y
     rot_x = @_controller._pitch.rotation.x
     # 这里的设置速度是世界坐标系。好不容易调出来的方向
     bullet.mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed, Math.sin(rot_x) * @bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed))
 
+  # @private
   _makeBullet: =>
     geometry = new THREE.SphereGeometry(@bullet_size)
     material = new THREE.MeshBasicMaterial({color: @bullet_color})
@@ -66,5 +67,5 @@ class FirstPersonShooter extends Component
     mesh.position.set(worldPosition.x, worldPosition.y + 0.5, worldPosition.z)
     mesh.name = "bullet"
     obj = new GameObject(mesh)
-    obj.addComponent(new Bullet(@_scene))
+    obj.addComponent(new Bullet())
     return obj

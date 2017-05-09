@@ -23,6 +23,7 @@ class Game
   # @param scene [Scene] the scene to be set
   # @return [Game] the game itself to support chained invocation
   setScene: (@scene) =>
+    Game.scene = @scene
     return this
 
   # @private
