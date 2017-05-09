@@ -1,5 +1,6 @@
 Component = require("../Component")
 GameObject = require("../GameObject")
+Bullet = require("./Bullet")
 # The first-person shooter, give you the ability that,
 # when you click mouse, a small ball will be generated and fly to your first-person direction.
 # The ball has it collider, you can detect it by assert other_mesh.name = 'bullet'.
@@ -51,15 +52,19 @@ class FirstPersonShooter extends Component
     return if currentTime - @_lastFireTime < @cooldown
     @_lastFireTime = currentTime
     # 创造子弹，此处可以考虑使用对象池优化
-    # TODO 可以令子弹只存活5s
+    @_scene.add(bullet = @_makeBullet())
+    rot_y = @_controller._yaw.rotation.y
+    rot_x = @_controller._pitch.rotation.x
+    # 这里的设置速度是世界坐标系。好不容易调出来的方向
+    bullet.mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed, Math.sin(rot_x) * @bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed))
+
+  _makeBullet: =>
     geometry = new THREE.SphereGeometry(@bullet_size)
     material = new THREE.MeshBasicMaterial({color: @bullet_color})
     mesh = new Physijs.SphereMesh(geometry, material)
     worldPosition = @gameObject.mesh.position
     mesh.position.set(worldPosition.x, worldPosition.y + 0.5, worldPosition.z)
     mesh.name = "bullet"
-    @_scene.add(new GameObject(mesh))
-    rot_y = @_controller._yaw.rotation.y
-    rot_x = @_controller._pitch.rotation.x
-    # 这里的设置速度是世界坐标系。好不容易调出来的方向
-    mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed, Math.sin(rot_x) * @bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed))
+    obj = new GameObject(mesh)
+    obj.addComponent(new Bullet(@_scene))
+    return obj
