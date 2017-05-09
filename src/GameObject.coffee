@@ -5,11 +5,18 @@ class GameObject
   # @property [boolean] to identify whether it is a game object, you should not change it
   isGameObject: true
 
-  # @property [THREE.Mesh] the mesh of the game object
+  # @property [THREE.Mesh | Physijs.Mesh] the mesh of the game object, especially, you can call mesh.gameObject to get the game object of mesh
   mesh: null
 
   # @property [Object] the key-value pair of components and theirs name. e.g. {name1: component1, name2: component2}
   components: {}
+
+  @property 'mesh',
+    get: -> @_mesh
+    set: (mesh) ->
+      @_mesh?.gameObject = null
+      @_mesh = mesh
+      mesh.gameObject = this
 
   # Construct a new game object.
   # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of the game object

@@ -37,7 +37,7 @@ class Scene
   #   @param [GameObject] gameObject the game object to be removed
   #
   # @overload remove(mesh)
-  #   Remove a game object of this mesh to the scene.
+  #   Remove a game object of this mesh to the scene. It's equal to use remove(mesh.gameObject).
   #   @param [THREE.Mesh | Physijs.Mesh] mesh the mesh of the game object to be removed
   #
   # @overload remove(object)
@@ -45,13 +45,12 @@ class Scene
   #   @param [Object] object the object to be removed
   remove: (object) =>
     return @_removeGameObject(object) if object.isGameObject
-    if object.isMesh
-      for obj in @_objects
-        return @_removeGameObject(obj) if obj.mesh.uuid == object.uuid
+    return @_removeGameObject(object.gameObject) if object.isMesh
     @_scene.remove(object)  # not game object or mesh
 
   # @private
   _removeGameObject: (object) =>
+    return if not object?
     @_cameras.remove(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
     @_scene.remove(object.mesh)
     @_objects.remove(object)

@@ -122,8 +122,22 @@
 
     GameObject.prototype.components = {};
 
-    function GameObject(mesh) {
-      this.mesh = mesh;
+    GameObject.property('mesh', {
+      get: function() {
+        return this._mesh;
+      },
+      set: function(mesh) {
+        var ref;
+        if ((ref = this._mesh) != null) {
+          ref.gameObject = null;
+        }
+        this._mesh = mesh;
+        return mesh.gameObject = this;
+      }
+    });
+
+    function GameObject(mesh1) {
+      this.mesh = mesh1;
       this.broadcast = bind(this.broadcast, this);
       this.removeComponent = bind(this.removeComponent, this);
       this.getComponent = bind(this.getComponent, this);
@@ -312,23 +326,19 @@
     };
 
     Scene.prototype.remove = function(object) {
-      var i, len, obj, ref;
       if (object.isGameObject) {
         return this._removeGameObject(object);
       }
       if (object.isMesh) {
-        ref = this._objects;
-        for (i = 0, len = ref.length; i < len; i++) {
-          obj = ref[i];
-          if (obj.mesh.uuid === object.uuid) {
-            return this._removeGameObject(obj);
-          }
-        }
+        return this._removeGameObject(object.gameObject);
       }
       return this._scene.remove(object);
     };
 
     Scene.prototype._removeGameObject = function(object) {
+      if (object == null) {
+        return;
+      }
       if (object.getComponent("Camera") != null) {
         this._cameras.remove(object.getComponent("Camera")._camera);
       }
@@ -466,7 +476,6 @@
         color: 0xffcc99
       });
       mesh = new THREE.Mesh(geometry, material);
-      mesh.renderOrder = -1;
       this._pitch.add(mesh);
       mesh.position.set(0.25, 0, -0.2);
       this.enabled = true;

@@ -4,6 +4,9 @@
 web 3d game framework
 
 ## How to run
+[Click Here to Play Offline Version](https://adv-web.github.io/web3d/)
+
+[Click Here to See the Doc](https://adv-web.github.io/web3d/doc/)
 
 ## Documentations
 
