@@ -53,7 +53,7 @@ function scene1(scene) {
             mesh.position.set(x, -0.9, y);
             mesh._physijs.mass = 0;
             var tree = new GameObject(mesh);
-            tree.addComponent(new TreeCollider(scene));
+            tree.addComponent(new TreeCollider());
             scene.add(tree);
         }
     };
@@ -131,7 +131,7 @@ function scene1(scene) {
     var fpc = new FirstPersonController(camera, {sensitivity: 1});
     player.addComponent(fpc);
     player.addComponent(new HUD());
-    player.addComponent(new FirstPersonShooter(scene, fpc));
+    player.addComponent(new FirstPersonShooter(fpc));
     scene.add(player);
     // dat
     gui.add(fpc, 'sensitivity').min(0).step(0.5);

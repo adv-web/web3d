@@ -52,7 +52,7 @@ class Scene
   _removeGameObject: (object) =>
     return if not object?
     @_cameras.remove(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
-    @_scene.remove(object.mesh)
+    @_scene.remove(object.mesh) if object.mesh?
     @_objects.remove(object)
 
   # @nodoc

@@ -1,4 +1,5 @@
 Component = require("../Component")
+Game = require("../Game")
 # The tree collider. It uses on tree and deal with its collision events.
 #
 # name = "TreeCollider"
@@ -7,7 +8,7 @@ class TreeCollider extends Component
 
   # Construct a tree collider.
   # @param scene [Scene] the scene its game object in
-  constructor: (@_scene) ->
+  constructor: () ->
     super("TreeCollider")
     window.PlayerInfo = window.PlayerInfo || {} # not good behavior
     PlayerInfo.hitCount = 0 if not PlayerInfo.hitCount?
@@ -23,6 +24,5 @@ class TreeCollider extends Component
   # @private
   _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     if other_mesh.name == "bullet"
-      @_scene.remove(@gameObject)
-      @_scene.remove(other_mesh)
+      Game.scene.remove(@gameObject)
       PlayerInfo.hitCount += 1
