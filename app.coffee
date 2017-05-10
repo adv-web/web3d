@@ -8,6 +8,8 @@ server = require('http').Server(app);
 io = require('socket.io')(server)
 # server port
 port = process.env.PORT || 5000
+# UUID
+UUID = require('node-uuid')
 # whether to print debug message
 verbose = true;
 
@@ -54,8 +56,8 @@ app.get( '/*' , ( req, res, next ) ->
 # Enter the game server code. The game server handles
 # client connections looking for a game, creating games,
 # leaving games, joining games and ending games when they leave.
-gameServer = require('./game.server.js')()
-
+GameServer = require('./game.server.js')
+gameServer = new GameServer()
 # Socket.io will call this function when a client connects,
 # So we can send that client looking for a game to play,
 # as well as give that client a unique ID to use so we can

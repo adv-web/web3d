@@ -1,12 +1,14 @@
 /**
  * Created by maliut on 2017/4/21.
  */
-
+var NetWorkManager = require('./NetWorkManager');
 module.exports = window.GameCore = function(game_instance){
     //Store the instance, if any
     this.instance = game_instance;
     //Store a flag if we are the server
-    this.server = this.instance !== undefined
+    this.isServer = this.instance !== undefined;
+
+    this.netWorkManager = NetWorkManager;
 }; //game_core.constructor
 
 GameCore.prototype.start = function () {
@@ -18,7 +20,7 @@ GameCore.prototype.start = function () {
     var HUD = require("./component/HUD");
     var FirstPersonShooter = require("./component/FirstPersonShooter");
     var TreeCollider = require("./component/TreeCollider");
-    // 公用资源
+        // 公用资源
     var voxParser = new vox.Parser();
     var meshes = {};
     var gui = new dat.GUI();
@@ -127,26 +129,30 @@ GameCore.prototype.start = function () {
         loadWall(0, 3.2);
         loadWall2(3.2, 0);
         loadWall2(-2, 0);
-        // player
-        var geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
-        var material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-        mesh = new Physijs.BoxMesh(geometry, material);
-        mesh.position.set(0, -0.5, 1);
-        mesh.name = "player";
-        var player = new GameObject(mesh);
-        var camera = new Camera();
-        camera.position.set(0, 0.25, 0);
-        player.addComponent(camera);
-        var fpc = new FirstPersonController(camera, {sensitivity: 1});
-        player.addComponent(fpc);
-        player.addComponent(new HUD());
-        player.addComponent(new FirstPersonShooter(fpc));
-        scene.add(player);
-        // dat
-        gui.add(fpc, 'sensitivity').min(0).step(0.5);
-        gui.add(fpc, 'move_velocity').min(0).step(0.5);
-        gui.add(fpc, 'jump_velocity').min(0).step(0.5);
 
+        // player
+        function player() {
+            var geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+            var material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+            mesh = new Physijs.BoxMesh(geometry, material);
+            mesh.position.set(0, -0.5, 1);
+            mesh.name = "player";
+            var player = new GameObject(mesh);
+            var camera = new Camera();
+            camera.position.set(0, 0.25, 0);
+            player.addComponent(camera);
+            var fpc = new FirstPersonController(camera, {sensitivity: 1});
+            player.addComponent(fpc);
+            player.addComponent(new HUD());
+            player.addComponent(new FirstPersonShooter(fpc));
+
+            // dat
+            gui.add(fpc, 'sensitivity').min(0).step(0.5);
+            gui.add(fpc, 'move_velocity').min(0).step(0.5);
+            gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+            return player;
+        }
+        NetWorkManager.init(this.isServer, scene, player);
     }
     document.addEventListener('keydown', Game.requestFullScreen, false);
 
