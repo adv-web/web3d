@@ -5,8 +5,16 @@
     "build": "coffee -c -m src/",
     "build:watch": "coffee -c -m -w src/",
     "pack": "webpack",
-    "serve": "lite-server",
-    "start": "npm run build && npm run pack & npm run serve"
+    "lite:serve": "lite-server",
+    "node:serve": "node app.js",
+    "start:server": "npm run build && npm run pack & npm run node:serve",
+    "start:single": "npm run build && npm run pack & npm run lite:serve",
+    "start": "npm run start:server"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "node-uuid": "^1.4.8",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
     "coffee-script": "^1.12.5",
