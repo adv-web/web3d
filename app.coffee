@@ -67,17 +67,17 @@ io.on('connection', (client) =>
   # Generate a new UUID, looks something like
   # 5b2ca132-64bd-4513-99da-90e838ca47d1
   # and store this on their socket/connection
-  client.userid = UUID()
+  client.id = UUID()
 
   # tell the player they connected, giving them their id
-  client.emit('onconnected', { id: client.userid } )
+  client.emit('onconnected', { id: client.id } )
 
   # now we can find them a game to play with someone.
   # if no game exists with someone waiting, they create one and wait.
   gameServer.findGame(client)
 
   # Useful to know when someone connects
-  console.log('\t socket.io:: player ' + client.userid + ' connected')
+  console.log('\t socket.io:: player ' + client.id + ' connected')
 
   # Now we want to handle some of the messages that clients will send.
   # They send messages here, and we send them to the gameServer to handle.

@@ -16,9 +16,9 @@ class GameServer
     @games = {}
     @gameCount = 0
 
-  onMessage: (mess) =>
+  onMessage: (player,mess) =>
 
-  _onMessage: (mess) =>
+  _onMessage: (player,mess) =>
 
   findGame: (player) =>
     if @gameCount > 0
@@ -44,6 +44,10 @@ class GameServer
     player.game = game
     game.player_count++
     game.player_clients[player.id] = player
+
+    nwm = game.gamecore.netWorkManager
+    # add this player to net work manager
+    nwm.server_add_player(player)
 
     # log message
     console.log('player ' + player.userid + ' joined a game with id ' + player.game.id)
@@ -83,7 +87,7 @@ class GameServer
     player.game = thegame
     player.hosting = true
 
-    console.log('player ' + player.userid + ' created a game with id ' + player.game.id)
+    console.log('player ' + player.id + ' created a game with id ' + player.game.id)
 
     # return it
     return thegame

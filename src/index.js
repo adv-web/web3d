@@ -160,6 +160,8 @@ GameCore.prototype.start = function () {
             player.addComponent(new FirstPersonShooter(fpc));
             var GUIDatComponent = require('./component/GUIDatComponent');
             player.addComponent(new GUIDatComponent());
+            var NetWorkTransformComponent = require('./component/NetWorkTransformComponent');
+            player.addComponent(new NetWorkTransformComponent());
             return player;
         }
         NetWorkManager.setScene(scene);

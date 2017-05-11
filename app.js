@@ -37,12 +37,12 @@
 
   io.on('connection', (function(_this) {
     return function(client) {
-      client.userid = UUID();
+      client.id = UUID();
       client.emit('onconnected', {
-        id: client.userid
+        id: client.id
       });
       gameServer.findGame(client);
-      console.log('\t socket.io:: player ' + client.userid + ' connected');
+      console.log('\t socket.io:: player ' + client.id + ' connected');
       client.on('message', function(m) {
         return gameServer.onMessage(client, m);
       });

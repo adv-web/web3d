@@ -6,7 +6,7 @@ class NetWorkManager
   @prefabs = {}
   @gameObjects = {}
   @players =
-    self: null
+    self: {}
     others: {}
   @net_latency = 0
   @init: (@server, @scene, @playerPrefab) =>
@@ -21,6 +21,10 @@ class NetWorkManager
     for key, comp of playerObject.components
       comp.setIsLocal?(false)
       comp.onStartServerPlayer?(player)
+    if @players.self is null
+      @players.self = self
+    else
+      @players.others[player.id] = player
 
   @setScene: (@scene) =>
 
@@ -37,6 +41,9 @@ class NetWorkManager
       comp.setIsLocal?(true)
       comp.onStartLocalPlayer?()
     @scene.add(player)
+    player.id = @players.self.id
+    player.state = @players.self.state
+    player.online = @players.self.online
     @players.self = player
 
   @_client_connect_to_server: () =>
@@ -101,6 +108,7 @@ class NetWorkManager
       # maybe some message else later
 
   @_client_onotherjoingame: (id) =>
+    id = id.toString()
     player = @playerPrefab()
     @scene.add(player)
     player.id = id
