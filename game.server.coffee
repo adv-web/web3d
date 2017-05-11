@@ -21,21 +21,32 @@ class GameServer
   _onMessage: (mess) =>
 
   findGame: (player) =>
-    if @games.length > 0
+    if @gameCount > 0
       for key, game of @games
         @_joinGame(player, game)
         return;
     else
       @_createGame(player)
-
+    console.log("we have " + @gameCount + " games")
 
   _joinGame: (player, game) =>
+    player.send("s.j."+game.id) # tell the player he/she joined a game
+
+    # tell the player others joined
+    # s.oj. s = server message, oj = others join
     game.player_host.send("s.oj."+player.id)
-    player.send("s.j.") # join a game
     player.send("s.oj."+game.player_host.id)
     for key, player2 of game.player_clients
       player2.send("s.oj."+player.id)
       player.send("s.oj."+player2.id)
+
+    # store the player message
+    player.game = game
+    game.player_count++
+    game.player_clients[player.id] = player
+
+    # log message
+    console.log('player ' + player.userid + ' joined a game with id ' + player.game.id)
 
   _createGame: (player) =>
     # Create a new game instance
@@ -49,18 +60,25 @@ class GameServer
     @games[ thegame.id ] = thegame
 
     # Keep track
-    @game_count++
+    @gameCount++
 
     # Create a new game core instance, this actually runs the
     # game code like collisions and such.
     thegame.gamecore = new GameCore(thegame)
-    # Start updating the game loop on the server
-    thegame.gamecore.netWorkManager?.server_update(new Date().getTime())
+    # start game on the server
+    thegame.gamecore.server_start()
+
+    # get net work manager of this game
+    nwm = thegame.gamecore.netWorkManager
+    # set up game
+    nwm.game_id = thegame.id
+    nwm.players.self = player # means host on server
+
+    nwm.server_add_player(player)
 
     # tell the player that they are now the host
     # s=server message, h=you are hosting
-
-    player.send('s.h.'+ String(thegame.gamecore.netWorkManager?.local_time).replace('.','-'))
+    player.send('s.h.'+ thegame.id)
     console.log('server host at  ' + thegame.gamecore.netWorkManager?.local_time)
     player.game = thegame
     player.hosting = true

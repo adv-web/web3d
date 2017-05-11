@@ -1,4 +1,4 @@
-Component = require("../Component")
+NetWorkComponent = require("./NetWorkComponent")
 Input = require("../Input")
 # The first-person controller component, provide users with first-person mouse movement, WASD move and jump.
 # Modified by THREE.PointerLockControls to support when main object's mesh is not empty,
@@ -10,7 +10,7 @@ Input = require("../Input")
 # before you add this controller component to game object, or the controller will not work properly.
 #
 # When use pointer lock, you can request browser's better support. @see Game#requestPointerLock
-class FirstPersonController extends Component
+class FirstPersonController extends NetWorkComponent
   module.exports = this
 
   PI_2 = Math.PI / 2
@@ -52,6 +52,7 @@ class FirstPersonController extends Component
 
   # @private
   _onMouseMove: (event) =>
+    return if not @isLocal
     return if not @enabled
     movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
     movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
@@ -79,6 +80,7 @@ class FirstPersonController extends Component
 
   # @nodoc
   update: (deltaTime) =>
+    return if not @isLocal
     distance = @move_velocity * deltaTime / 1000
     # WASD 移动
     @_yaw2.translateX(distance) if Input.isPressed('D')

@@ -7,7 +7,7 @@
   window.onload = (function(_this) {
     return function() {
       game = new GameCore();
-      return game.start();
+      return game.start.apply(game);
     };
   })(this);
 

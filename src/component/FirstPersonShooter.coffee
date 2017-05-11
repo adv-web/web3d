@@ -1,4 +1,4 @@
-Component = require("../Component")
+NetWorkComponent = require("./NetWorkComponent")
 GameObject = require("../GameObject")
 Game = require("../Game")
 Bullet = require("./Bullet")
@@ -7,7 +7,7 @@ Bullet = require("./Bullet")
 # The ball has it collider, you can detect it by assert other_mesh.name = 'bullet'.
 #
 # name = "FirstPersonShooter"
-class FirstPersonShooter extends Component
+class FirstPersonShooter extends NetWorkComponent
   module.exports = this
 
   # @property [number] the cool down time (ms), initially 1000
@@ -47,6 +47,7 @@ class FirstPersonShooter extends Component
 
   # @private
   _onFire: =>
+    # return if not @isLocal
     # 确认冷却时间
     currentTime = new Date()
     return if currentTime - @_lastFireTime < @cooldown

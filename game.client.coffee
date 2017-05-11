@@ -4,4 +4,4 @@ game = {}
 
 window.onload = () =>
   game = new GameCore()
-  game.start()
+  game.start.apply(game)

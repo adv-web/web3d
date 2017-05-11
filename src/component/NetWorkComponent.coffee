@@ -1,11 +1,15 @@
 # Created by duocai on 2017/5/10.
+Component = require('../Component')
 
 class NetWorkComponent extends Component
+  module.exports = this
 
-  constructor: ->
+  constructor: (name) ->
+    super name
     @isLocal = false
 
   setIsLocal: (@isLocal) =>
 
+  onStartServerPlayer: (player)=>
 
   onStartLocalPlayer: =>

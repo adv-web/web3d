@@ -25,7 +25,7 @@ class GameObject
 
   # Construct a new game object.
   # @param mesh [THREE.Mesh | Physijs.Mesh] the mesh of the game object
-  constructor: (@mesh) ->
+  constructor: (@mesh,@name) ->
     @components = {}
     @isGameObject = true
 

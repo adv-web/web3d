@@ -2,15 +2,28 @@
  * Created by maliut on 2017/4/21.
  */
 var NetWorkManager = require('./NetWorkManager');
-module.exports = window.GameCore = function(game_instance){
+var GameCore = window.GameCore = function(game_instance){
     //Store the instance, if any
     this.instance = game_instance;
     //Store a flag if we are the server
     this.isServer = this.instance !== undefined;
-
-    this.netWorkManager = NetWorkManager;
+    console.log("gameCore_isServer:"+this.isServer);
+    this.netWorkManager = NetWorkManager.init(this.isServer);
 }; //game_core.constructor
-
+GameCore.prototype.server_start = function() {
+    // player
+    function player() {
+        var player = {name: "player"};
+        var NetWorkTransformComponent = require('./component/NetWorkTransformComponent');
+        var comp = new NetWorkTransformComponent();
+        comp.gameObject = player;
+        player.components = {
+          "NetWorkTransformComponent": comp
+        };
+        return player;
+    }
+    NetWorkManager.setPlayerPrefab(player);
+};
 GameCore.prototype.start = function () {
     var Game = require("./Game");
     var Scene = require("./Scene");
@@ -23,7 +36,7 @@ GameCore.prototype.start = function () {
         // 公用资源
     var voxParser = new vox.Parser();
     var meshes = {};
-    var gui = new dat.GUI();
+
     // 加载模型资源
     var MODEL_COUNT = 6;
     voxParser.parse('vox/obj_tree1.vox').then(function (voxelData) {
@@ -137,7 +150,7 @@ GameCore.prototype.start = function () {
             mesh = new Physijs.BoxMesh(geometry, material);
             mesh.position.set(0, -0.5, 1);
             mesh.name = "player";
-            var player = new GameObject(mesh);
+            var player = new GameObject(mesh,"player");
             var camera = new Camera();
             camera.position.set(0, 0.25, 0);
             player.addComponent(camera);
@@ -145,14 +158,12 @@ GameCore.prototype.start = function () {
             player.addComponent(fpc);
             player.addComponent(new HUD());
             player.addComponent(new FirstPersonShooter(fpc));
-
-            // dat
-            gui.add(fpc, 'sensitivity').min(0).step(0.5);
-            gui.add(fpc, 'move_velocity').min(0).step(0.5);
-            gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+            var GUIDatComponent = require('./component/GUIDatComponent');
+            player.addComponent(new GUIDatComponent());
             return player;
         }
-        NetWorkManager.init(this.isServer, scene, player);
+        NetWorkManager.setScene(scene);
+        NetWorkManager.setPlayerPrefab(player);
     }
     document.addEventListener('keydown', Game.requestFullScreen, false);
 

@@ -9,19 +9,29 @@ class NetWorkManager
     self: null
     others: {}
   @net_latency = 0
-  @init: (server, @scene, @playerPrefab) =>
-    @server = server
-    console.log("isServer":server)
-    if !server
-      @_client_connect_to_server()
-      @_initLocalPlayer()
+  @init: (@server, @scene, @playerPrefab) =>
+    console.log("isServer":@server)
+    @local_time = new Date().getTime()
     return @
 
   @server_update: () =>
 
+  @server_add_player: (player) =>
+    playerObject = @playerPrefab()
+    for key, comp of playerObject.components
+      comp.setIsLocal?(false)
+      comp.onStartServerPlayer?(player)
+
+  @setScene: (@scene) =>
+
+  @setPlayerPrefab: (@playerPrefab) =>
+    if !@server
+      @_client_connect_to_server()
+      @_client_initLocalPlayer()
+
   @client_update: () =>
 
-  @_initLocalPlayer: () =>
+  @_client_initLocalPlayer: () =>
     player = @playerPrefab()
     for key, comp of player.components
       comp.setIsLocal?(true)
@@ -52,8 +62,8 @@ class NetWorkManager
     @socket.on('message', @_client_onnetmessage)
 
   @_client_onconnected: (data) =>
-    #The server responded that we are now in a game,
-    #this lets us store the information about ourselves and set the colors
+    #The server responded that we are now connected to the server
+    #this lets us store the information about ourselves
     #to show we are now ready to be playing.
     @players.self.id = data.id;
     @players.self.state = 'connected'
@@ -88,29 +98,20 @@ class NetWorkManager
       
           when 'p' #server ping
             @_client_onping(commanddata)
-
-          when 'c' #other player changed colors
-            @_client_on_otherclientcolorchange(commanddata)
       # maybe some message else later
 
   @_client_onotherjoingame: (id) =>
     player = @playerPrefab()
     @scene.add(player)
     player.id = id
-    @players.others[data.id] = player
+    @players.others[id] = player
     console.log(id+" joined game")
 
-  @_client_onhostgame: (data) =>
-    # so the value will be really small anyway (15 or 16ms)
-    server_time = parseFloat(data.replace('-','.'))
-
-    # Get an estimate of the current time on the server
-    @local_time = server_time + @net_latency
-
+  @_client_onhostgame: (@game_id) =>
     # Set the flag that we are hosting, this helps us position respawns correctly
     @players.self.host = true;
 
-  @_client_onjoingame: (data) =>
+  @_client_onjoingame: (@game_id) =>
     # i am not host
     @players.self.host = false
 
