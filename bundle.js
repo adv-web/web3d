@@ -272,7 +272,7 @@
       this.onStartLocalPlayer = bind(this.onStartLocalPlayer, this);
       this.onStartServerPlayer = bind(this.onStartServerPlayer, this);
       NetWorkTransformComponent.__super__.constructor.call(this, "NetWorkTransformComponent");
-      this.networkSendRate = 100;
+      this.networkSendRate = 1000;
     }
 
     NetWorkTransformComponent.prototype.onStartServerPlayer = function(player) {
@@ -284,7 +284,7 @@
           players = NetWorkManager.players.others;
           host = NetWorkManager.players.self;
           players[host.id] = host;
-          console.log(data);
+          console.log(player.id + "'s sign");
           results = [];
           for (id in players) {
             p = players[id];
@@ -300,7 +300,8 @@
     };
 
     NetWorkTransformComponent.prototype.onStartLocalPlayer = function() {
-      var event, socket;
+      var Game, event, socket;
+      Game = __webpack_require__(0);
       event = "nwtc." + this.gameObject.name;
       socket = NetWorkManager.socket;
       setInterval(this.networkSend, this.networkSendRate);
@@ -308,24 +309,27 @@
         return function(data) {
           var player;
           console.log(data);
-          console.log(NetWorkManager.players.others);
           player = NetWorkManager.players.others[data.id];
-          player.mesh.position.set(data.pos);
-          return player.mesh.rotation.set(data.rot);
+          player.mesh.position.set(10, 3, 4);
+          Game.scene.remove(player);
+          return player.mesh.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
         };
       })(this));
     };
 
     NetWorkTransformComponent.prototype.networkSend = function() {
-      var event, mesh, socket;
+      var data, event, mesh, pos1, rot1, socket;
       event = "nwtc." + this.gameObject.name;
       socket = NetWorkManager.socket;
       mesh = this.gameObject.mesh;
-      return socket.emit(event, {
+      pos1 = mesh.position;
+      rot1 = mesh.rotation;
+      data = {
         id: NetWorkManager.players.self.id,
-        pos: mesh.position,
-        rot: mesh.rotation
-      });
+        pos: [pos1.x, pos1.y, pos1.z],
+        rot: [rot1.x, rot1.y, rot1.z]
+      };
+      return socket.emit(event, data);
     };
 
     return NetWorkTransformComponent;
