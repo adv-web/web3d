@@ -2,8 +2,8 @@
   "name": "web3d",
   "version": "0.0.1",
   "scripts": {
-    "build": "coffee -c -m src/",
-    "build:watch": "coffee -c -m -w src/",
+    "build": "coffee -c -m ./",
+    "build:watch": "coffee -c -m -w ./",
     "pack": "webpack",
     "lite:serve": "lite-server",
     "node:serve": "node app.js",

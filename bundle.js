@@ -272,7 +272,7 @@
       this.onStartLocalPlayer = bind(this.onStartLocalPlayer, this);
       this.onStartServerPlayer = bind(this.onStartServerPlayer, this);
       NetWorkTransformComponent.__super__.constructor.call(this, "NetWorkTransformComponent");
-      this.networkSendRate = 1000;
+      this.networkSendRate = 200;
     }
 
     NetWorkTransformComponent.prototype.onStartServerPlayer = function(player) {
@@ -284,7 +284,6 @@
           players = NetWorkManager.players.others;
           host = NetWorkManager.players.self;
           players[host.id] = host;
-          console.log(player.id + "'s sign");
           results = [];
           for (id in players) {
             p = players[id];
@@ -308,11 +307,11 @@
       return socket.on(event, (function(_this) {
         return function(data) {
           var player;
-          console.log(data);
           player = NetWorkManager.players.others[data.id];
-          player.mesh.position.set(10, 3, 4);
-          Game.scene.remove(player);
-          return player.mesh.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
+          player.mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+          player.mesh.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
+          player.mesh.__dirtyRotation = true;
+          return player.mesh.__dirtyPosition = true;
         };
       })(this));
     };

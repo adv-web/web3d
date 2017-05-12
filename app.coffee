@@ -34,7 +34,7 @@ app.get('/', (req, res) ->
 # This handler will listen for requests on /*, any file from the root of our server.
 # See expressjs documentation for more info on routing.
 app.get( '/*' , ( req, res, next ) ->
-# This is the current file they have requested
+  # This is the current file they have requested
   file = req.params[0];
 
   # For debugging, we can track what files are requested.

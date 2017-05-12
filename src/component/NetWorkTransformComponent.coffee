@@ -8,7 +8,7 @@ class NetWorkTransformComponent extends NetWorkComponent
 
   constructor: () ->
     super "NetWorkTransformComponent"
-    @networkSendRate = 1000
+    @networkSendRate = 200
 
   onStartServerPlayer: (player) =>
     event = "nwtc."+ @gameObject.name
@@ -16,7 +16,6 @@ class NetWorkTransformComponent extends NetWorkComponent
       players = NetWorkManager.players.others
       host = NetWorkManager.players.self
       players[host.id] = host
-      console.log(player.id+"'s sign")
       for id, p of players
         p.emit(event, data) if player.id  != id
     )
@@ -27,11 +26,11 @@ class NetWorkTransformComponent extends NetWorkComponent
     socket = NetWorkManager.socket
     setInterval(@networkSend,@networkSendRate)
     socket.on(event, (data) =>
-      console.log(data)
       player = NetWorkManager.players.others[data.id]
-      player.mesh.position.set(10,3,4)
-      Game.scene.remove(player)
+      player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
       player.mesh.rotation.set(data.rot[0],data.rot[1],data.rot[2])
+      player.mesh.__dirtyRotation = true
+      player.mesh.__dirtyPosition = true
     )
 
   networkSend: () =>
@@ -44,4 +43,5 @@ class NetWorkTransformComponent extends NetWorkComponent
       id: NetWorkManager.players.self.id,
       pos: [pos1.x,pos1.y,pos1.z],
       rot: [rot1.x,rot1.y,rot1.z]
+#    console.log(pos1)
     socket.emit(event,data)
