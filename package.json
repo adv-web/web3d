@@ -2,14 +2,10 @@
   "name": "web3d",
   "version": "0.0.1",
   "scripts": {
-    "build": "coffee -c -m ./",
-    "build:watch": "coffee -c -m -w ./",
+    "build": "coffee -c -m ./src/",
     "pack": "webpack",
     "lite:serve": "lite-server",
-    "node:serve": "node app.js",
-    "start:server": "npm run build && npm run pack & npm run node:serve",
-    "start:single": "npm run build && npm run pack & npm run lite:serve",
-    "start": "npm run start:server"
+    "start": "npm run build && npm run pack & npm run lite:serve"
   },
   "dependencies": {
     "express": "^4.15.2",

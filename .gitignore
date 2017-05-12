@@ -15,7 +15,3 @@ test_scripts/
 !/src/index.js
 
 phrase1_doc.md
-game.client.js
-game.client.js.map
-game.server.js
-game.server.js.map

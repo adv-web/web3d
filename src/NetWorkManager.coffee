@@ -2,7 +2,6 @@
 
 class NetWorkManager
   module.exports = this
-  @server = false
   @prefabs = {}
   @gameObjects = {}
   @players =
@@ -10,28 +9,21 @@ class NetWorkManager
     others: {}
   @net_latency = 0
   @init: (@server, @scene, @playerPrefab) =>
-    console.log("isServer":@server)
     @local_time = new Date().getTime()
+    if @playerPrefab
+      @_client_connect_to_server()
+      @_client_initLocalPlayer()
     return @
-
-  @server_update: () =>
-
-  @server_add_player: (player) =>
-    playerObject = @playerPrefab()
-    for key, comp of playerObject.components
-      comp.setIsLocal?(false)
-      comp.onStartServerPlayer?(player)
-    if @players.self is null
-      @players.self = self
-    else
-      @players.others[player.id] = player
 
   @setScene: (@scene) =>
 
-  @setPlayerPrefab: (@playerPrefab) =>
-    if !@server
-      @_client_connect_to_server()
-      @_client_initLocalPlayer()
+  @setPlayerPrefab: (playerPrefab) =>
+    if @playerPrefab
+      console.log("Error: you already add the player prefab")
+      return
+    @playerPrefab = playerPrefab
+    @_client_connect_to_server()
+    @_client_initLocalPlayer()
 
   @client_update: () =>
 
@@ -48,7 +40,7 @@ class NetWorkManager
 
   @_client_connect_to_server: () =>
     # Store a local reference to our connection to the server
-    @socket = io('/')
+    @socket = io('http://localhost:5000/')
 
     # When we connect, we are not 'connected' until we have a server id
     # and are placed in a game by the server. The server sends us a message for that.
@@ -80,6 +72,7 @@ class NetWorkManager
 
 
   @_client_onnetmessage: (data) =>
+    # data is a string, and it has at most three parts
     commands = data.split('.');
     command = commands[0];
     subcommand = commands[1] || null;
@@ -97,6 +90,9 @@ class NetWorkManager
           when 'oj' # other player join the game
             @_client_onotherjoingame(commanddata)
 
+          when 'ol' # other player left the game
+            @_client_onotherleftgame(commanddata)
+
           when 'r' #ready a game requested
             @_client_onreadygame(commanddata)
       
@@ -108,12 +104,16 @@ class NetWorkManager
       # maybe some message else later
 
   @_client_onotherjoingame: (id) =>
-    id = id.toString()
     player = @playerPrefab()
     @scene.add(player)
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
+
+  @_client_onotherleftgame: (id) =>
+    @scene.remove(@players.others[id])
+    delete  @players.others[id]
+    console.log(id+" left game")
 
   @_client_onhostgame: (@game_id) =>
     # Set the flag that we are hosting, this helps us position respawns correctly

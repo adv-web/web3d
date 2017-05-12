@@ -10,27 +10,19 @@ class NetWorkTransformComponent extends NetWorkComponent
     super "NetWorkTransformComponent"
     @networkSendRate = 200
 
-  onStartServerPlayer: (player) =>
-    event = "nwtc."+ @gameObject.name
-    player.on(event, (data) =>
-      players = NetWorkManager.players.others
-      host = NetWorkManager.players.self
-      players[host.id] = host
-      for id, p of players
-        p.emit(event, data) if player.id  != id
-    )
-
   onStartLocalPlayer: () =>
-    Game = require('../Game')
+    if @networkSendRate <= 0
+      return
     event = "nwtc."+ @gameObject.name
     socket = NetWorkManager.socket
     setInterval(@networkSend,@networkSendRate)
     socket.on(event, (data) =>
       player = NetWorkManager.players.others[data.id]
-      player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
-      player.mesh.rotation.set(data.rot[0],data.rot[1],data.rot[2])
-      player.mesh.__dirtyRotation = true
-      player.mesh.__dirtyPosition = true
+      if player
+        player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
+        player.mesh.rotation.set(data.rot[0],data.rot[1],data.rot[2])
+        player.mesh.__dirtyRotation = true
+        player.mesh.__dirtyPosition = true
     )
 
   networkSend: () =>
