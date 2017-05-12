@@ -13,10 +13,10 @@ class NetWorkTransformComponent extends NetWorkComponent
   onStartLocalPlayer: () =>
     if @networkSendRate <= 0
       return
-    event = "nwtc."+ @gameObject.name
+
+    @event = "nwtc."+ @gameObject.name
     socket = NetWorkManager.socket
-    setInterval(@networkSend,@networkSendRate)
-    socket.on(event, (data) =>
+    socket.on(@event, (data) =>
       player = NetWorkManager.players.others[data.id]
       if player
         player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
@@ -25,15 +25,17 @@ class NetWorkTransformComponent extends NetWorkComponent
         player.mesh.__dirtyPosition = true
     )
 
+    setInterval(@networkSend,@networkSendRate)
+
   networkSend: () =>
-    event = "nwtc."+ @gameObject.name
     socket = NetWorkManager.socket
     mesh = @gameObject.mesh
     pos1 = mesh.position
     rot1 = mesh.rotation
     data =
+      event: @event
       id: NetWorkManager.players.self.id,
       pos: [pos1.x,pos1.y,pos1.z],
       rot: [rot1.x,rot1.y,rot1.z]
 #    console.log(pos1)
-    socket.emit(event,data)
+    socket.emit("nwtc",data)

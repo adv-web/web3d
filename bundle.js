@@ -356,8 +356,6 @@
 
     module.exports = NetWorkManager;
 
-    NetWorkManager.server = false;
-
     NetWorkManager.prefabs = {};
 
     NetWorkManager.gameObjects = {};
@@ -369,37 +367,16 @@
 
     NetWorkManager.net_latency = 0;
 
-    NetWorkManager.init = function(server, scene, playerPrefab) {
+    NetWorkManager.init = function(server, scene, playerPrefab1) {
       NetWorkManager.server = server;
       NetWorkManager.scene = scene;
-      NetWorkManager.playerPrefab = playerPrefab;
-      console.log({
-        "isServer": NetWorkManager.server
-      });
+      NetWorkManager.playerPrefab = playerPrefab1;
       NetWorkManager.local_time = new Date().getTime();
+      if (NetWorkManager.playerPrefab) {
+        NetWorkManager._client_connect_to_server();
+        NetWorkManager._client_initLocalPlayer();
+      }
       return NetWorkManager;
-    };
-
-    NetWorkManager.server_update = function() {};
-
-    NetWorkManager.server_add_player = function(player) {
-      var comp, key, playerObject, ref;
-      playerObject = NetWorkManager.playerPrefab();
-      ref = playerObject.components;
-      for (key in ref) {
-        comp = ref[key];
-        if (typeof comp.setIsLocal === "function") {
-          comp.setIsLocal(false);
-        }
-        if (typeof comp.onStartServerPlayer === "function") {
-          comp.onStartServerPlayer(player);
-        }
-      }
-      if (NetWorkManager.players.self === null) {
-        return NetWorkManager.players.self = self;
-      } else {
-        return NetWorkManager.players.others[player.id] = player;
-      }
     };
 
     NetWorkManager.setScene = function(scene) {
@@ -407,11 +384,13 @@
     };
 
     NetWorkManager.setPlayerPrefab = function(playerPrefab) {
-      NetWorkManager.playerPrefab = playerPrefab;
-      if (!NetWorkManager.server) {
-        NetWorkManager._client_connect_to_server();
-        return NetWorkManager._client_initLocalPlayer();
+      if (NetWorkManager.playerPrefab) {
+        console.log("Error: you already add the player prefab");
+        return;
       }
+      NetWorkManager.playerPrefab = playerPrefab;
+      NetWorkManager._client_connect_to_server();
+      return NetWorkManager._client_initLocalPlayer();
     };
 
     NetWorkManager.client_update = function() {};
@@ -1001,38 +980,40 @@
     }
 
     NetWorkTransformComponent.prototype.onStartLocalPlayer = function() {
-      var event, socket;
+      var socket;
       if (this.networkSendRate <= 0) {
         return;
       }
-      event = "nwtc." + this.gameObject.name;
+      this.event = "nwtc." + this.gameObject.name;
       socket = NetWorkManager.socket;
-      setInterval(this.networkSend, this.networkSendRate);
-      return socket.on(event, (function(_this) {
+      socket.on(this.event, (function(_this) {
         return function(data) {
           var player;
           player = NetWorkManager.players.others[data.id];
-          player.mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
-          player.mesh.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
-          player.mesh.__dirtyRotation = true;
-          return player.mesh.__dirtyPosition = true;
+          if (player) {
+            player.mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+            player.mesh.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
+            player.mesh.__dirtyRotation = true;
+            return player.mesh.__dirtyPosition = true;
+          }
         };
       })(this));
+      return setInterval(this.networkSend, this.networkSendRate);
     };
 
     NetWorkTransformComponent.prototype.networkSend = function() {
-      var data, event, mesh, pos1, rot1, socket;
-      event = "nwtc." + this.gameObject.name;
+      var data, mesh, pos1, rot1, socket;
       socket = NetWorkManager.socket;
       mesh = this.gameObject.mesh;
       pos1 = mesh.position;
       rot1 = mesh.rotation;
       data = {
+        event: this.event,
         id: NetWorkManager.players.self.id,
         pos: [pos1.x, pos1.y, pos1.z],
         rot: [rot1.x, rot1.y, rot1.z]
       };
-      return socket.emit(event, data);
+      return socket.emit("nwtc", data);
     };
 
     return NetWorkTransformComponent;
