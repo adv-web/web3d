@@ -51,6 +51,12 @@ class GameObject
     comp.gameObject = null
     @components[name] = null
 
+  # Be called when this object is to be removed from the seen
+  # usually do some destroying work here.
+  beforeRemoved: () =>
+    for key, comp of @components
+      comp.beforeRemoved?()
+
   # Broadcast messages to all of its components
   # @param args [Array<Object>] the message to be broadcast
   broadcast: (args...) =>

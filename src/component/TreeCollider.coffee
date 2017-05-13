@@ -1,5 +1,5 @@
 Component = require("../Component")
-Game = require("../Game")
+NetWorkManager = require('../NetWorkManager')
 # The tree collider. It uses on tree and deal with its collision events.
 #
 # name = "TreeCollider"
@@ -24,5 +24,7 @@ class TreeCollider extends Component
   # @private
   _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     if other_mesh.name == "bullet"
-      Game.scene.remove(@gameObject)
-      PlayerInfo.hitCount += 1
+      NetWorkManager.remove(@gameObject,(result) =>
+        if result
+          PlayerInfo.hitCount += 1
+      )

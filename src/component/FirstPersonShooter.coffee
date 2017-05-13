@@ -2,6 +2,7 @@ NetWorkComponent = require("./NetWorkComponent")
 GameObject = require("../GameObject")
 Game = require("../Game")
 Bullet = require("./Bullet")
+Input = require("../Input")
 # The first-person shooter, give you the ability that,
 # when you click mouse, a small ball will be generated and fly to your first-person direction.
 # The ball has it collider, you can detect it by assert other_mesh.name = 'bullet'.
@@ -39,15 +40,15 @@ class FirstPersonShooter extends NetWorkComponent
 
   # @nodoc
   afterAdded: =>
-    document.body.onclick = @_onFire
+    Input.registerClickResponse(@_onFire)
 
   # @nodoc
   beforeRemoved: =>
-    document.body.onclick = null
+    Input.removeClickResponse(@_onFire)
 
   # @private
   _onFire: =>
-    # return if not @isLocal
+    return if not @isLocal
     # 确认冷却时间
     currentTime = new Date()
     return if currentTime - @_lastFireTime < @cooldown

@@ -53,6 +53,7 @@ class Scene
     return if not object?
     @_cameras.remove(object.getComponent("Camera")._camera) if object.getComponent("Camera")?
     @_scene.remove(object.mesh) if object.mesh?
+    object.beforeRemoved()
     @_objects.remove(object)
 
   # @nodoc

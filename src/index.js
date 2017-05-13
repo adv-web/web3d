@@ -9,6 +9,7 @@ var FirstPersonController = require("./component/FirstPersonController");
 var HUD = require("./component/HUD");
 var FirstPersonShooter = require("./component/FirstPersonShooter");
 var TreeCollider = require("./component/TreeCollider");
+var NetWorkManager = require('./NetWorkManager');
     // 公用资源
 var voxParser = new vox.Parser();
 var meshes = {};
@@ -47,14 +48,14 @@ voxParser.parse('vox/chest.vox').then(function (voxelData) {
 });
 // 场景1初始化方法
 function scene1(scene) {
-    var loadTree = function (x, y) {
-        if (Math.abs(x) > 0.3 || y > 0.3) {
+    var loadTree = function (pos) {
+        if (Math.abs(pos.x) > 0.3 || pos.y > 0.3) {
             var mesh = meshes.tree.clone();
-            mesh.position.set(x, -0.9, y);
+            mesh.position.set(pos.x, -0.9, pos.y);
             mesh._physijs.mass = 0;
             var tree = new GameObject(mesh);
             tree.addComponent(new TreeCollider());
-            scene.add(tree);
+            return tree;
         }
     };
     var loadWall = function (x, y) {
@@ -104,14 +105,9 @@ function scene1(scene) {
     mesh.position.set(0, -0.9, -4);
     mesh.mass = 0;
     scene.add(new GameObject(mesh));
-    // tree
-    for (var i = 9; i < 15; i++) {
-        for (var j = 9; j < 15; j++) {
-            loadTree(i * 0.48 - 5.76 + Math.random() * 0.3 - 0.15, j * 0.48 - 5.76 + Math.random() * 0.3 - 0.15);
-        }
-    }
+
     // cube
-    for (i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
         loadCube(2.5, -0.8 + 0.4 * i, -0.5 * i);
     }
     // wall
@@ -123,7 +119,7 @@ function scene1(scene) {
     function player() {
         var geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
         var material = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
-        mesh = new Physijs.BoxMesh(geometry, material);
+        var mesh = new Physijs.BoxMesh(geometry, material);
         mesh.position.set(0, -0.5, 1);
         mesh.name = "player";
         var player = new GameObject(mesh,"player");
@@ -140,9 +136,9 @@ function scene1(scene) {
         player.addComponent(new NetWorkTransformComponent());
         return player;
     }
-    var NetWorkManager = require('./NetWorkManager');
-    NetWorkManager.setScene(scene);
-    NetWorkManager.setPlayerPrefab(player);
+    NetWorkManager.init(scene,player);
+    loadTree.key = "loadTree";
+    NetWorkManager.addPrefab(loadTree);
 }
 document.addEventListener('keydown', Game.requestFullScreen, false);
 
@@ -152,5 +148,6 @@ function checkLoad() {
     if (loadedCount === MODEL_COUNT) {
         var scene = new Scene(scene1);
         new Game().setScene(scene).start();
+        NetWorkManager.client_start();
     }
 }

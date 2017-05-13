@@ -1,7 +1,8 @@
 # The static class that listens to key events.
 class Input
   module.exports = this
-
+  # store function that will response to click event
+  @_clickResponses = []
   # @nodoc
   @_keyBitmap: []
 
@@ -26,5 +27,21 @@ class Input
     code = if isNaN(arg) then arg.toUpperCase().charCodeAt(0) else arg
     return !!Input._keyBitmap[code]
 
-  document.addEventListener('keydown', @_onKeyDown, false);
-  document.addEventListener('keyup', @_onKeyUp, false);
+  # @private
+  @_onclick: () =>
+    for res in @_clickResponses
+      res()
+
+  # add response to click event
+  #   @param [Function] a callback function
+  @registerClickResponse: (res) =>
+    @_clickResponses.push(res)
+
+  # add response to click event
+  #   @param [Function] a callback function that had been registered before
+  @removeClickResponse: (res) =>
+    @_clickResponses.remove(res)
+
+  document.addEventListener('keydown', @_onKeyDown, false)
+  document.addEventListener('keyup', @_onKeyUp, false)
+  document.body.onclick = @_onclick

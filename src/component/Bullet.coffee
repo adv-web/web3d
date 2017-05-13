@@ -17,7 +17,7 @@ class Bullet extends Component
 
   # @nodoc
   beforeRemoved: =>
-    @gameObject.mesh.removeEventListener('collision', @_onCollision)
+    @gameObject.mesh?.removeEventListener('collision', @_onCollision)
 
   # @private
   _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
