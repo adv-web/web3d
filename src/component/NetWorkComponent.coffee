@@ -10,6 +10,4 @@ class NetWorkComponent extends Component
 
   setIsLocal: (@isLocal) =>
 
-  onStartServerPlayer: (player)=>
-
   onStartLocalPlayer: =>

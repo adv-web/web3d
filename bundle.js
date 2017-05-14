@@ -224,7 +224,6 @@
 
     function NetWorkComponent(name) {
       this.onStartLocalPlayer = bind(this.onStartLocalPlayer, this);
-      this.onStartServerPlayer = bind(this.onStartServerPlayer, this);
       this.setIsLocal = bind(this.setIsLocal, this);
       NetWorkComponent.__super__.constructor.call(this, name);
       this.isLocal = false;
@@ -233,8 +232,6 @@
     NetWorkComponent.prototype.setIsLocal = function(isLocal) {
       this.isLocal = isLocal;
     };
-
-    NetWorkComponent.prototype.onStartServerPlayer = function(player) {};
 
     NetWorkComponent.prototype.onStartLocalPlayer = function() {};
 
@@ -291,23 +288,6 @@
       return NetWorkManager.prefabs[prefab.key] = prefab;
     };
 
-    NetWorkManager._spawn = function(key, id, data) {
-      var object;
-      object = NetWorkManager.prefabs[key](data.pos, data.rot);
-      if (object) {
-        object.id = id;
-        NetWorkManager.gameObjects[id] = object;
-        return NetWorkManager.scene.add(object);
-      }
-    };
-
-    NetWorkManager._destroy = function(id) {
-      if (NetWorkManager.gameObjects[id] !== void 0) {
-        NetWorkManager.scene.remove(NetWorkManager.gameObjects[id]);
-        return delete NetWorkManager.gameObjects[id];
-      }
-    };
-
     NetWorkManager.remove = function(object, callbackFunction) {
       var data, event;
       NetWorkManager.scene.remove(NetWorkManager.gameObjects[object.id]);
@@ -322,30 +302,8 @@
       return NetWorkManager.socket.emit(NetWorkManager.objectUpdateEvent, data);
     };
 
-    NetWorkManager._update = function(id, data) {};
-
-    NetWorkManager._client_initLocalPlayer = function() {
-      var comp, key, player, ref;
-      player = NetWorkManager.playerPrefab();
-      ref = player.components;
-      for (key in ref) {
-        comp = ref[key];
-        if (typeof comp.setIsLocal === "function") {
-          comp.setIsLocal(true);
-        }
-        if (typeof comp.onStartLocalPlayer === "function") {
-          comp.onStartLocalPlayer();
-        }
-      }
-      NetWorkManager.scene.add(player);
-      player.id = NetWorkManager.players.self.id;
-      player.state = NetWorkManager.players.self.state;
-      player.online = NetWorkManager.players.self.online;
-      return NetWorkManager.players.self = player;
-    };
-
     NetWorkManager._client_connect_to_server = function() {
-      NetWorkManager.socket = io('http://localhost:5000/');
+      NetWorkManager.socket = io('http://120.76.125.35:5000/game');
       NetWorkManager.socket.on('connect', function() {
         NetWorkManager.players.self.state = "connecting";
         return console.log("self.status:" + NetWorkManager.players.self.state);
@@ -367,11 +325,32 @@
       });
     };
 
+    NetWorkManager._spawn = function(key, id, data) {
+      var object;
+      object = NetWorkManager.prefabs[key](data.pos, data.rot);
+      if (object) {
+        object.id = id;
+        NetWorkManager.gameObjects[id] = object;
+        return NetWorkManager.scene.add(object);
+      }
+    };
+
+    NetWorkManager._destroy = function(id) {
+      if (NetWorkManager.gameObjects[id] !== void 0) {
+        NetWorkManager.scene.remove(NetWorkManager.gameObjects[id]);
+        return delete NetWorkManager.gameObjects[id];
+      }
+    };
+
+    NetWorkManager._update = function(id, data) {};
+
     NetWorkManager._client_onconnected = function(data) {
       NetWorkManager.players.self.id = data.id;
       NetWorkManager.players.self.state = 'connected';
       return NetWorkManager.players.self.online = true;
     };
+
+    NetWorkManager._client_ondisconnect = function(data) {};
 
     NetWorkManager._client_onserverupdate_recieved = function(data) {};
 
@@ -429,6 +408,26 @@
       NetWorkManager.game_id = game_id;
       NetWorkManager.players.self.host = false;
       return NetWorkManager._client_initLocalPlayer();
+    };
+
+    NetWorkManager._client_initLocalPlayer = function() {
+      var comp, key, player, ref;
+      player = NetWorkManager.playerPrefab();
+      ref = player.components;
+      for (key in ref) {
+        comp = ref[key];
+        if (typeof comp.setIsLocal === "function") {
+          comp.setIsLocal(true);
+        }
+        if (typeof comp.onStartLocalPlayer === "function") {
+          comp.onStartLocalPlayer();
+        }
+      }
+      NetWorkManager.scene.add(player);
+      player.id = NetWorkManager.players.self.id;
+      player.state = NetWorkManager.players.self.state;
+      player.online = NetWorkManager.players.self.online;
+      return NetWorkManager.players.self = player;
     };
 
     NetWorkManager._client_onstartgame = function() {
