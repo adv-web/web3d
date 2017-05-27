@@ -9,6 +9,7 @@ var FirstPersonController = require("./component/FirstPersonController");
 var HUD = require("./component/HUD");
 var FirstPersonShooter = require("./component/FirstPersonShooter");
 var TreeCollider = require("./component/TreeCollider");
+var Bullet = require("./component/Bullet");
 var NetWorkManager = require('./NetWorkManager');
     // 公用资源
 var voxParser = new vox.Parser();
@@ -129,16 +130,36 @@ function scene1(scene) {
         var fpc = new FirstPersonController(camera, {sensitivity: 1});
         player.addComponent(fpc);
         player.addComponent(new HUD());
-        player.addComponent(new FirstPersonShooter(fpc));
+        var fps = new FirstPersonShooter(fpc)
+        player.addComponent(fps);
         var GUIDatComponent = require('./component/GUIDatComponent');
         player.addComponent(new GUIDatComponent());
         var NetWorkTransformComponent = require('./component/NetWorkTransformComponent');
         player.addComponent(new NetWorkTransformComponent());
         return player;
     }
+
+    // bullet
+    var makeBullet = function(mess) {
+        var pos = mess.pos;
+        var vel = mess.vel;
+        var geometry = new THREE.SphereGeometry(0.05);
+        var material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        var mesh = new Physijs.SphereMesh(geometry, material);
+        mesh.position.set(pos[0], pos[1], pos[2]);
+        mesh.name = "bullet";
+        var obj = new GameObject(mesh);
+        obj.addComponent(new Bullet());
+        obj.mesh.setLinearVelocity(new THREE.Vector3(vel[0], vel[1], vel[2]));
+        return obj;
+    };
+
+
     NetWorkManager.init(scene,player);
     loadTree.key = "loadTree";
     NetWorkManager.addPrefab(loadTree);
+    makeBullet.key = "bullet";
+    NetWorkManager.addPrefab(makeBullet);
 }
 document.addEventListener('keydown', Game.requestFullScreen, false);
 

@@ -1,45 +1,89 @@
 # Created by duocai on 2017/5/2.
 
+# Network Manager is unique in the client. It will do many works that
+# are simply classified as follows:
+# 1. It will connect to the server. Besides, it will receive and handle
+#   message about that other players join and leave the game, and send message
+#   to server if we leave the game. Mostly important, it will store and maintain
+#   the socket. and other class can use this socket to register event or emit message
+# 2. It will store and maintain the prefabs of game objects. Recall GameManager on the
+#   server, this class will receive the spawn or destroy message from GameManager. And
+#   then it will do the work of spawn objects to the scene. And then it will store theses
+#   objects in order to destroy them later
 class NetWorkManager
   module.exports = this
-  @prefabs = {}
-  @gameObjects = {}
-  @players =
-    self: {}
-    others: {}
-  @net_latency = 0
+
+  # this function must be called before you use Network Manager
+  # must set scene
+  # must set player prefab
+  #   @param [Scene] scene the scene that you will display on the window
+  #   @param [Function] the function that will return player GameObject
   @init: (@scene, @playerPrefab) =>
     @local_time = new Date().getTime()
     @objectUpdateEvent = "object.update"
+    @prefabs = {}
+    @gameObjects = {}
+    @players =
+      self: {}
+      others: {}
+    @net_latency = 0
     return @
 
-  @setPlayerPrefab: (@playerPrefab) =>
-
-  # initialize the client,
+  # initialize the client and connect to the server
   @client_start: () =>
     # connect to the server
     @_client_connect_to_server()
 
+  # add prefab to NetworkManager's pool of prefabs
+  #   @param [Function] prefab a function that receives parameter
+  #     (mess) and returns a GameObject
   @addPrefab: (prefab) =>
     @prefabs[prefab.key] = prefab
 
+  # add GameObject to the scene and inform other clients
+  #   @param [String] key the key of the prefab that you have set
+  #   @param [Object] messages side message of this object and this message
+  #       will be send to the prefab decided by the parameter key. So, the
+  #     server don't care the format of the message. you definite it and you
+  #   should use it properly.
+  @add: (key, messages) =>
+    prefab = @prefabs[key]
+    if prefab == undefined
+      console.error("No such key of prefab: ", key)
 
+    # can not use client predict add it to the scene directly
+    # for the UUID of the object is produced by server
+    data =
+      action: 's'
+      prefabId: key
+      mess: messages
+    # send message to server
+    @socket.emit(@objectUpdateEvent, data)
+
+  # remove object from the scene
+  #   @param [GameObject] object the object function
+  #   @param [Function] callbackFunction callback to show whether this operation is successful
   @remove: (object, callbackFunction) =>
+    # remove directly for Smooth in client
+    # for in this game, it will must be removed by this action or action of
+    # others before this one
     @scene.remove(@gameObjects[object.id])
     delete @gameObjects[object.id]
+
+    # set callback event
     event = "_destroy_callback_"+object.id
     @socket.on(event, callbackFunction)
-    data = {
-      action: 'd',
-      callback: event,
+    data =
+      action: 'd'
+      callback: event
       objectId: object.id
-    }
     # send message to server
     @socket.emit(@objectUpdateEvent, data)
 
   @_client_connect_to_server: () =>
     # Store a local reference to our connection to the server
-    @socket = io('http://120.76.125.35:5000/game')
+    # @socket = io('http://120.76.125.35:5000/game')
+    @socket = io('http://localhost:5000/game')
 
     # When we connect, we are not 'connected' until we have a server id
     # and are placed in a game by the server. The server sends us a message for that.
@@ -62,13 +106,13 @@ class NetWorkManager
     # receive the message about update game object
     @socket.on(@objectUpdateEvent, (data) =>
       switch data.action
-        when 's' then @_spawn(data.prefabId, data.objectId, data)
+        when 's' then @_spawn(data.prefabId, data.objectId, data.mess)
         when 'd' then @_destroy(data.objectId)
         when 'u' then @_update(data.objectId, data)
     )
 
-  @_spawn: (key, id, data) =>
-    object = @prefabs[key](data.pos, data.rot)
+  @_spawn: (key, id, mess) =>
+    object = @prefabs[key](mess)
     if object
       object.id = id
       @gameObjects[id] = object
@@ -81,7 +125,6 @@ class NetWorkManager
 
   @_update: (id, data) =>
 
-
   @_client_onconnected: (data) =>
     #The server responded that we are now connected to the server
     #this lets us store the information about ourselves
@@ -91,6 +134,7 @@ class NetWorkManager
     @players.self.online = true
 
   @_client_ondisconnect: (data) =>
+    @scene.remove(@players.self)
 
   @_client_onserverupdate_recieved: (data) =>
 
