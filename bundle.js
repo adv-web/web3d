@@ -269,7 +269,7 @@
     };
 
     NetWorkManager._client_connect_to_server = function() {
-      NetWorkManager.socket = io('http://localhost:5000/game');
+      NetWorkManager.socket = io('http://120.76.125.35:5000/game');
       NetWorkManager.socket.on('connect', function() {
         NetWorkManager.players.self.state = "connecting";
         return console.log("self.status:" + NetWorkManager.players.self.state);
@@ -1087,12 +1087,14 @@
     }
 
     GUIDatComponent.prototype.onStartLocalPlayer = function() {
-      var fpc, gui;
+      var fpc, gui, nwtm;
       gui = new dat.GUI();
       fpc = this.gameObject.getComponent('FirstPersonController');
       gui.add(fpc, 'sensitivity').min(0).step(0.5);
       gui.add(fpc, 'move_velocity').min(0).step(0.5);
-      return gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+      gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+      nwtm = this.gameObject.getComponent("NetWorkTransformComponent");
+      return gui.add(nwtm, 'networkSendRate').min(10).max(1000).step(5);
     };
 
     return GUIDatComponent;
@@ -1177,7 +1179,7 @@
       this.networkSend = bind(this.networkSend, this);
       this.onStartLocalPlayer = bind(this.onStartLocalPlayer, this);
       NetWorkTransformComponent.__super__.constructor.call(this, "NetWorkTransformComponent");
-      this.networkSendRate = 200;
+      this.networkSendRate = 40;
     }
 
     NetWorkTransformComponent.prototype.onStartLocalPlayer = function() {

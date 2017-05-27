@@ -8,7 +8,7 @@ class NetWorkTransformComponent extends NetWorkComponent
 
   constructor: () ->
     super "NetWorkTransformComponent"
-    @networkSendRate = 200
+    @networkSendRate = 40
 
   onStartLocalPlayer: () =>
     if @networkSendRate <= 0
