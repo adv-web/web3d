@@ -1,0 +1,6 @@
+{
+  "name": "cube",
+  "meshType": "vox",
+  "mesh": "cube",
+  "mass": 0
+}

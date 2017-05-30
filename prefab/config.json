@@ -1,0 +1,26 @@
+[
+  {
+    "name": "tree"
+  },
+  {
+    "name": "wall"
+  },
+  {
+    "name": "cube"
+  },
+  {
+    "name": "ground"
+  },
+  {
+    "name": "x8"
+  },
+  {
+    "name": "chest"
+  },
+  {
+    "name": "bullet"
+  },
+  {
+    "name": "player"
+  }
+]

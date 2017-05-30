@@ -10,45 +10,45 @@
 class Game
   module.exports = this
 
-  # @property [Scene] the current scene of the game, you should use #setScene and avoid directly assign to it
-  scene: null
-
   # To start the game.
-  start: =>
-    @nowTime = @prevTime = Date.now()
+  @start: =>
+    Game.nowTime = Game.prevTime = Date.now()
     @_initialize()
     @_loop()
 
   # Set the scene of game.
   # @param scene [Scene] the scene to be set
   # @return [Game] the game itself to support chained invocation
-  setScene: (@scene) =>
-    Game.scene = @scene
-    return this
+  @setScene: (scene) =>
+    Game.scene = scene
+    return Game
 
   # @private
-  _initialize: =>
+  @_initialize: =>
     # set renderer, is it reasonable to put renderer here? or in scene?
-    @renderer = new THREE.WebGLRenderer({antialias: true})
-    @renderer.setSize(window.innerWidth, window.innerHeight)
-    document.body.appendChild(@renderer.domElement)
+    renderer = new THREE.WebGLRenderer({antialias: true})
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    document.body.appendChild(renderer.domElement)
+    Game.renderer = renderer
     # set event listener
     window.addEventListener('resize', @_onWindowResize, false)
 
   # @private
-  _loop: =>
-    @nowTime = Date.now()
-    deltaTime = @nowTime - @prevTime
-    @scene?.update(deltaTime)
-    @renderer.render(@scene._scene, @scene._cameras[0]) if @scene?._cameras[0]?
+  @_loop: =>
+    Game.nowTime = Date.now()
+    deltaTime = Game.nowTime - Game.prevTime
+    scene = Game.scene
+    scene?.update(deltaTime)
+    Game.renderer.render(scene._scene, scene._cameras[0]) if scene?._cameras[0]?
     requestAnimationFrame(@_loop)
-    @prevTime = @nowTime
+    Game.prevTime = Game.nowTime
 
   # @private
-  _onWindowResize: =>
-    @scene?._cameras[0]?.aspect = window.innerWidth / window.innerHeight
-    @scene?._cameras[0]?.updateProjectionMatrix()
-    @renderer.setSize(window.innerWidth, window.innerHeight)
+  @_onWindowResize: =>
+    scene = Game.scene
+    scene?._cameras[0]?.aspect = window.innerWidth / window.innerHeight
+    scene?._cameras[0]?.updateProjectionMatrix()
+    Game.renderer.setSize(window.innerWidth, window.innerHeight)
 
   # Request the browser into pointer lock mode.
   @requestPointerLock: ->

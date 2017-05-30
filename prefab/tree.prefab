@@ -1,0 +1,11 @@
+{
+  "name": "tree",
+  "meshType": "vox",
+  "mesh": "tree",
+  "mass": 0,
+  "components": [
+    {
+      "name": "TreeCollider"
+    }
+  ]
+}

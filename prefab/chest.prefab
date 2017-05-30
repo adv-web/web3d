@@ -1,0 +1,6 @@
+{
+  "name": "chest",
+  "meshType": "vox",
+  "mesh": "chest",
+  "mass": 0
+}

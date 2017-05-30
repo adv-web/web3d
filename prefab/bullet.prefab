@@ -1,0 +1,11 @@
+{
+  "name": "bullet",
+  "meshType": "code",
+  "mesh": "new Physijs.SphereMesh(new THREE.SphereGeometry(0.05), new THREE.MeshBasicMaterial({color: 0xffff00}))",
+  "mass": -1,
+  "components": [
+    {
+      "name": "Bullet"
+    }
+  ]
+}

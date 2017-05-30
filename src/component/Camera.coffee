@@ -18,9 +18,13 @@ class Camera extends Component
   # Construct a camera component.
   #
   # It will create a new THREE.PerspectiveCamera.
-  constructor: ->
+  constructor: (options = {}) ->
     super("Camera")
     @_camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.001, 10000)
+    x = if options.x? then options.x else 0
+    y = if options.y? then options.y else 0
+    z = if options.z? then options.z else 0
+    @_camera.position.set(x, y, z)
 
   # @nodoc
   afterAdded: =>

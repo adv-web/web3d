@@ -1,0 +1,6 @@
+{
+  "name": "ground",
+  "meshType": "vox",
+  "mesh": "ground",
+  "mass": 0
+}

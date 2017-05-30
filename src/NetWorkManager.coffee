@@ -1,3 +1,5 @@
+Data = require("./Data")
+Game = require("./Game")
 # Created by duocai on 2017/5/2.
 
 # Network Manager is unique in the client. It will do many works that
@@ -21,13 +23,13 @@ class NetWorkManager
   @init: (@scene, @playerPrefab) =>
     @local_time = new Date().getTime()
     @objectUpdateEvent = "object.update"
-    @prefabs = {}
     @gameObjects = {}
     @players =
       self: {}
       others: {}
     @net_latency = 0
-    return @
+    @_callbacks = {}  # save when call #spawn, use in #_spawn
+    return this
 
   # initialize the client and connect to the server
   @client_start: () =>
@@ -37,8 +39,8 @@ class NetWorkManager
   # add prefab to NetworkManager's pool of prefabs
   #   @param [Function] prefab a function that receives parameter
   #     (mess) and returns a GameObject
-  @addPrefab: (prefab) =>
-    @prefabs[prefab.key] = prefab
+  #@addPrefab: (prefab) =>
+  #  @prefabs[prefab.key] = prefab
 
   # add GameObject to the scene and inform other clients
   #   @param [String] key the key of the prefab that you have set
@@ -46,17 +48,20 @@ class NetWorkManager
   #       will be send to the prefab decided by the parameter key. So, the
   #     server don't care the format of the message. you definite it and you
   #   should use it properly.
-  @add: (key, messages) =>
-    prefab = @prefabs[key]
-    if prefab == undefined
-      console.error("No such key of prefab: ", key)
+  @spawn: (prefab, message, callback = null) =>
+    #prefab = @prefabs[key]
+    #if prefab == undefined
+    #  console.error("No such key of prefab: ", key)
 
     # can not use client predict add it to the scene directly
     # for the UUID of the object is produced by server
+    time = Date.now()
     data =
       action: 's'
-      prefabId: key
-      mess: messages
+      prefab: prefab.name
+      message: JSON.stringify(message) #{x:,y:,z:}
+      createTime: time
+    @_callbacks[time] = callback if callback?
     # send message to server
     @socket.emit(@objectUpdateEvent, data)
 
@@ -67,11 +72,12 @@ class NetWorkManager
     # remove directly for Smooth in client
     # for in this game, it will must be removed by this action or action of
     # others before this one
-    @scene.remove(@gameObjects[object.id])
+    #@scene.remove(@gameObjects[object.id])
+    @scene.remove(object)
     delete @gameObjects[object.id]
 
     # set callback event
-    event = "_destroy_callback_"+object.id
+    event = "_destroy_callback_#{object.id}"
     @socket.on(event, callbackFunction)
     data =
       action: 'd'
@@ -87,10 +93,9 @@ class NetWorkManager
 
     # When we connect, we are not 'connected' until we have a server id
     # and are placed in a game by the server. The server sends us a message for that.
-    @socket.on('connect', () =>
+    @socket.on 'connect', () =>
       @players.self.state = "connecting"
       console.log "self.status:" + @players.self.state
-    )
 
     # Sent when we are disconnected (network, server down, etc)
     @socket.on('disconnect', @_client_ondisconnect)
@@ -104,26 +109,30 @@ class NetWorkManager
     @socket.on('message', @_client_onnetmessage)
 
     # receive the message about update game object
-    @socket.on(@objectUpdateEvent, (data) =>
+    @socket.on @objectUpdateEvent, (data) =>
       switch data.action
-        when 's' then @_spawn(data.prefabId, data.objectId, data.mess)
-        when 'd' then @_destroy(data.objectId)
-        when 'u' then @_update(data.objectId, data)
-    )
+        when 's' then @_spawn(data)
+        when 'd' then @_destroy(data)
+        when 'u' then @_update(data)
 
-  @_spawn: (key, id, mess) =>
-    object = @prefabs[key](mess)
-    if object
-      object.id = id
-      @gameObjects[id] = object
-      @scene.add(object)
+  @_spawn: (data) =>
+    prefab = Data.prefab[data.prefab]
+    message = JSON.parse(data.message)
+    ps = if message.position then message.position else {x: 0, y: 0, z: 0}
+    rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
+    obj = @scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z))
+    @gameObjects[data.objectId] = obj # save to network objects' pool
+    if @_callbacks[data.createTime]?
+      @_callbacks[data.createTime](obj)
+      delete @_callbacks[data.createTime]
 
-  @_destroy: (id) =>
-    if @gameObjects[id] isnt undefined
+  @_destroy: (data) =>
+    id = data.objectId
+    if @gameObjects[id]?
       @scene.remove(@gameObjects[id])
       delete @gameObjects[id]
 
-  @_update: (id, data) =>
+  @_update: (data) =>
 
   @_client_onconnected: (data) =>
     #The server responded that we are now connected to the server
@@ -172,8 +181,7 @@ class NetWorkManager
       # maybe some message else later
 
   @_client_onotherjoingame: (id) =>
-    player = @playerPrefab()
-    @scene.add(player)
+    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 1))
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
@@ -196,11 +204,10 @@ class NetWorkManager
     @_client_initLocalPlayer()
 
   @_client_initLocalPlayer: () =>
-    player = @playerPrefab()
+    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 1))
     for key, comp of player.components
       comp.setIsLocal?(true)
       comp.onStartLocalPlayer?()
-    @scene.add(player)
     player.id = @players.self.id
     player.state = @players.self.state
     player.online = @players.self.online

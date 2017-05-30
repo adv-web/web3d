@@ -1,0 +1,30 @@
+[
+  {
+    "name": "tree",
+    "filename": "obj_tree1",
+    "scale": 0.025
+  },
+  {
+    "name": "wall",
+    "filename": "obj_wall",
+    "scale": 0.2
+  },
+  {
+    "name": "cube",
+    "filename": "cube2",
+    "scale": 0.025
+  },
+  {
+    "name": "ground",
+    "scale": 0.08
+  },
+  {
+    "name": "x8",
+    "filename": "8x8x8",
+    "scale": 0.25
+  },
+  {
+    "name": "chest",
+    "scale": 0.02
+  }
+]
