@@ -28,26 +28,16 @@ class FirstPersonController extends NetWorkComponent
   jump_velocity: 3
 
   # Construct a pointer lock controller. It's initially enabled.
-  # @param camera [Camera] the camera related to
   # @param options [Object] the optional parameters
   # @option options [number] sensitivity the sensitivity of mouse
   # @option options [number] move_velocity the move velocity
   # @option options [number] jump_velocity the jump velocity
-  constructor: (@camera, options = {}) ->
+  constructor: (options = {}) ->
     super("FirstPersonController")
-    (@_pitch = new THREE.Object3D()).add(@camera._camera)
-    (@_yaw = new THREE.Object3D()).add(@_pitch)
-    @_yaw2 = new THREE.Object3D()
-    geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5)
-    material = new THREE.MeshBasicMaterial({color: 0xffcc99})
-    mesh = new THREE.Mesh(geometry, material)
-    @_pitch.add(mesh)
-    mesh.position.set(0.25, 0, -0.2)
-    @enabled = true
+    @enabled = false
     @sensitivity = if options.sensitivity? then options.sensitivity else 1
     @move_velocity = if options.move_velocity? then options.move_velocity else 3
     @jump_velocity = if options.jump_velocity? then options.jump_velocity else 3
-
     @_canJump = true
 
   # @private
@@ -68,10 +58,20 @@ class FirstPersonController extends NetWorkComponent
 
   # @nodoc
   afterAdded: =>
+    @camera = @gameObject.getComponent("Camera")
+    (@_pitch = new THREE.Object3D()).add(@camera._camera)
+    (@_yaw = new THREE.Object3D()).add(@_pitch)
+    @_yaw2 = new THREE.Object3D()
+    geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5)
+    material = new THREE.MeshBasicMaterial({color: 0xffcc99})
+    mesh = new THREE.Mesh(geometry, material)
+    @_pitch.add(mesh)
+    mesh.position.set(0.25, 0, -0.2)
     @gameObject.mesh.add(@_yaw)
     @gameObject.mesh.add(@_yaw2)
     document.addEventListener('mousemove', @_onMouseMove, false)
     @gameObject.mesh.addEventListener('collision', @_onCollision)
+    @enabled = true
 
   # @nodoc
   beforeRemoved: =>
@@ -80,6 +80,7 @@ class FirstPersonController extends NetWorkComponent
 
   # @nodoc
   update: (deltaTime) =>
+    return if not @enabled
     return if not @isLocal
     distance = @move_velocity * deltaTime / 1000
     # WASD 移动

@@ -1,3 +1,14 @@
+Data = require("./Data")
+GameObject = require("./GameObject")
+Bullet = require("./component/Bullet")
+Camera = require("./component/Camera")
+FirstPersonController = require("./component/FirstPersonController")
+FirstPersonShooter = require("./component/FirstPersonShooter")
+GUIDatComponent = require("./component/GUIDatComponent")
+HUD = require("./component/HUD")
+NetWorkComponent = require("./component/NetWorkComponent")
+NetWorkTransformComponent = require("./component/NetWorkTransformComponent")
+TreeCollider = require("./component/TreeCollider")
 # The scene in game to contain game objects and other essential objects.
 #
 # To render the scene, it will auto detect cameras and save it to an array when add a game object to the scene.
@@ -47,6 +58,26 @@ class Scene
     return @_removeGameObject(object) if object.isGameObject
     return @_removeGameObject(object.gameObject) if object.isMesh
     @_scene.remove(object)  # not game object or mesh
+
+  spawn: (prefab, position = new THREE.Vector3(0, 0, 0), rotation = new THREE.Vector3(0, 0, 0)) =>
+    prototype = switch prefab.meshType
+      when "vox" then Data.vox[prefab.mesh]
+      when "code" then eval(prefab.mesh)
+    mesh = prototype.clone()
+    if prefab.mass
+      mesh.mass = if prefab.mass >= 0 then prefab.mass else prototype.mass
+    else
+      mesh.mass = 0
+    mesh.name = prefab.name
+    mesh.position.set(position.x, position.y, position.z)
+    mesh.rotation.set(rotation.x, rotation.y, rotation.z)
+    obj = new GameObject(mesh)
+    prefab.components?.forEach (comp) =>
+      #eval("#{comp.name} = require('./component/#{comp.name}')")
+      param = if comp.param then comp.param else ""
+      eval("obj.addComponent(new #{comp.name}(#{param}))")
+    @add(obj)
+    return obj
 
   # @private
   _removeGameObject: (object) =>

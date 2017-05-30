@@ -8,7 +8,7 @@ class TreeCollider extends Component
 
   # Construct a tree collider.
   # @param scene [Scene] the scene its game object in
-  constructor: () ->
+  constructor: ->
     super("TreeCollider")
     window.PlayerInfo = window.PlayerInfo || {} # not good behavior
     PlayerInfo.hitCount = 0 if not PlayerInfo.hitCount?

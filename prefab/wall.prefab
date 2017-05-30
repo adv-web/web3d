@@ -1,0 +1,6 @@
+{
+  "name": "wall",
+  "meshType": "vox",
+  "mesh": "wall",
+  "mass": 0
+}

@@ -1,0 +1,28 @@
+{
+  "name": "player",
+  "meshType": "code",
+  "mesh": "new Physijs.BoxMesh(new THREE.BoxGeometry(0.2, 0.2, 0.2), new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true}))",
+  "mass": -1,
+  "components": [
+    {
+      "name": "Camera",
+      "param": "{y: 0.25}"
+    },
+    {
+      "name": "FirstPersonController",
+      "param": "{sensitivity: 1}"
+    },
+    {
+      "name": "FirstPersonShooter"
+    },
+    {
+      "name": "HUD"
+    },
+    {
+      "name": "GUIDatComponent"
+    },
+    {
+      "name": "NetWorkTransformComponent"
+    }
+  ]
+}
