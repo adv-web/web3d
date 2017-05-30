@@ -49,6 +49,10 @@ class FirstPersonController extends NetWorkComponent
     @jump_velocity = if options.jump_velocity? then options.jump_velocity else 3
 
     @_canJump = true
+    @_canMove = true
+
+    @activateMoveRate = 5
+    @_activate = 0
 
   # @private
   _onMouseMove: (event) =>
@@ -62,9 +66,12 @@ class FirstPersonController extends NetWorkComponent
     @_pitch.rotation.x = Math.max(-PI_2, Math.min(PI_2, @_pitch.rotation.x))
 
   # @private
-  _onCollision: (other_object, linear_velocity, angular_velocity) =>
+  _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     # can jump if player is on the top of other object
-    @_canJump = true if @gameObject.mesh.position.y - other_object.position.y > 0
+    @_canJump = true if @gameObject.mesh.position.y - other_mesh.position.y > 0
+    if other_mesh.name != 'ground'
+      @_canMove = false
+      console.log("on collision")
 
   # @nodoc
   afterAdded: =>
@@ -83,10 +90,22 @@ class FirstPersonController extends NetWorkComponent
     return if not @isLocal
     distance = @move_velocity * deltaTime / 1000
     # WASD 移动
-    @_yaw2.translateX(distance) if Input.isPressed('D')
-    @_yaw2.translateX(-distance) if Input.isPressed('A')
-    @_yaw2.translateZ(distance) if Input.isPressed('S')
-    @_yaw2.translateZ(-distance) if Input.isPressed('W')
+    if @_canMove
+      @_yaw2.translateX(distance) if Input.isPressed('D')
+      @_yaw2.translateX(-distance) if Input.isPressed('A')
+      @_yaw2.translateZ(distance) if Input.isPressed('S')
+      @_yaw2.translateZ(-distance) if Input.isPressed('W')
+    else # collision happened
+      @_yaw2.translateX(-distance) if Input.isPressed('D')
+      @_yaw2.translateX(distance) if Input.isPressed('A')
+      @_yaw2.translateZ(-distance) if Input.isPressed('S')
+      @_yaw2.translateZ(distance) if Input.isPressed('W')
+
+      @_activate++
+      if @_activate >= @activateMoveRate
+        @_activate = 0
+        @_canMove = true
+
     p = @_yaw2.getWorldPosition()
     @gameObject.mesh.position.x = p.x
     @gameObject.mesh.position.z = p.z

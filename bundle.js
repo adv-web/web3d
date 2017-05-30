@@ -878,6 +878,9 @@
       this.move_velocity = options.move_velocity != null ? options.move_velocity : 3;
       this.jump_velocity = options.jump_velocity != null ? options.jump_velocity : 3;
       this._canJump = true;
+      this._canMove = true;
+      this.activateMoveRate = 5;
+      this._activate = 0;
     }
 
     FirstPersonController.prototype._onMouseMove = function(event) {
@@ -896,9 +899,13 @@
       return this._pitch.rotation.x = Math.max(-PI_2, Math.min(PI_2, this._pitch.rotation.x));
     };
 
-    FirstPersonController.prototype._onCollision = function(other_object, linear_velocity, angular_velocity) {
-      if (this.gameObject.mesh.position.y - other_object.position.y > 0) {
-        return this._canJump = true;
+    FirstPersonController.prototype._onCollision = function(other_mesh, linear_velocity, angular_velocity) {
+      if (this.gameObject.mesh.position.y - other_mesh.position.y > 0) {
+        this._canJump = true;
+      }
+      if (other_mesh.name !== 'ground') {
+        this._canMove = false;
+        return console.log("on collision");
       }
     };
 
@@ -920,17 +927,37 @@
         return;
       }
       distance = this.move_velocity * deltaTime / 1000;
-      if (Input.isPressed('D')) {
-        this._yaw2.translateX(distance);
-      }
-      if (Input.isPressed('A')) {
-        this._yaw2.translateX(-distance);
-      }
-      if (Input.isPressed('S')) {
-        this._yaw2.translateZ(distance);
-      }
-      if (Input.isPressed('W')) {
-        this._yaw2.translateZ(-distance);
+      if (this._canMove) {
+        if (Input.isPressed('D')) {
+          this._yaw2.translateX(distance);
+        }
+        if (Input.isPressed('A')) {
+          this._yaw2.translateX(-distance);
+        }
+        if (Input.isPressed('S')) {
+          this._yaw2.translateZ(distance);
+        }
+        if (Input.isPressed('W')) {
+          this._yaw2.translateZ(-distance);
+        }
+      } else {
+        if (Input.isPressed('D')) {
+          this._yaw2.translateX(-distance);
+        }
+        if (Input.isPressed('A')) {
+          this._yaw2.translateX(distance);
+        }
+        if (Input.isPressed('S')) {
+          this._yaw2.translateZ(-distance);
+        }
+        if (Input.isPressed('W')) {
+          this._yaw2.translateZ(distance);
+        }
+        this._activate++;
+        if (this._activate >= this.activateMoveRate) {
+          this._activate = 0;
+          this._canMove = true;
+        }
       }
       p = this._yaw2.getWorldPosition();
       this.gameObject.mesh.position.x = p.x;
@@ -1093,8 +1120,9 @@
       gui.add(fpc, 'sensitivity').min(0).step(0.5);
       gui.add(fpc, 'move_velocity').min(0).step(0.5);
       gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+      gui.add(fpc, 'activateMoveRate').min(1).max(20).step(1);
       nwtm = this.gameObject.getComponent("NetWorkTransformComponent");
-      return gui.add(nwtm, 'networkSendRate').min(10).max(1000).step(5);
+      return gui.add(nwtm, 'networkSendRate').min(10).max(100).step(5);
     };
 
     return GUIDatComponent;
@@ -1479,6 +1507,14 @@ function scene1(scene) {
         var mesh = meshes.cube.clone();
         mesh.position.set(x, y, z);
         mesh._physijs.mass = 0;
+        mesh._physijs.collider = {
+            pos: {x: x, y: y, z: z},
+            size: {
+                x: mesh._physijs.width / 2,
+                y: mesh._physijs.height / 2 + 0.3,
+                z: mesh._physijs.depth / 2
+            }
+        };
         scene.add(new GameObject(mesh));
     };
     // sky box
@@ -1533,7 +1569,7 @@ function scene1(scene) {
         var fpc = new FirstPersonController(camera, {sensitivity: 1});
         player.addComponent(fpc);
         player.addComponent(new HUD());
-        var fps = new FirstPersonShooter(fpc)
+        var fps = new FirstPersonShooter(fpc);
         player.addComponent(fps);
         var GUIDatComponent = __webpack_require__(11);
         player.addComponent(new GUIDatComponent());

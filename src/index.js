@@ -76,6 +76,14 @@ function scene1(scene) {
         var mesh = meshes.cube.clone();
         mesh.position.set(x, y, z);
         mesh._physijs.mass = 0;
+        mesh._physijs.collider = {
+            pos: {x: x, y: y, z: z},
+            size: {
+                x: mesh._physijs.width / 2,
+                y: mesh._physijs.height / 2 + 0.3,
+                z: mesh._physijs.depth / 2
+            }
+        };
         scene.add(new GameObject(mesh));
     };
     // sky box
@@ -130,7 +138,7 @@ function scene1(scene) {
         var fpc = new FirstPersonController(camera, {sensitivity: 1});
         player.addComponent(fpc);
         player.addComponent(new HUD());
-        var fps = new FirstPersonShooter(fpc)
+        var fps = new FirstPersonShooter(fpc);
         player.addComponent(fps);
         var GUIDatComponent = require('./component/GUIDatComponent');
         player.addComponent(new GUIDatComponent());
