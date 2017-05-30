@@ -391,14 +391,8 @@
       return NetWorkManager._client_connect_to_server();
     };
 
-    NetWorkManager.spawn = function(prefab, position, rotation, callback) {
+    NetWorkManager.spawn = function(prefab, message, callback) {
       var data, time;
-      if (position == null) {
-        position = new THREE.Vector3(0, 0, 0);
-      }
-      if (rotation == null) {
-        rotation = new THREE.Vector3(0, 0, 0);
-      }
       if (callback == null) {
         callback = null;
       }
@@ -406,8 +400,7 @@
       data = {
         action: 's',
         prefab: prefab.name,
-        position: JSON.stringify(position),
-        rotation: JSON.stringify(rotation),
+        message: JSON.stringify(message),
         createTime: time
       };
       if (callback != null) {
@@ -454,10 +447,19 @@
     };
 
     NetWorkManager._spawn = function(data) {
-      var obj, prefab, ps, rs;
+      var message, obj, prefab, ps, rs;
       prefab = Data.prefab[data.prefab];
-      ps = JSON.parse(data.position);
-      rs = JSON.parse(data.rotation);
+      message = JSON.parse(data.message);
+      ps = message.position ? message.position : {
+        x: 0,
+        y: 0,
+        z: 0
+      };
+      rs = message.rotation ? message.rotation : {
+        x: 0,
+        y: 0,
+        z: 0
+      };
       obj = NetWorkManager.scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z));
       NetWorkManager.gameObjects[data.objectId] = obj;
       if (NetWorkManager._callbacks[data.createTime] != null) {
@@ -11428,6 +11430,9 @@ return jQuery;
       this.move_velocity = options.move_velocity != null ? options.move_velocity : 3;
       this.jump_velocity = options.jump_velocity != null ? options.jump_velocity : 3;
       this._canJump = true;
+      this._canMove = true;
+      this.activateMoveRate = 5;
+      this._activate = 0;
     }
 
     FirstPersonController.prototype._onMouseMove = function(event) {
@@ -11446,9 +11451,13 @@ return jQuery;
       return this._pitch.rotation.x = Math.max(-PI_2, Math.min(PI_2, this._pitch.rotation.x));
     };
 
-    FirstPersonController.prototype._onCollision = function(other_object, linear_velocity, angular_velocity) {
-      if (this.gameObject.mesh.position.y - other_object.position.y > 0) {
-        return this._canJump = true;
+    FirstPersonController.prototype._onCollision = function(other_mesh, linear_velocity, angular_velocity) {
+      if (this.gameObject.mesh.position.y - other_mesh.position.y > 0) {
+        this._canJump = true;
+      }
+      if (other_mesh.name !== 'ground') {
+        this._canMove = false;
+        return console.log("on collision");
       }
     };
 
@@ -11486,17 +11495,37 @@ return jQuery;
         return;
       }
       distance = this.move_velocity * deltaTime / 1000;
-      if (Input.isPressed('D')) {
-        this._yaw2.translateX(distance);
-      }
-      if (Input.isPressed('A')) {
-        this._yaw2.translateX(-distance);
-      }
-      if (Input.isPressed('S')) {
-        this._yaw2.translateZ(distance);
-      }
-      if (Input.isPressed('W')) {
-        this._yaw2.translateZ(-distance);
+      if (this._canMove) {
+        if (Input.isPressed('D')) {
+          this._yaw2.translateX(distance);
+        }
+        if (Input.isPressed('A')) {
+          this._yaw2.translateX(-distance);
+        }
+        if (Input.isPressed('S')) {
+          this._yaw2.translateZ(distance);
+        }
+        if (Input.isPressed('W')) {
+          this._yaw2.translateZ(-distance);
+        }
+      } else {
+        if (Input.isPressed('D')) {
+          this._yaw2.translateX(-distance);
+        }
+        if (Input.isPressed('A')) {
+          this._yaw2.translateX(distance);
+        }
+        if (Input.isPressed('S')) {
+          this._yaw2.translateZ(-distance);
+        }
+        if (Input.isPressed('W')) {
+          this._yaw2.translateZ(distance);
+        }
+        this._activate++;
+        if (this._activate >= this.activateMoveRate) {
+          this._activate = 0;
+          this._canMove = true;
+        }
       }
       p = this._yaw2.getWorldPosition();
       this.gameObject.mesh.position.x = p.x;
@@ -11593,7 +11622,9 @@ return jQuery;
       pos = new THREE.Vector3(worldPosition.x, worldPosition.y + 0.5, worldPosition.z);
       rot_y = this._controller._yaw.rotation.y;
       rot_x = this._controller._pitch.rotation.x;
-      return NetWorkManager.spawn(Data.prefab.bullet, pos, new THREE.Vector3(0, 0, 0), (function(_this) {
+      return NetWorkManager.spawn(Data.prefab.bullet, {
+        position: pos
+      }, (function(_this) {
         return function(obj) {
           return obj.mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * _this.bullet_speed, Math.sin(rot_x) * _this.bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * _this.bullet_speed));
         };
@@ -11639,6 +11670,7 @@ return jQuery;
       gui.add(fpc, 'sensitivity').min(0).step(0.5);
       gui.add(fpc, 'move_velocity').min(0).step(0.5);
       gui.add(fpc, 'jump_velocity').min(0).step(0.5);
+      gui.add(fpc, 'activateMoveRate').min(1).max(20).step(1);
       nwtm = this.gameObject.getComponent("NetWorkTransformComponent");
       return gui.add(nwtm, 'networkSendRate').min(10).max(100).step(5);
     };
@@ -11870,7 +11902,6 @@ function scene1(scene) {
     scene.spawn(Data.prefab.wall, new THREE.Vector3(0, -2.6, 3.2));
     scene.spawn(Data.prefab.wall, new THREE.Vector3(3.2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
     scene.spawn(Data.prefab.wall, new THREE.Vector3(-2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
-    //scene.spawn(Data.prefab.player, new THREE.Vector3(0, -0.5, 1));
 
     NetWorkManager.init(scene, Data.prefab.player);
 
@@ -11882,7 +11913,6 @@ Data.load(null, null, function() {
     Game.setScene(scene).start();
     NetWorkManager.client_start();
 });
-
 
 document.addEventListener('keydown', Game.requestFullScreen, false);
 

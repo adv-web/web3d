@@ -20,6 +20,7 @@ class Scene
   # @param initializer [Function] the user-defined initialize function to add objects in the scene
   constructor: (initializer) ->
     @_scene = new Physijs.Scene()
+    # @_scene.setGravity(new THREE.Vector3(10, 0, 10))
     @_cameras = []
     @_objects = []
     initializer(this)
