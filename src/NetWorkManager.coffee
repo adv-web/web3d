@@ -93,8 +93,8 @@ class NetWorkManager
 
   @_client_connect_to_server: () =>
     # Store a local reference to our connection to the server
-    @socket = io('http://120.76.125.35:5000/game')
-    # @socket = io('http://localhost:5000/game')
+    # @socket = io('http://120.76.125.35:5000/game')
+    @socket = io('http://localhost:5000/game')
 
     # When we connect, we are not 'connected' until we have a server id
     # and are placed in a game by the server. The server sends us a message for that.
@@ -140,7 +140,7 @@ class NetWorkManager
       delete @gameObjects[id]
 
   @_update: (data) =>
-    console.log data
+    # console.log data
     @gameObjects[data.objectId]?.broadcast(JSON.parse(data.message))
 
   @_client_onconnected: (data) =>

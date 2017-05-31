@@ -6,6 +6,10 @@
   "components": [
     {
       "name": "TreeCollision"
+    },
+    {
+        "name": "BoxCollider",
+        "param": "{isTrigger: true, center: {x: 0, y: 0.19, z: 0}}"
     }
   ]
 }

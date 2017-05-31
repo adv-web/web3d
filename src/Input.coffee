@@ -52,6 +52,11 @@ class Input
 
     return if @canMove then num else -num
 
+  @stopMove: =>
+    @canMove = false
+
+  @activeMove: =>
+    @canMove = true
 
   # @private
   @_onclick: () =>

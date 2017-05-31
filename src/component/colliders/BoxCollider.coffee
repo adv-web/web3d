@@ -10,10 +10,8 @@ class BoxCollider extends Collider
     # console.log("Box collider constructor")
     isTrigger = if options.isTrigger then options.isTrigger else false
     super("BoxCollider", isTrigger)
-
     @center = options.center
     @size = options.size
-
 
   afterAdded: =>
     super
@@ -26,7 +24,7 @@ class BoxCollider extends Collider
       console.error("BoxCollider component needs Physijs Mesh. but the mesh is not")
       return
     physics.collider = {}
-    console.log(@gameObject.mesh.name, @center)
+    # console.log(@gameObject.mesh.name, @center)
     if @center
       physics.collider.center = @center
     if @size
