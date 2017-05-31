@@ -1,4 +1,10 @@
 # The static class that listens to key events.
+#
+# You can register the onclick event.
+#   - registerClickResponse: (callback)
+#
+# To read an axis use Input.GetAxis with one of the
+# following default axes: "horizontal" and "vertical" are mapped to A, W, S, D keys.
 class Input
   module.exports = this
 

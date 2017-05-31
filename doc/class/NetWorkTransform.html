@@ -39,6 +39,30 @@
           </td>
         </tr>
       </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>this component will automatically synchronize the transform of the game object
+it binds to.</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffeescript'># set this component in the prefab file
+{
+  &quot;name&quot;: &quot;player&quot;,
+  &quot;components&quot;: [
+    {
+      &quot;name&quot;: &quot;NetWorkTransform&quot;
+    }
+  ]
+}
+# then when you add this prefab to the scene, it&#39;s transform will be synchronized
+# automatically.</code></pre>
+  </div>
+</div>
+<div class='tags'>
+</div>
       <h2>Property Summary</h2>
       <h3 class='inherited'>
         Properties inherited from
@@ -60,6 +84,8 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      override the onStartLocalPlayer function and register update transform events and handlers
+
     </span>
   </li>
   <li>
@@ -72,6 +98,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      send message to the server automatically. 
     </span>
   </li>
   <li>
@@ -84,6 +111,7 @@
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      get transform of this game object and send it to the player 
     </span>
   </li>
 </ul>
@@ -94,7 +122,6 @@
           <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
         </h3>
         <p class='inherited'>
-          <a href='../class/NetWorkComponent.html#setIsLocal-dynamic'>#setIsLocal</a>
           <a href='../class/NetWorkComponent.html#onStartLocalPlayer-dynamic'>#onStartLocalPlayer</a>
           <a href='../class/Component.html#receive-dynamic'>#receive</a>
         </p>
@@ -121,7 +148,12 @@
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>override the onStartLocalPlayer function and
+register update transform events and handlers</p>
+</div>
+<div class='tags'>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='update-dynamic'>
@@ -131,7 +163,11 @@
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>send message to the server automatically.</p>
+</div>
+<div class='tags'>
+</div>
   </div>
   <div class='method_details'>
     <p class='signature' id='networkSend-dynamic'>
@@ -141,7 +177,11 @@
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>get transform of this game object and send it to the player</p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>

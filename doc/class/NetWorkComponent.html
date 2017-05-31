@@ -43,14 +43,16 @@
       <div class='docstring'>
   <p>Base class which should be inherited by scripts which
 contain networking functionality.</p><p>It receive various callbacks help you to decide whether
-the player is a local player when in a multi player game.
-And it allows you to do something only to local players</p>
+the player is a local player(@isLocal) when in a multi player game.
+And it allows you to do something only to local player or only to
+other players</p>
   <div class='examples'>
     <h3>Examples:</h3>
     <h4>
       
     </h4>
     <pre><code class='coffeescript'>class MyComponent extends NetWorkComponent
+
   update: =&gt;
     if @isLocal
       # do something</code></pre>
@@ -78,18 +80,6 @@ And it allows you to do something only to local players</p>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#setIsLocal-dynamic'>
-        #
-(void)
-<b>setIsLocal</b><span>(isLocal)</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
       <a href='#onStartLocalPlayer-dynamic'>
         #
 (void)
@@ -98,6 +88,7 @@ And it allows you to do something only to local players</p>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      this function will be call when the Network Manager initialize the local player. 
     </span>
   </li>
 </ul>
@@ -120,21 +111,25 @@ And it allows you to do something only to local players</p>
 <b>constructor</b><span>(name)</span>
       <br>
     </p>
-    
+    <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>name</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the name of this component </span>
+    </li>
+  </ul>
+</div>
   </div>
 </div>
       <h2>Instance Method Details</h2>
       <div class='methods'>
-  <div class='method_details'>
-    <p class='signature' id='setIsLocal-dynamic'>
-      #
-(void)
-<b>setIsLocal</b><span>(isLocal)</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
   <div class='method_details'>
     <p class='signature' id='onStartLocalPlayer-dynamic'>
       #
@@ -143,7 +138,12 @@ And it allows you to do something only to local players</p>
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>this function will be call when the Network Manager initialize the local player.
+You can do something only for the local player such as binding the camera.</p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>

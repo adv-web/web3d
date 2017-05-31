@@ -3,6 +3,21 @@
 NetWorkComponent = require('./NetWorkComponent')
 NetWorkManager = require('../NetWorkManager')
 
+# this component will automatically synchronize the transform of the game object
+# it binds to.
+#
+# @example
+#   # set this component in the prefab file
+#   {
+#     "name": "player",
+#     "components": [
+#       {
+#         "name": "NetWorkTransform"
+#       }
+#     ]
+#   }
+#   # then when you add this prefab to the scene, it's transform will be synchronized
+#   # automatically.
 class NetWorkTransform extends NetWorkComponent
   module.exports = @
 
@@ -11,6 +26,8 @@ class NetWorkTransform extends NetWorkComponent
     @networkSendRate = 10
     @_networkSend =0
 
+  # override the onStartLocalPlayer function and
+  # register update transform events and handlers
   onStartLocalPlayer: () =>
     if @networkSendRate <= 0
       return
@@ -33,12 +50,14 @@ class NetWorkTransform extends NetWorkComponent
           otherObject.mesh.__dirtyPosition = true
     )
 
+  # send message to the server automatically.
   update: () =>
     @_networkSend++
     if @_networkSend >= @networkSendRate
       @networkSend()
       @_networkSend = 0
 
+  # get transform of this game object and send it to the player
   networkSend: () =>
     socket = NetWorkManager.socket
     mesh = @gameObject.mesh
