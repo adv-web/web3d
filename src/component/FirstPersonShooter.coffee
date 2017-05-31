@@ -55,6 +55,12 @@ class FirstPersonShooter extends NetWorkComponent
     pos = new THREE.Vector3(worldPosition.x, worldPosition.y + 0.5, worldPosition.z)
     rot_y = @_controller._yaw.rotation.y
     rot_x = @_controller._pitch.rotation.x
+    # 计算速度分量
+    vx = -Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed
+    vy = Math.sin(rot_x) * @bullet_speed
+    vz = -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed
     NetWorkManager.spawn Data.prefab.bullet, {position: pos}, (obj) =>
-      obj.mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed, Math.sin(rot_x) * @bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed))
-    # 这里的设置速度是世界坐标系。好不容易调出来的方向
+      NetWorkManager.update(obj.id, {method: "launch", x: vx, y: vy, z: vz}) # 通知其他玩家发射子弹
+      # 本地发射子弹（NetWorkManager 不发给自机）
+      obj.mesh.mass = 0.0006
+      obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz)) # 这里的设置速度是世界坐标系

@@ -28,3 +28,12 @@ class Bullet extends Component
   # @private
   _onExplodeFinish: =>
     Game.scene.remove(@gameObject)
+
+  _launch: (mass, velocity) =>
+    @gameObject.mesh.mass = mass
+    @gameObject.mesh.setLinearVelocity(velocity)
+
+  receive: (args...) =>
+    data = args[0]
+    return if data.method != "launch"
+    @_launch(0.0006, new THREE.Vector3(data.x, data.y, data.z))
