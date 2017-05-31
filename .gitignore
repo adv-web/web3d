@@ -13,6 +13,8 @@ test/
 /src/component/*.map
 /src/*.js
 /src/component/*.js
+/src/component/colliders/*.js
+/src/component/colliders/*.map
 !/src/index.js
 
 phrase1_doc.md
