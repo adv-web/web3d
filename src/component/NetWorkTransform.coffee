@@ -3,11 +3,11 @@
 NetWorkComponent = require('./NetWorkComponent')
 NetWorkManager = require('../NetWorkManager')
 
-class NetWorkTransformComponent extends NetWorkComponent
+class NetWorkTransform extends NetWorkComponent
   module.exports = @
 
   constructor: () ->
-    super "NetWorkTransformComponent"
+    super "NetWorkTransform"
     @networkSendRate = 10
     @_networkSend =0
 

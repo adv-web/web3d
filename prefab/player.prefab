@@ -19,10 +19,10 @@
       "name": "HUD"
     },
     {
-      "name": "GUIDatComponent"
+      "name": "GUIDat"
     },
     {
-      "name": "NetWorkTransformComponent"
+      "name": "NetWorkTransform"
     },
     {
       "name": "BoxCollider",

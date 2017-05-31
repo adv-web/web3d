@@ -61,6 +61,6 @@ class FirstPersonShooter extends NetWorkComponent
     vz = -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed
     NetWorkManager.spawn Data.prefab.bullet, {position: pos}, (obj) =>
       NetWorkManager.update(obj.id, {method: "launch", x: vx, y: vy, z: vz}) # 通知其他玩家发射子弹
-      # 本地发射子弹（NetWorkManager 不发给自机）
+      # 本地发射子弹（NetWorkManager 不发给自己）
       obj.mesh.mass = 0.0006
       obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz)) # 这里的设置速度是世界坐标系

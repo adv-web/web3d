@@ -122,7 +122,7 @@ class NetWorkManager
 
   @_spawn: (data) =>
     prefab = Data.prefab[data.prefab]
-    console.log data
+    # console.log data
     message = JSON.parse(data.message)
     ps = if message.position then message.position else {x: 0, y: 0, z: 0}
     rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
@@ -140,6 +140,7 @@ class NetWorkManager
       delete @gameObjects[id]
 
   @_update: (data) =>
+    console.log data
     @gameObjects[data.objectId]?.broadcast(JSON.parse(data.message))
 
   @_client_onconnected: (data) =>

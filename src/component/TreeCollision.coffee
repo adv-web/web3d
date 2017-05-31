@@ -2,14 +2,14 @@ Component = require("../Component")
 NetWorkManager = require('../NetWorkManager')
 # The tree collider. It uses on tree and deal with its collision events.
 #
-# name = "TreeCollider"
-class TreeCollider extends Component
+# name = "TreeCollision"
+class TreeCollision extends Component
   module.exports = this
 
   # Construct a tree collider.
   # @param scene [Scene] the scene its game object in
   constructor: ->
-    super("TreeCollider")
+    super("TreeCollision")
     window.PlayerInfo = window.PlayerInfo || {} # not good behavior
     PlayerInfo.hitCount = 0 if not PlayerInfo.hitCount?
 

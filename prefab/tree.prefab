@@ -5,7 +5,7 @@
   "mass": 0,
   "components": [
     {
-      "name": "TreeCollider"
+      "name": "TreeCollision"
     }
   ]
 }
