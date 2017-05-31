@@ -1,13 +1,19 @@
 # The static class that listens to key events.
 class Input
   module.exports = this
+
   # store function that will response to click event
+  # @nodoc
   @_clickResponses = []
+
   # @nodoc
   @_keyBitmap: []
 
-  @canMove = true
+  # @private
+  # @nodoc
+  @_canMove = true
 
+  # @property [Object] all axises
   @axis =
     vertical: "vertical",
     horizontal: "horizontal"
@@ -35,6 +41,8 @@ class Input
 
   # Returns the value of the virtual axis identified by axisName.
   # The value will be in the range -1 or 0 or 1 for keyboard input.
+  # @param [String] axis vertical or horizontal
+  # @return [Integer] the velocity
   @getAxis: (axis) =>
     num = 0
 
@@ -50,13 +58,17 @@ class Input
         if @isPressed('A')
           num -= 1
 
-    return if @canMove then num else -num
+    return if @_canMove then num else -num
 
-  @stopMove: =>
-    @canMove = false
+  # let the player stop move
+  # @nodoc
+  @_stopMove: =>
+    @_canMove = false
 
+  # let the player start move
+  # @nodoc
   @activeMove: =>
-    @canMove = true
+    @_canMove = true
 
   # @private
   @_onclick: () =>
@@ -64,12 +76,12 @@ class Input
       res()
 
   # add response to click event
-  #   @param [Function] a callback function
+  # @param [Function] res a callback function that response to click event
   @registerClickResponse: (res) =>
     @_clickResponses.push(res)
 
   # add response to click event
-  #   @param [Function] a callback function that had been registered before
+  # @param [Function] res a callback function that had been registered before
   @removeClickResponse: (res) =>
     @_clickResponses.remove(res)
 

@@ -617,7 +617,7 @@
 
     Input._keyBitmap = [];
 
-    Input.canMove = true;
+    Input._canMove = true;
 
     Input.axis = {
       vertical: "vertical",
@@ -658,7 +658,7 @@
             num -= 1;
           }
       }
-      if (Input.canMove) {
+      if (Input._canMove) {
         return num;
       } else {
         return -num;
@@ -666,11 +666,11 @@
     };
 
     Input.stopMove = function() {
-      return Input.canMove = false;
+      return Input._canMove = false;
     };
 
     Input.activeMove = function() {
-      return Input.canMove = true;
+      return Input._canMove = true;
     };
 
     Input._onclick = function() {
@@ -12029,7 +12029,7 @@ return jQuery;
         if (other_mesh.name !== 'ground') {
           console.log("player on collision");
           if (!this.isTrigger && !other_mesh.isTrigger) {
-            Input.canMove = false;
+            Input._canMove = false;
             setTimeout(Input.activeMove, this.activateMoveTime);
           }
         }
