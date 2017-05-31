@@ -26,7 +26,8 @@ class BoxCollider extends Collider
       console.error("BoxCollider component needs Physijs Mesh. but the mesh is not")
       return
     physics.collider = {}
-    if @center isnt undefined
+    console.log(@gameObject.mesh.name, @center)
+    if @center
       physics.collider.center = @center
     if @size
       physics.collider.size = @size

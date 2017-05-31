@@ -11977,7 +11977,8 @@ return jQuery;
         return;
       }
       physics.collider = {};
-      if (this.center !== void 0) {
+      console.log(this.gameObject.mesh.name, this.center);
+      if (this.center) {
         physics.collider.center = this.center;
       }
       if (this.size) {
