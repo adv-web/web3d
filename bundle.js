@@ -409,6 +409,24 @@
       return NetWorkManager.socket.emit(NetWorkManager.objectUpdateEvent, data);
     };
 
+    NetWorkManager.update = function(object, message, callback) {
+      var data, time;
+      if (callback == null) {
+        callback = null;
+      }
+      time = Date.now();
+      data = {
+        action: 'u',
+        objectId: object.id,
+        message: JSON.stringify(message),
+        createTime: time
+      };
+      if (callback != null) {
+        NetWorkManager._callbacks[time] = callback;
+      }
+      return NetWorkManager.socket.emit(NetWorkManager.objectUpdateEvent, data);
+    };
+
     NetWorkManager.remove = function(object, callbackFunction) {
       var data, event;
       NetWorkManager.scene.remove(object);
@@ -449,6 +467,7 @@
     NetWorkManager._spawn = function(data) {
       var message, obj, prefab, ps, rs;
       prefab = Data.prefab[data.prefab];
+      console.log(data);
       message = JSON.parse(data.message);
       ps = message.position ? message.position : {
         x: 0,
@@ -461,6 +480,7 @@
         z: 0
       };
       obj = NetWorkManager.scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z));
+      obj.id = data.objectId;
       NetWorkManager.gameObjects[data.objectId] = obj;
       if (NetWorkManager._callbacks[data.createTime] != null) {
         NetWorkManager._callbacks[data.createTime](obj);
@@ -477,7 +497,10 @@
       }
     };
 
-    NetWorkManager._update = function(data) {};
+    NetWorkManager._update = function(data) {
+      var ref;
+      return (ref = NetWorkManager.gameObjects[data.objectId]) != null ? ref.broadcast(JSON.parse(data.message)) : void 0;
+    };
 
     NetWorkManager._client_onconnected = function(data) {
       NetWorkManager.players.self.id = data.id;
@@ -11165,7 +11188,8 @@ return jQuery;
   var Bullet, Component, ExplodeAnimation, Game,
     bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
+    hasProp = {}.hasOwnProperty,
+    slice = [].slice;
 
   Component = __webpack_require__(0);
 
@@ -11179,6 +11203,8 @@ return jQuery;
     module.exports = Bullet;
 
     function Bullet() {
+      this.receive = bind(this.receive, this);
+      this._launch = bind(this._launch, this);
       this._onExplodeFinish = bind(this._onExplodeFinish, this);
       this._onCollision = bind(this._onCollision, this);
       this.beforeRemoved = bind(this.beforeRemoved, this);
@@ -11203,6 +11229,21 @@ return jQuery;
 
     Bullet.prototype._onExplodeFinish = function() {
       return Game.scene.remove(this.gameObject);
+    };
+
+    Bullet.prototype._launch = function(mass, velocity) {
+      this.gameObject.mesh.mass = mass;
+      return this.gameObject.mesh.setLinearVelocity(velocity);
+    };
+
+    Bullet.prototype.receive = function() {
+      var args, data;
+      args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      data = args[0];
+      if (data.method !== "launch") {
+        return;
+      }
+      return this._launch(0.0006, new THREE.Vector3(data.x, data.y, data.z));
     };
 
     return Bullet;
@@ -11606,7 +11647,7 @@ return jQuery;
     };
 
     FirstPersonShooter.prototype._onFire = function() {
-      var currentTime, pos, rot_x, rot_y, worldPosition;
+      var currentTime, pos, rot_x, rot_y, vx, vy, vz, worldPosition;
       if (!this.enabled) {
         return;
       }
@@ -11622,11 +11663,21 @@ return jQuery;
       pos = new THREE.Vector3(worldPosition.x, worldPosition.y + 0.5, worldPosition.z);
       rot_y = this._controller._yaw.rotation.y;
       rot_x = this._controller._pitch.rotation.x;
+      vx = -Math.sin(rot_y) * Math.cos(rot_x) * this.bullet_speed;
+      vy = Math.sin(rot_x) * this.bullet_speed;
+      vz = -Math.cos(rot_y) * Math.cos(rot_x) * this.bullet_speed;
       return NetWorkManager.spawn(Data.prefab.bullet, {
         position: pos
       }, (function(_this) {
         return function(obj) {
-          return obj.mesh.setLinearVelocity(new THREE.Vector3(-Math.sin(rot_y) * Math.cos(rot_x) * _this.bullet_speed, Math.sin(rot_x) * _this.bullet_speed, -Math.cos(rot_y) * Math.cos(rot_x) * _this.bullet_speed));
+          NetWorkManager.update(obj.id, {
+            method: "launch",
+            x: vx,
+            y: vy,
+            z: vz
+          });
+          obj.mesh.mass = 0.0006;
+          return obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz));
         };
       })(this));
     };

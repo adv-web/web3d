@@ -36,12 +36,6 @@ class NetWorkManager
     # connect to the server
     @_client_connect_to_server()
 
-  # add prefab to NetworkManager's pool of prefabs
-  #   @param [Function] prefab a function that receives parameter
-  #     (mess) and returns a GameObject
-  #@addPrefab: (prefab) =>
-  #  @prefabs[prefab.key] = prefab
-
   # add GameObject to the scene and inform other clients
   #   @param [String] key the key of the prefab that you have set
   #   @param [Object] messages side message of this object and this message
@@ -60,6 +54,17 @@ class NetWorkManager
       action: 's'
       prefab: prefab.name
       message: JSON.stringify(message) #{x:,y:,z:}
+      createTime: time
+    @_callbacks[time] = callback if callback?
+    # send message to server
+    @socket.emit(@objectUpdateEvent, data)
+
+  @update: (object, message, callback = null) =>
+    time = Date.now()
+    data =
+      action: 'u'
+      objectId: object.id
+      message: JSON.stringify(message)
       createTime: time
     @_callbacks[time] = callback if callback?
     # send message to server
@@ -117,10 +122,12 @@ class NetWorkManager
 
   @_spawn: (data) =>
     prefab = Data.prefab[data.prefab]
+    console.log data
     message = JSON.parse(data.message)
     ps = if message.position then message.position else {x: 0, y: 0, z: 0}
     rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
     obj = @scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z))
+    obj.id = data.objectId
     @gameObjects[data.objectId] = obj # save to network objects' pool
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](obj)
@@ -133,6 +140,7 @@ class NetWorkManager
       delete @gameObjects[id]
 
   @_update: (data) =>
+    @gameObjects[data.objectId]?.broadcast(JSON.parse(data.message))
 
   @_client_onconnected: (data) =>
     #The server responded that we are now connected to the server
