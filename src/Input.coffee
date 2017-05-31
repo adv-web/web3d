@@ -6,6 +6,12 @@ class Input
   # @nodoc
   @_keyBitmap: []
 
+  @canMove = true
+
+  @axis =
+    vertical: "vertical",
+    horizontal: "horizontal"
+
   # @private
   @_onKeyDown: (event) ->
     Input._keyBitmap[event.keyCode] = true
@@ -26,6 +32,26 @@ class Input
   @isPressed: (arg) ->
     code = if isNaN(arg) then arg.toUpperCase().charCodeAt(0) else arg
     return !!Input._keyBitmap[code]
+
+  # Returns the value of the virtual axis identified by axisName.
+  # The value will be in the range -1 or 0 or 1 for keyboard input.
+  @getAxis: (axis) =>
+    num = 0
+
+    switch axis
+      when @axis.vertical
+        if @isPressed('S')
+          num += 1
+        if @isPressed('W')
+          num -= 1
+      when @axis.horizontal
+        if @isPressed('D')
+          num += 1
+        if @isPressed('A')
+          num -= 1
+
+    return if @canMove then num else -num
+
 
   # @private
   @_onclick: () =>

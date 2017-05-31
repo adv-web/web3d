@@ -15,7 +15,7 @@ class GUIDatComponent extends NetWorkComponent
     gui.add(fpc, 'sensitivity').min(0).step(0.5)
     gui.add(fpc, 'move_velocity').min(0).step(0.5)
     gui.add(fpc, 'jump_velocity').min(0).step(0.5)
-    gui.add(fpc, 'activateMoveRate').min(1).max(20).step(1)
+    # gui.add(fpc, 'activateMoveRate').min(1).max(20).step(1)
 
     nwtm = @gameObject.getComponent("NetWorkTransformComponent")
-    gui.add(nwtm, 'networkSendRate').min(10).max(100).step(5)
+    gui.add(nwtm, 'networkSendRate').min(1).max(50).step(1)

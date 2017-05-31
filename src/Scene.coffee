@@ -9,6 +9,7 @@ HUD = require("./component/HUD")
 NetWorkComponent = require("./component/NetWorkComponent")
 NetWorkTransformComponent = require("./component/NetWorkTransformComponent")
 TreeCollider = require("./component/TreeCollider")
+BoxCollider = require("./component/colliders/BoxCollider")
 # The scene in game to contain game objects and other essential objects.
 #
 # To render the scene, it will auto detect cameras and save it to an array when add a game object to the scene.

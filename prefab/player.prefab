@@ -23,6 +23,10 @@
     },
     {
       "name": "NetWorkTransformComponent"
+    },
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false}"
     }
   ]
 }
