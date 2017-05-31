@@ -2,5 +2,11 @@
   "name": "cube",
   "meshType": "vox",
   "mesh": "cube",
-  "mass": 0
+  "mass": 0,
+  "components": [
+      {
+        "name": "BoxCollider",
+        "param": "{isTrigger: false, center: {x: 0, y: 0.5, z: 0}}"
+      }
+  ]
 }
