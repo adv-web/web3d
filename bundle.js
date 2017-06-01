@@ -372,9 +372,10 @@
 
     module.exports = NetWorkManager;
 
-    NetWorkManager.init = function(scene, playerPrefab) {
+    NetWorkManager.init = function(scene, playerPrefab, serverAddress) {
       NetWorkManager.scene = scene;
       NetWorkManager.playerPrefab = playerPrefab;
+      NetWorkManager.serverAddress = serverAddress;
       NetWorkManager.local_time = new Date().getTime();
       NetWorkManager.objectUpdateEvent = "object.update";
       NetWorkManager.gameObjects = {};
@@ -384,10 +385,11 @@
       };
       NetWorkManager.net_latency = 0;
       NetWorkManager._callbacks = {};
+      NetWorkManager._client_start();
       return NetWorkManager;
     };
 
-    NetWorkManager.client_start = function() {
+    NetWorkManager._client_start = function() {
       return NetWorkManager._client_connect_to_server();
     };
 
@@ -442,7 +444,7 @@
     };
 
     NetWorkManager._client_connect_to_server = function() {
-      NetWorkManager.socket = io('http://localhost:5000/game');
+      NetWorkManager.socket = io(NetWorkManager.serverAddress);
       NetWorkManager.socket.on('connect', function() {
         NetWorkManager.players.self.state = "connecting";
         return console.log("self.status:" + NetWorkManager.players.self.state);
@@ -482,7 +484,7 @@
       obj.id = data.objectId;
       NetWorkManager.gameObjects[data.objectId] = obj;
       if (NetWorkManager._callbacks[data.createTime] != null) {
-        NetWorkManager._callbacks[data.createTime](obj);
+        NetWorkManager._callbacks[data.createTime](obj, message);
         return delete NetWorkManager._callbacks[data.createTime];
       }
     };
@@ -497,8 +499,15 @@
     };
 
     NetWorkManager._update = function(data) {
-      var ref;
-      return (ref = NetWorkManager.gameObjects[data.objectId]) != null ? ref.broadcast(JSON.parse(data.message)) : void 0;
+      var message, ref;
+      message = JSON.parse(data.message);
+      if ((ref = NetWorkManager.gameObjects[data.objectId]) != null) {
+        ref.broadcast(message);
+      }
+      if (NetWorkManager._callbacks[data.createTime] != null) {
+        NetWorkManager._callbacks[data.createTime](message);
+        return delete NetWorkManager._callbacks[data.createTime];
+      }
     };
 
     NetWorkManager._client_onconnected = function(data) {
@@ -12029,7 +12038,7 @@ return jQuery;
         if (other_mesh.name !== 'ground') {
           console.log("player on collision");
           if (!this.isTrigger && !other_mesh.isTrigger) {
-            Input._canMove = false;
+            Input.stopMove();
             setTimeout(Input.activeMove, this.activateMoveTime);
           }
         }
@@ -12097,7 +12106,7 @@ function scene1(scene) {
     scene.spawn(Data.prefab.wall, new THREE.Vector3(3.2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
     scene.spawn(Data.prefab.wall, new THREE.Vector3(-2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
 
-    NetWorkManager.init(scene, Data.prefab.player);
+    NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
 
 }
 
@@ -12105,7 +12114,6 @@ function scene1(scene) {
 Data.load(null, null, function() {
     var scene = new Scene(scene1);
     Game.setScene(scene).start();
-    NetWorkManager.client_start();
 });
 
 document.addEventListener('keydown', Game.requestFullScreen, false);

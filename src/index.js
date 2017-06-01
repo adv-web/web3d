@@ -38,7 +38,6 @@ function scene1(scene) {
 Data.load(null, null, function() {
     var scene = new Scene(scene1);
     Game.setScene(scene).start();
-    NetWorkManager.client_start();
 });
 
 document.addEventListener('keydown', Game.requestFullScreen, false);

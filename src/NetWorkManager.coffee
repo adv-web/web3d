@@ -33,11 +33,12 @@ class NetWorkManager
       others: {}
     @net_latency = 0
     @_callbacks = {}  # save when call #spawn, use in #_spawn
+    @_client_start()
     return this
 
   # initialize the client and connect to the server
-  # this function should be called when you start the game.
-  @client_start: () =>
+  # @private
+  @_client_start: () =>
     # connect to the server
     @_client_connect_to_server()
 
@@ -223,12 +224,11 @@ class NetWorkManager
     @players.others[id] = player
     console.log(id+" joined game")
 
-
   # @private
   @_client_onotherleftgame: (id) =>
-  @scene.remove(@players.others[id])
-  delete  @players.others[id]
-  console.log(id+" left game")
+    @scene.remove(@players.others[id])
+    delete  @players.others[id]
+    console.log(id+" left game")
 
   # @private
   @_client_onhostgame: (@game_id) =>

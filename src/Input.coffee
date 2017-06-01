@@ -68,7 +68,7 @@ class Input
 
   # let the player stop move
   # @nodoc
-  @_stopMove: =>
+  @stopMove: =>
     @_canMove = false
 
   # let the player start move
