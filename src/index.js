@@ -30,7 +30,7 @@ function scene1(scene) {
     scene.spawn(Data.prefab.wall, new THREE.Vector3(3.2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
     scene.spawn(Data.prefab.wall, new THREE.Vector3(-2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
 
-    NetWorkManager.init(scene, Data.prefab.player);
+    NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
 
 }
 
@@ -38,7 +38,6 @@ function scene1(scene) {
 Data.load(null, null, function() {
     var scene = new Scene(scene1);
     Game.setScene(scene).start();
-    NetWorkManager.client_start();
 });
 
 document.addEventListener('keydown', Game.requestFullScreen, false);

@@ -9,11 +9,9 @@ test_scripts/
 test/
 
 # complie file
-/src/*.map
-/src/component/*.map
-/src/*.js
-/src/component/*.js
+/src/*.js*
+/src/component/*.js*
+/src/component/colliders/*.js*
 !/src/index.js
 
 phrase1_doc.md
-

@@ -19,73 +19,46 @@
       Index
     </a>
     &raquo;
-    <span class='title'>FirstPersonShooter</span>
+    <span class='title'>Collider</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        FirstPersonShooter
+        Collider
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>src\component\FirstPersonShooter.coffee</td>
+          <td>src\component\colliders\Collider.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+            <a href='../class/Component.html'>Component</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The first-person shooter, give you the ability that,
-when you click mouse, a small ball will be generated and fly to your first-person direction.
-The ball has it collider, you can detect it by assert other_mesh.name = &#39;bullet&#39;.</p><p>name = &quot;FirstPersonShooter&quot;</p>
+  <p>the Collider class will detector the collision.</p><p>if the collision happened, it will call the onCollision method
+under the game object, you can put the onCollision method in any Component
+of this game object</p><ul>
+<li>onCollision(other_mesh, linear_velocity, angular_velocity)</li>
+</ul><p>@require [Physijs Mesh]: this collider must be add to game object
+that has a Physijs Mesh</p><p>you can extend this class to implement you own collider, but never to use it
+directly. use it&#39;s subclass instead</p>
 </div>
 <div class='tags'>
 </div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../class/BoxCollider.html'>BoxCollider</a>
+      </p>
       <h2>Property Summary</h2>
-      <dl class='properties'>
-        <dt id='enabled-property'>
-          <span class='signature'>
-            (boolean)
-            <b>
-              enabled
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          tell whether the controller is enabled, initially true 
-        </dd>
-        <dt id='cooldown-property'>
-          <span class='signature'>
-            (number)
-            <b>
-              cooldown
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          the cool down time (ms), initially 1000 
-        </dd>
-        <dt id='bullet_speed-property'>
-          <span class='signature'>
-            (number)
-            <b>
-              bullet_speed
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          the initial speed of bullet, initially 10 
-        </dd>
-      </dl>
       <h3 class='inherited'>
         Properties inherited from
-        <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+        <a href='../class/Component.html'>Component</a>
       </h3>
       <p class='inherited'>
         <a href='../class/Component.html#name-property'>name</a>
@@ -95,10 +68,9 @@ The ball has it collider, you can detect it by assert other_mesh.name = &#39;bul
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+          <a href='../class/Component.html'>Component</a>
         </h3>
         <p class='inherited'>
-          <a href='../class/NetWorkComponent.html#onStartLocalPlayer-dynamic'>#onStartLocalPlayer</a>
           <a href='../class/Component.html#receive-dynamic'>#receive</a>
         </p>
       </h2>
@@ -108,50 +80,31 @@ The ball has it collider, you can detect it by assert other_mesh.name = &#39;bul
     <p class='signature' id='constructor-dynamic'>
       #
 (void)
-<b>constructor</b><span>(options = {})</span>
+<b>constructor</b><span>(name, isTrigger)</span>
       <br>
     </p>
-    <div class='docstring'>
-  <p>Constructor a first-person shooter.</p>
-</div>
-<div class='tags'>
+    <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>options</span>
+      <span class='name'>name</span>
       <span class='type'>
         (
-          <tt>Object</tt>
+          <tt>String</tt>
         )
       </span>
       &mdash;
-      <span class='desc'>the optional parameters </span>
-    </li>
-  </ul>
-  <h3>
-    Options Hash:
-    (options):
-  </h3>
-  <ul class='options'>
-    <li>
-      <span class='name'>cooldown</span>
-      <span class='type'>
-        (
-          <tt>number</tt>
-        )
-      </span>
-      &mdash;
-      <span class='desc'>the cool down time (ms) </span>
+      <span class='desc'>the name of this Collider </span>
     </li>
     <li>
-      <span class='name'>bullet_speed</span>
+      <span class='name'>isTrigger</span>
       <span class='type'>
         (
-          <tt>number</tt>
+          <tt>Boolean</tt>
         )
       </span>
       &mdash;
-      <span class='desc'>the initial speed of bullet </span>
+      <span class='desc'>isTrigger If enabled, this Collider is used only for triggering events, and is ignored by the physics engine which simply means the player can go through it. </span>
     </li>
   </ul>
 </div>

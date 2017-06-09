@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>CoffeeScript API Documentation</title>
+  <script src='../javascript/application.js'></script>
+  <script src='../javascript/search.js'></script>
+  <link rel='stylesheet' href='../stylesheets/application.css' type='text/css'>
+</head>
+  <body>
+    <div id='base' data-path='../'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='../extra/README.md.html' title='Web3d'>
+      Web3d
+    </a>
+    &raquo;
+    <a href='../alphabetical_index.html' title='Index'>
+      Index
+    </a>
+    &raquo;
+    <span class='title'>NetWorkManager</span>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class:
+        NetWorkManager
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>src\NetWorkManager.coffee</td>
+        </tr>
+      </table>
+      <h2>Overview</h2>
+      <div class='docstring'>
+  <p>Network Manager is unique in the client. It will do many works that
+are simply classified as follows:</p><ol>
+<li>It will connect to the server. Besides, it will receive and handle message about that other players join and leave the game, and send message to server if we leave the game. Mostly important, it will store and maintain the socket. and other class can use this socket to register event or emit message</li>
+<li>It will store and maintain the prefabs of game objects. Recall GameManager on the server, this class will receive the spawn or destroy message from GameManager. And then it will do the work of spawn objects to the scene. And then it will store theses objects in order to destroy them later</li>
+</ol><p>You can use it&#39;s methods to do some synchronization works following the instructions as bellow</p>
+</div>
+<div class='tags'>
+</div>
+      <h2>Class Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#init-static'>
+        .
+(void)
+<b>init</b><span>(scene, playerPrefab, serverAddress)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      this function must be called before you use Network Manager. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#spawn-static'>
+        .
+(void)
+<b>spawn</b><span>(prefab, message, callback = null)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      add GameObject to the scene and inform other clients 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#update-static'>
+        .
+(void)
+<b>update</b><span>(object, message, callback = null)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      update the status of the game object 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove-static'>
+        .
+(void)
+<b>remove</b><span>(object, callbackFunction)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      remove object from the scene 
+    </span>
+  </li>
+</ul>
+      <h2>Class Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='init-static'>
+      .
+(void)
+<b>init</b><span>(scene, playerPrefab, serverAddress)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>this function must be called before you use Network Manager.</p><ul>
+<li>must set scene</li>
+<li>must set player prefab</li>
+<li>must set the server address</li>
+</ul>
+
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>scene</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/Scene.html'>Scene</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the scene that you will display on the window </span>
+    </li>
+    <li>
+      <span class='name'>playerPrefab</span>
+      <span class='type'>
+        (
+          <tt>Prefab</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the the json prefab that store the message of the object </span>
+    </li>
+    <li>
+      <span class='name'>serverAddress</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the server address </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='spawn-static'>
+      .
+(void)
+<b>spawn</b><span>(prefab, message, callback = null)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>add GameObject to the scene and inform other clients</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>prefab</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the prefab that you have set </span>
+    </li>
+    <li>
+      <span class='name'>message</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>side message of this object. if you want to set position and rotation message. the message should be {position: {x:,y:,z}, rotation: {x:,y:,z}, other_message} other_message should be definited and used by your self. the message will be send to the callback function if it is set </span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>callback function. Default one is null </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='update-static'>
+      .
+(void)
+<b>update</b><span>(object, message, callback = null)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>update the status of the game object</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>object</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/GameObject.html'>GameObject</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the game object to be updated </span>
+    </li>
+    <li>
+      <span class='name'>message</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>you definite it and you should use it properly. this message will broadcast to all game objects. see GameObject.broadcast for details and the message will be send to the callback function if it is set </span>
+    </li>
+    <li>
+      <span class='name'>callback</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the callback function. Default one is null </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove-static'>
+      .
+(void)
+<b>remove</b><span>(object, callbackFunction)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>remove object from the scene</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>object</span>
+      <span class='type'>
+        (
+          <tt><a href='../class/GameObject.html'>GameObject</a></tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the object to be removed </span>
+    </li>
+    <li>
+      <span class='name'>callbackFunction</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>callback function to show whether this operation is successful </span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  By
+  <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
+    Codo
+  </a>
+  2.1.2
+  &#10034;
+  Press H to see the keyboard shortcuts
+  &#10034;
+  <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
+  &#10034;
+  <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
+</div>
+<iframe id='search_frame'></iframe>
+<div id='fuzzySearch'>
+  <input type='text'>
+  <ol></ol>
+</div>
+<div id='help'>
+  <p>
+    Quickly fuzzy find classes, mixins, methods, file:
+  </p>
+  <ul>
+    <li>
+      <span>T</span>
+      Open fuzzy finder dialog
+    </li>
+  </ul>
+  <p>
+    Control the navigation frame:
+  </p>
+  <ul>
+    <li>
+      <span>L</span>
+      Toggle list view
+    </li>
+    <li>
+      <span>C</span>
+      Show class list
+    </li>
+    <li>
+      <span>I</span>
+      Show mixin list
+    </li>
+    <li>
+      <span>F</span>
+      Show file list
+    </li>
+    <li>
+      <span>M</span>
+      Show method list
+    </li>
+    <li>
+      <span>E</span>
+      Show extras list
+    </li>
+  </ul>
+  <p>
+    You can focus and blur the search input:
+  </p>
+  <ul>
+    <li>
+      <span>S</span>
+      Focus search input
+    </li>
+    <li>
+      <span>Esc</span>
+      Blur search input
+    </li>
+  </ul>
+</div>
+  </body>
+</html>

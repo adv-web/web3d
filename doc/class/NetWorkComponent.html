@@ -19,86 +19,86 @@
       Index
     </a>
     &raquo;
-    <span class='title'>FirstPersonShooter</span>
+    <span class='title'>NetWorkComponent</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        FirstPersonShooter
+        NetWorkComponent
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>src\component\FirstPersonShooter.coffee</td>
+          <td>src\component\NetWorkComponent.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+            <a href='../class/Component.html'>Component</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The first-person shooter, give you the ability that,
-when you click mouse, a small ball will be generated and fly to your first-person direction.
-The ball has it collider, you can detect it by assert other_mesh.name = &#39;bullet&#39;.</p><p>name = &quot;FirstPersonShooter&quot;</p>
+  <p>Base class which should be inherited by scripts which
+contain networking functionality.</p><p>It receive various callbacks help you to decide whether
+the player is a local player(@isLocal) when in a multi player game.
+And it allows you to do something only to local player or only to
+other players</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffeescript'>class MyComponent extends NetWorkComponent
+
+  update: =&gt;
+    if @isLocal
+      # do something</code></pre>
+  </div>
 </div>
 <div class='tags'>
 </div>
+      <h2>Direct Known Subclasses</h2>
+      <p class='children'>
+        <a href='../class/FirstPersonController.html'>FirstPersonController</a>
+        <a href='../class/FirstPersonShooter.html'>FirstPersonShooter</a>
+        <a href='../class/GUIDat.html'>GUIDat</a>
+        <a href='../class/NetWorkTransform.html'>NetWorkTransform</a>
+      </p>
       <h2>Property Summary</h2>
-      <dl class='properties'>
-        <dt id='enabled-property'>
-          <span class='signature'>
-            (boolean)
-            <b>
-              enabled
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          tell whether the controller is enabled, initially true 
-        </dd>
-        <dt id='cooldown-property'>
-          <span class='signature'>
-            (number)
-            <b>
-              cooldown
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          the cool down time (ms), initially 1000 
-        </dd>
-        <dt id='bullet_speed-property'>
-          <span class='signature'>
-            (number)
-            <b>
-              bullet_speed
-            </b>
-          </span>
-        </dt>
-        <dd class='desc'>
-          the initial speed of bullet, initially 10 
-        </dd>
-      </dl>
       <h3 class='inherited'>
         Properties inherited from
-        <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+        <a href='../class/Component.html'>Component</a>
       </h3>
       <p class='inherited'>
         <a href='../class/Component.html#name-property'>name</a>
         <a href='../class/Component.html#gameObject-property'>gameObject</a>
       </p>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#onStartLocalPlayer-dynamic'>
+        #
+(void)
+<b>onStartLocalPlayer</b><span>()</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      this function will be call when the Network Manager initialize the local player. 
+    </span>
+  </li>
+</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+          <a href='../class/Component.html'>Component</a>
         </h3>
         <p class='inherited'>
-          <a href='../class/NetWorkComponent.html#onStartLocalPlayer-dynamic'>#onStartLocalPlayer</a>
           <a href='../class/Component.html#receive-dynamic'>#receive</a>
         </p>
       </h2>
@@ -108,52 +108,41 @@ The ball has it collider, you can detect it by assert other_mesh.name = &#39;bul
     <p class='signature' id='constructor-dynamic'>
       #
 (void)
-<b>constructor</b><span>(options = {})</span>
+<b>constructor</b><span>(name)</span>
       <br>
     </p>
-    <div class='docstring'>
-  <p>Constructor a first-person shooter.</p>
-</div>
-<div class='tags'>
+    <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>options</span>
+      <span class='name'>name</span>
       <span class='type'>
         (
-          <tt>Object</tt>
+          <tt>String</tt>
         )
       </span>
       &mdash;
-      <span class='desc'>the optional parameters </span>
+      <span class='desc'>the name of this component </span>
     </li>
   </ul>
-  <h3>
-    Options Hash:
-    (options):
-  </h3>
-  <ul class='options'>
-    <li>
-      <span class='name'>cooldown</span>
-      <span class='type'>
-        (
-          <tt>number</tt>
-        )
-      </span>
-      &mdash;
-      <span class='desc'>the cool down time (ms) </span>
-    </li>
-    <li>
-      <span class='name'>bullet_speed</span>
-      <span class='type'>
-        (
-          <tt>number</tt>
-        )
-      </span>
-      &mdash;
-      <span class='desc'>the initial speed of bullet </span>
-    </li>
-  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='onStartLocalPlayer-dynamic'>
+      #
+(void)
+<b>onStartLocalPlayer</b><span>()</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>this function will be call when the Network Manager initialize the local player.
+You can do something only for the local player such as binding the camera.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
 </div>

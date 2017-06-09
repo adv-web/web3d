@@ -1,5 +1,6 @@
 $ = require("jquery")
 
+# manage the prefab file and other raw files like textures, audio and so on
 class Data
   module.exports = this
 

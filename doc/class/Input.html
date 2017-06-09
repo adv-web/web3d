@@ -35,10 +35,25 @@
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>The static class that listens to key events.</p>
+  <p>The static class that listens to key events.</p><p>You can register the onclick event. - registerClickResponse: (callback)</p><p>To read an axis use Input.GetAxis with one of the
+following default axes: &quot;horizontal&quot; and &quot;vertical&quot; are mapped to A, W, S, D keys.</p>
 </div>
 <div class='tags'>
 </div>
+      <h2>Variables Summary</h2>
+      <dl class='constants'>
+  <dt id='axis-variable'>
+    axis
+    =
+  </dt>
+  <dd>
+    <pre><code class='coffeescript'>{
+  vertical: &quot;vertical&quot;,
+  horizontal: &quot;horizontal&quot;
+}</code></pre>
+    
+  </dd>
+</dl>
       <h2>Class Method Summary</h2>
       <ul class='summary'>
   <li>
@@ -50,6 +65,45 @@
       </a>
     </span>
     <span class='desc'>
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getAxis-static'>
+        .
+(Integer)
+<b>getAxis</b><span>(axis)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Returns the value of the virtual axis identified by axisName. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#registerClickResponse-static'>
+        .
+(void)
+<b>registerClickResponse</b><span>(res)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      add response to click event 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#removeClickResponse-static'>
+        .
+(void)
+<b>removeClickResponse</b><span>(res)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      add response to click event 
     </span>
   </li>
 </ul>
@@ -142,6 +196,99 @@
 </div>
     </div>
   </div>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getAxis-static'>
+      .
+(Integer)
+<b>getAxis</b><span>(axis)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Returns the value of the virtual axis identified by axisName.
+The value will be in the range -1 or 0 or 1 for keyboard input.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>axis</span>
+      <span class='type'>
+        (
+          <tt>String</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>vertical or horizontal </span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (
+        <tt>Integer</tt>
+      )
+      &mdash;
+      <span class='desc'>the velocity </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='registerClickResponse-static'>
+      .
+(void)
+<b>registerClickResponse</b><span>(res)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>add response to click event</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>res</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a callback function that response to click event </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='removeClickResponse-static'>
+      .
+(void)
+<b>removeClickResponse</b><span>(res)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>add response to click event</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>res</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>a callback function that had been registered before </span>
+    </li>
+  </ul>
 </div>
   </div>
 </div>
