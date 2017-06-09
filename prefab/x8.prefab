@@ -2,5 +2,11 @@
   "name": "x8",
   "meshType": "vox",
   "mesh": "x8",
-  "mass": 0
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y: 2, z: 0}}"
+    }
+  ]
 }

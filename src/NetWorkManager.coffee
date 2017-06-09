@@ -140,6 +140,7 @@ class NetWorkManager
 
   # @private
   @_spawn: (data) =>
+    # console.log(data)
     prefab = Data.prefab[data.prefab]
     # console.log data
     message = JSON.parse(data.message)
@@ -162,6 +163,7 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
+    console.log(message)
     @gameObjects[data.objectId]?.broadcast(message)
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)

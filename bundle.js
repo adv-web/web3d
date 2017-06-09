@@ -501,6 +501,7 @@
     NetWorkManager._update = function(data) {
       var message, ref;
       message = JSON.parse(data.message);
+      console.log(message);
       if ((ref = NetWorkManager.gameObjects[data.objectId]) != null) {
         ref.broadcast(message);
       }
@@ -11686,7 +11687,7 @@ return jQuery;
         position: pos
       }, (function(_this) {
         return function(obj) {
-          NetWorkManager.update(obj.id, {
+          NetWorkManager.update(obj, {
             method: "launch",
             x: vx,
             y: vy,
