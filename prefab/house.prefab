@@ -1,0 +1,12 @@
+{
+  "name": "house",
+  "meshType": "vox",
+  "mesh": "house",
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: true, center: {x: 0, y: 0.4, z: 0}}"
+    }
+  ]
+}

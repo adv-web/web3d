@@ -22,5 +22,35 @@
   },
   {
     "name": "player"
+  },
+  {
+    "name": "container"
+  },
+  {
+    "name": "house"
+  },
+  {
+    "name": "tank_start"
+  },
+  {
+    "name":"fence"
+  },
+  {
+    "name":"pumpkin"
+  },
+  {
+    "name":"car"
+  },
+  {
+    "name":"statue_red"
+  },
+  {
+    "name":"statue_blue"
+  },
+  {
+    "name":"train_container"
+  },
+  {
+    "name":"train_empty"
   }
 ]

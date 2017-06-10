@@ -1,13 +1,8 @@
 [
   {
     "name": "tree",
-    "filename": "obj_tree1",
-    "scale": 0.025
-  },
-  {
-    "name": "wall",
-    "filename": "obj_wall",
-    "scale": 0.2
+    "filename": "christmas_tree",
+    "scale": 0.04
   },
   {
     "name": "cube",
@@ -15,16 +10,61 @@
     "scale": 0.025
   },
   {
+    "name": "house",
+    "filename": "house_broken",
+    "scale": 0.04
+  },
+  {
     "name": "ground",
     "scale": 0.08
   },
   {
-    "name": "x8",
-    "filename": "8x8x8",
-    "scale": 0.25
+    "name":"container",
+    "filename": "container_grey",
+    "scale": 0.1
+  },
+  {
+    "name":"train_container",
+    "filename": "train_container",
+    "scale": 0.1
+  },
+  {
+    "name":"train_empty",
+    "filename": "train_empty",
+    "scale": 0.1
   },
   {
     "name": "chest",
+    "scale": 0.02
+  },
+  {
+    "name": "statue_red",
+    "filename":"obj_statue1",
+    "scale": 0.2
+  },
+  {
+    "name": "statue_blue",
+    "filename":"obj_statue3",
+    "scale": 0.2
+  },
+  {
+    "name": "tank_start",
+    "filename":"veh_tank1",
+    "scale": 0.02
+  },
+  {
+    "name": "fence",
+    "filename":"fence",
+    "scale": 0.02
+  },
+  {
+    "name": "car",
+    "filename":"veh_car3",
+    "scale": 0.02
+  },
+  {
+    "name": "pumpkin",
+    "filename":"obj_pumpkin",
     "scale": 0.02
   }
 ]

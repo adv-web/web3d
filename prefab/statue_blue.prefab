@@ -1,0 +1,12 @@
+{
+  "name": "statue_blue",
+  "meshType": "vox",
+  "mesh": "statue_blue",
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: true, center: {x: 0, y: 1.5, z: 0}}"
+    }
+  ]
+}

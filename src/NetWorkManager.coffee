@@ -221,7 +221,7 @@ class NetWorkManager
 
   # @private
   @_client_onotherjoingame: (id) =>
-    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 1))
+    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 10))
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
@@ -248,7 +248,7 @@ class NetWorkManager
 
   # @private
   @_client_initLocalPlayer: () =>
-    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 1))
+    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, 0.1, 10))
     for key, comp of player.components
       comp.setIsLocal?(true)
       comp.onStartLocalPlayer?()
