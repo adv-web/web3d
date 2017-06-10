@@ -12,11 +12,11 @@ function scene1(scene) {
     scene.add(THREE.SkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
     // light
     scene.add(new THREE.AmbientLight(0x000080,.2));
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.6);
+    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.7);
     directionalLight.position.set(0, 0, 1);
     directionalLight.castShadow = true;
     scene.add(directionalLight);
-    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.6);
+    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.7);
     directionalLightback.position.set(0, 0, -1);
     directionalLightback.rotation.set(0, Math.PI, 0);
     directionalLightback.castShadow = true;
