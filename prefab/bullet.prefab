@@ -6,6 +6,10 @@
   "components": [
     {
       "name": "Bullet"
+    },
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false}"
     }
   ]
 }

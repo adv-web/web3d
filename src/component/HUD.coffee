@@ -13,6 +13,8 @@ class HUD extends Component
   afterAdded: =>
     @_hud = document.createElement('div')
     @_hud.innerHTML = '当前玩家：CZP<br>击中数：0'
+    @_hud.style.opacity = 0.5
+    @_hud.style.top = '0px'
     @_hud.style.height = '100px'
     @_hud.style.width = '200px'
     @_hud.style.position = 'fixed'

@@ -50,4 +50,4 @@ class Collider extends Component
 
   # @nodoc
   beforeRemoved: =>
-    @gameObject.mesh.removeEventListener('collision', @_onCollision.bind(@))
+    @gameObject.mesh?.removeEventListener('collision', @_onCollision.bind(@))

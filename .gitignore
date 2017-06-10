@@ -15,3 +15,4 @@ test/
 !/src/index.js
 
 phrase1_doc.md
+npm-debug.log

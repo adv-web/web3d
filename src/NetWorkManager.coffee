@@ -42,6 +42,10 @@ class NetWorkManager
     # connect to the server
     @_client_connect_to_server()
 
+  # set the spawn point of the player
+  # param [THREE.Vector3] spawnPoint the spawn point of player.
+  @setSpawnPoint: (@spawnPoint) =>
+
   # add GameObject to the scene and inform other clients
   #
   # @param [String] prefab the prefab that you have set
@@ -221,7 +225,7 @@ class NetWorkManager
 
   # @private
   @_client_onotherjoingame: (id) =>
-    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, -0.5, 10))
+    player = @_get_player()
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
@@ -231,6 +235,13 @@ class NetWorkManager
     @scene.remove(@players.others[id])
     delete  @players.others[id]
     console.log(id+" left game")
+
+  # @private
+  @_get_player: =>
+    if @spawnPoint
+      return Game.scene.spawn(@playerPrefab, @spawnPoint)
+    else
+      return Game.scene.spawn(@playerPrefab)
 
   # @private
   @_client_onhostgame: (@game_id) =>
@@ -248,7 +259,7 @@ class NetWorkManager
 
   # @private
   @_client_initLocalPlayer: () =>
-    player = Game.scene.spawn(@playerPrefab, new THREE.Vector3(0, 0.1, 10))
+    player = @_get_player()
     for key, comp of player.components
       comp.setIsLocal?(true)
       comp.onStartLocalPlayer?()

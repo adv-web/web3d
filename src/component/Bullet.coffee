@@ -11,18 +11,9 @@ class Bullet extends Component
   constructor: () ->
     super("Bullet")
 
-  # @nodoc
-  afterAdded: =>
-    @gameObject.mesh.addEventListener('collision', @_onCollision)
-
-  # @nodoc
-  beforeRemoved: =>
-    @gameObject.mesh?.removeEventListener('collision', @_onCollision)
-
   # @private
-  _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
+  onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     @gameObject.addComponent(new ExplodeAnimation(@_onExplodeFinish))
-    @gameObject.mesh.removeEventListener('collision', @_onCollision)
     @gameObject.mesh = null
 
   # @private

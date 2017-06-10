@@ -66,6 +66,7 @@ function scene1(scene) {
     //scene.spawn(Data.prefab.tank_start);
 
     NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
+    NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, 1, -5))
 
 }
 
