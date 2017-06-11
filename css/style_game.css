@@ -42,7 +42,7 @@ button {
     height: 90px;
     position: absolute;
     top: 120px;
-    left: 750px;
+    left: 41%;
     background: no-repeat url("../images/gif-8-1.png") left top;
     opacity: 0.30;
 }
@@ -52,7 +52,7 @@ button {
     height: 90px;
     position: absolute;
     top: 120px;
-    left: 750px;
+    left: 41%;
     font: 80px/18px 'ds-digitalbold';
     color: #f4ab20;
     text-align: center;
@@ -102,6 +102,16 @@ button {
     right: 42.6%;
     /*background-color: ;*/
 }
+
+#prepare-codetime {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 45%;
+    position: absolute;
+    /*background-color: ;*/
+}
+
 
 .coldtime-bg {
     width: 250px;
@@ -416,6 +426,69 @@ button {
 }
 
 
+#prepare-location-name {
+    width: 100px;
+    height: 50px;
+    margin-left: 135px;
+    margin-top: -28px;
+    position: absolute;
+    font: 28px/18px 'bankgothic_md_btmedium';
+    font-weight: bold;
+    color: #ee4300;
+    opacity: 0.8;
+    line-height: 30px;
+}
+
+#prepare-location-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -35px;
+    left: 80px;
+    background: no-repeat url("../images/gif-3.png") left top;
+    background-size: 40px 40px;
+    border-radius: 50px;
+    transition: all .1s;
+    animation: rotate 10s infinite linear;
+}
+
+
+/* 开战 */
+
+#start {
+    width: 200px;
+    height: 120px;
+    top: 75%;
+    left: 45%;
+    color: #FFD478;
+    border-color: #FFD478;
+    overflow: hidden;
+    position: absolute;
+    font-size: 50px;
+}
+
+/* 开战 */
+
+#start:before {
+    content: "";
+    background-color: #FFD478;
+    transform: skew(45deg, 0);
+    width: 0;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: -30px;
+    z-index: -1;
+    transition: all .4s;
+}
+
+#start:hover {
+    color: #FFFFFF;
+}
+
+#start:hover:before {
+    width: 150%;
+}
 
 
 /************聊天*************/
@@ -431,7 +504,7 @@ button {
 }
 
 .chat .typing {
-    color: gray;
+    color: whitesmoke;
 }
 
 .chat-thread {
