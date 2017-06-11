@@ -22,20 +22,20 @@ class AudioSource extends Component
         sound.play()
       );
 
-    # player a sound
-    # @param [String] audioClip the path of the audio source
-    # @param [Float] volume the volume of the sound, between [0,1]
+  # player a sound
+  # @param [String] audioClip the path of the audio source
+  # @param [Float] volume the volume of the sound, between [0,1]
   @play: (audioClip, volume=0.5) =>
-      if @audioClips[audioClip]
-        @audioClips[audioClip].play()
-      else
-        sound = new THREE.Audio(AudioListener._listener);
-        if audioClip
-          new THREE.AudioLoader().load(audioclip, ( buffer ) =>
-            sound.setBuffer(buffer)
-            sound.setLoop(false)
-            sound.setVolume(volume)
-            sound.play()
-            # cache it
-            @audioClips[audioClip] = sound
-          );
+    if @audioClips[audioClip]
+      @audioClips[audioClip].play()
+    else
+      sound = new THREE.Audio(AudioListener._listener);
+      if audioClip
+        new THREE.AudioLoader().load(audioclip, ( buffer ) =>
+          sound.setBuffer(buffer)
+          sound.setLoop(false)
+          sound.setVolume(volume)
+          sound.play()
+          # cache it
+          @audioClips[audioClip] = sound
+        );
