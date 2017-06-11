@@ -9,7 +9,7 @@ var Data = require("./Data");
 // 场景1初始化方法
 function scene1(scene) {
     // sky box
-    scene.add(THREE.SkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
+    scene.add(THREE.SkyBox(['images/Right.jpg', 'images/Left.jpg', 'images/Up.jpg', 'images/Down.jpg', 'images/Back.jpg', 'images/Front.jpg'], 100));
     // light
     scene.add(new THREE.AmbientLight(0x000080,.2));
     var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.7);

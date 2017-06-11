@@ -167,7 +167,7 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
-    console.log(message)
+    # console.log(message)
     @gameObjects[data.objectId]?.broadcast(message)
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)

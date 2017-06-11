@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* 样式表 */
+@font-face {/*液晶字体*/
+    font-family: 'ds-digitalbold';
+    src: url('font/_-webfont.eot');
+    src: url('font/_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/_-webfont.woff2') format('woff2'),
+         url('font/_-webfont.woff') format('woff'),
+         url('font/_-webfont.ttf') format('truetype'),
+         url('font/_-webfont.svg#ds-digitalbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {/*变现金刚字体*/
+    font-family: 'bankgothic_md_btmedium';
+    src: url('font/bnkgothm-webfont.eot');
+    src: url('font/bnkgothm-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/bnkgothm-webfont.woff2') format('woff2'),
+         url('font/bnkgothm-webfont.woff') format('woff'),
+         url('font/bnkgothm-webfont.ttf') format('truetype'),
+         url('font/bnkgothm-webfont.svg#bankgothic_md_btmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {/*圆形字体*/
+    font-family: 'nasalizationregular';
+    src: url('font/nasalization_rg-webfont.woff2') format('woff2'),
+         url('font/nasalization_rg-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {/*科幻字体加粗*/
+    font-family: 'transformersregular';
+    src: url('font/transformers_movie-webfont.woff2') format('woff2'),
+         url('font/transformers_movie-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body,div,q,iframe,form,ul,li,dl,dt,dd,{ margin: 0; padding: 0;}
+img,fieldset{border: none 0;}
+.font-yt{font-family: "microsoft yahei";}/*中文圆滑字体*/
+.font-ht{font-family: "黑体";}/*黑体字体*/
+.font-kt{font-family: "楷体";}/*楷体字体*/
+.left{ float:left;} /*左浮动*/
+.right{ float:right;}
+.text-c{text-align:center;}/*文本居中*/ 
+.cursor{ cursor:pointer;}/*设置鼠标指针*/
+.li-dot{list-style-type:none;}/*去掉li小圆点*/
+.none{display:none;}/*不显示*/   
+.yes{display:block;}/*显示*/
+.pos-rel{position:relative;}/*相对定位*/
+.delay-1{transition-duration: 0.1s;}/*延迟0.1s*/
+.delay-2{transition-duration: 0.2s;}/*延迟0.2s*/
+.delay-3{transition-duration: 0.3s;}/*延迟0.3s*/
+.delay-4{transition-duration: 0.4s;}/*延迟0.4s*/
+.delay-5{transition-duration: 0.5s;}/*延迟0.5s*/
+.delay-6{transition-duration: 0.6s;}/*延迟0.6s*/
+.delay-7{transition-duration: 0.7s;}/*延迟0.7s*/
+.delay-8{transition-duration: 0.8s;}/*延迟0.8s*/
+.delay-9{transition-duration: 0.9s;}/*延迟0.9s*/
+.delay-10{transition-duration: 1s;}/*延迟1s*/

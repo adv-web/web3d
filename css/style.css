@@ -1,0 +1,864 @@
+@charset "utf-8";
+body {
+    /*width: auto;
+    height: auto;*/
+    width: 1920px;
+    height: 1080px;
+    background: rgba(24, 38, 41, 0.7);
+}
+
+button {
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 2px solid;
+  font: 16px 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  transition: all .5s;
+}
+
+
+/************目标积分*************/
+
+
+/* 炫酷标题 */
+
+.panel .title {
+    width: auto;
+    position: absolute;
+    top: -20px;
+    left: 910px;
+    font: 40px/18px '楷体';
+}
+
+.panel .masked0 {
+    line-height: 40px;
+}
+
+.panel .score-bg {
+    width: 500px;
+    height: 90px;
+    position: absolute;
+    top: 120px;
+    left: 750px;
+    background: no-repeat url("../images/gif-8-1.png") left top;
+    opacity: 0.30;
+}
+
+.panel .score {
+    width: 500px;
+    height: 90px;
+    position: absolute;
+    top: 120px;
+    left: 750px;
+    font: 80px/18px 'ds-digitalbold';
+    color: #f4ab20;
+    text-align: center;
+    line-height: 90px;
+    letter-spacing: 20px;
+}
+
+
+/************瞄准器*************/
+
+.panel .aim1 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 43%;
+    left: 48%;
+    opacity: 0.70;
+    background: no-repeat url("../images/gif-5.png") left top;
+    background-size: 150px 150px;
+    border-radius: 75px;
+    transition: all .6s;
+    animation: rotate 6s infinite linear;
+}
+
+.panel .aim2 {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 43%;
+    left: 48%;
+    opacity: 0.50;
+    background: no-repeat url("../images/gif-4.png") left top;
+    background-size: 150px 150px;
+    border-radius: 75px;
+    transition: all .20s;
+    animation: rotate 20s infinite linear;
+}
+
+
+/************炮弹冷却时间*************/
+
+#coldtime {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 38.5%;
+    right: 42.6%;
+    /*background-color: ;*/
+}
+
+.coldtime-bg {
+    width: 250px;
+    height: 250px;
+}
+
+.coldtime-bg .coldtime-bg1 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.80;
+    background: no-repeat url("../images/gif-11-1.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all 0.6s;
+    animation: rotate 0.6s infinite linear;
+}
+
+.coldtime-bg .coldtime-bg2 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.50;
+    background: no-repeat url("../images/gif-11-2.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all .2s;
+    animation: rotate 2s infinite linear;
+}
+
+.coldtime-bg .coldtime-bg3 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.50;
+    background: no-repeat url("../images/gif-11-3.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all 0.1s;
+    animation: rotate 0.1s infinite linear;
+}
+
+.coldtime-bg .coldtime-title {
+    width: 180px;
+    height: 30px;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+    margin: 80px auto 0 auto;
+    color: #19a9da;
+    font: 20px/18px '楷体';
+    text-align: center;
+}
+
+.coldtime-bg .coldtime-data {
+    width: 250px;
+    height: 50px;
+    margin-top: 8px;
+    color: #9C0;
+    font: 60px/50px 'ds-digitalbold';
+    text-align: center;
+}
+
+
+/************游戏倒计时*************/
+
+#gametime {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    right: 50px;
+    /*background-color: ;*/
+    z-index: 7;
+}
+
+.gametime-bg {
+    width: 250px;
+    height: 250px;
+}
+
+.panel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.gametime-bg .gametime-bg1 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 8;
+    opacity: 0.50;
+    background: no-repeat url("../images/gif-7-1.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all .2s;
+    animation: rotate 2s infinite linear;
+}
+
+.gametime-bg .gametime-bg2 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9;
+    opacity: 0.70;
+    background: no-repeat url("../images/gif-7-2.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all .3s;
+    animation: rotate 3s infinite linear;
+}
+
+.gametime-bg .gametime-bg3 {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    opacity: 0.50;
+    background: no-repeat url("../images/gif-7-3.png") left top;
+    background-size: 250px 250px;
+    border-radius: 125px;
+    transition: all 0.5s;
+    animation: rotate 0.5s infinite linear;
+}
+
+.gametime-bg .gametime-title {
+    width: 180px;
+    height: 30px;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+    margin: 80px auto 0 auto;
+    color: #19a9da;
+    font: 20px/18px '楷体';
+    text-align: center;
+}
+
+.gametime-bg .gametime-data {
+    width: 250px;
+    height: 50px;
+    margin-top: 8px;
+    color: #9C0;
+    font: 60px/50px 'ds-digitalbold';
+    text-align: center;
+}
+
+.gametime-data span {
+    font: 40px/28px 'ds-digitalbold';
+    color: #9C0;
+    opacity: 0.60;
+}
+
+
+/************排名*************/
+
+.order {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 320px;
+    right: 50px;
+    background: rgba(24, 38, 41, 0.1);
+    z-index: 1;
+}
+
+.order #order-title {
+    width: auto;
+    height: 150px;
+    color: #ee4400;
+    font: 22px/18px '楷体';
+    opacity: 0.8;
+    margin-top: 0px;
+    margin-left: 85px;
+    line-height: 30px;
+}
+
+.order #order-list {
+    height: 40px;
+    width: 180px;
+    position: absolute;
+    opacity: 0.6;
+    top: 50px;
+    left: 45px;
+    font: 22px/20px 'bankgothic_md_btmedium';
+    color: #f4ab20;
+    line-height: 40px;
+}
+
+#order-list span {
+    float: right;
+    margin-right: 20px;
+}
+
+
+/************右下角: 地图 + 系统提示消息*************/
+
+.panel .right_bottom {
+    position: absolute;
+    bottom: 0px;
+    right: 50px;
+    width: 400px;
+    height: 420px;
+    background-color: rgba(24, 38, 41, 0.1);
+}
+
+
+/* 系统消息 */
+
+.speaker {
+    top: 50px;
+    left: 50px;
+    width: 280px;
+    height: 100px;
+    position: absolute;
+}
+
+.speaker .horn {
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: url(../images/speaker.png);
+    background-size: 30px 30px;
+}
+
+.message-bg {
+    overflow: hidden;
+    top: -15px;
+    left: 50px;
+    width: 200px;
+    height: 50px;
+    position: absolute;
+}
+
+#message {
+    width: 280px;
+    height: 20px;
+    line-height: 14px;
+    font: 24px/18px 'bankgothic_md_btmedium';
+    color: #0caff4;
+}
+
+
+/* 地图 */
+
+.map {
+    top: 160px;
+    left: 50px;
+    width: 300px;
+    height: 240px;
+    background: url(../images/gif-12-1.png);
+    background-size: 300px 240px;
+    position: absolute;
+    opacity: 0.50;
+}
+
+
+.location-bg {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 120px;
+    left: 220px;
+}
+
+.location {
+    width: 30px;
+    height: 30px;
+    border-radius: 360px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-20%, -20%);
+    animation: pointRadius 1s ease 0s infinite;
+}
+
+#location-name {
+    width: 100px;
+    height: 50px;
+    margin-left: 135px;
+    margin-top: -28px;
+    position: absolute;
+    font: 28px/18px 'bankgothic_md_btmedium';
+    font-weight: bold;
+    color: #ee4300;
+    opacity: 0.8;
+    line-height: 30px;
+}
+
+#location-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -35px;
+    left: 80px;
+    background: no-repeat url("../images/gif-3.png") left top;
+    background-size: 40px 40px;
+    border-radius: 50px;
+    transition: all .1s;
+    animation: rotate 10s infinite linear;
+}
+
+
+
+
+/************聊天*************/
+
+.panel .chat {
+    width: 300px;
+    height: 520px;
+    position: absolute;
+    top: 180px;
+    left: 50px;
+    background: rgba(1, 92, 121, 0.2);
+    z-index: 1;
+}
+
+.chat .typing {
+    color: gray;
+}
+
+.chat-thread {
+    margin: 24px auto 0 auto;
+    padding: 0 20px 0 0;
+    list-style: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    opacity: 0.7;
+}
+
+.chat-thread li {
+    width: 130px;
+    position: relative;
+    clear: both;
+    display: inline-block;
+    padding: 16px 40px 16px 20px;
+    margin: 0 0 20px 0;
+    font: 16px/20px 'Noto Sans', sans-serif;
+    border-radius: 10px;
+    background-color: rgba(25, 147, 147, 0.2);
+}
+
+
+/* 头像 */
+
+.chat-thread li:before {
+    position: absolute;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    content: '';
+}
+
+
+/* 信息流 */
+
+.chat-thread li:after {
+    position: absolute;
+    top: 15px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid rgba(25, 147, 147, 0.2);
+}
+
+.chat-thread li {
+    float: left;
+    margin-left: 85px;
+    color: #0EC879;
+}
+
+.chat-thread li:nth-child(1):before {
+    left: -65px;
+    width: 40px;
+    height: 50px;
+    background-image: url(../images/usr_avatar1.png);
+    background-size:40px 50px;
+}
+
+.chat-thread li:nth-child(2):before {
+    left: -65px;
+    width: 40px;
+    height: 50px;
+    background-image: url(../images/usr_avatar2.png);
+    background-size:40px 50px;
+}
+
+.chat-thread li:nth-child(3):before {
+    left: -65px;
+    width: 40px;
+    height: 50px;
+    background-image: url(../images/usr_avatar3.png);
+    background-size:40px 50px;
+}
+
+.chat-thread li:nth-child(4):before {
+    left: -65px;
+    width: 40px;
+    height: 50px;
+    background-image: url(../images/usr_avatar4.png);
+    background-size:40px 50px;
+}
+
+.chat-thread li:nth-child(5):before {
+    left: -65px;
+    width: 40px;
+    height: 50px;
+    background-image: url(../images/usr_avatar5.png);
+    background-size:40px 50px;
+}
+
+
+.usr_input{
+    height: 30px;
+    width: 200px;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-top: 15px;
+    background-color: rgba(255,255,255,0.2);
+    border-color: #a3f7bf;
+    opacity: 0.8;
+
+}
+
+
+.send {
+  color: #A3F7BF;
+  border-color: #A3F7BF;
+  background: linear-gradient(left, #a3f7bf, #a3f7bf) no-repeat;
+  background: linear-gradient(to right, #a3f7bf, #a3f7bf) no-repeat;
+  background-size: 0% 100%;
+  opacity: 0.8;
+}
+.send:hover {
+  background-size: 100% 100%;
+  color: #27323A;
+}
+
+/************个人信息*************/
+
+.usr_info {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    bottom: 10px;
+    left: 50px;
+    border: 1px rgba(1, 100, 121, 0.6);
+    background: rgba(1, 100, 121, 0.1);
+    z-index: 1;
+}
+
+.usr_info .usr_avatar {
+    width: 100px;
+    height: 150px;
+    background: url(../images/usr_avatar.png)no-repeat;
+    background-size: 100px 150px;
+    opacity: 0.7;
+    margin-top: 60px;
+    margin-left: 30px;
+}
+
+.usr_info .usr_name {
+    width: auto;
+    height: 150px;
+    color: #19a9da;
+    font: 40px/20px 'bankgothic_md_btmedium';
+    opacity: 0.8;
+    margin-top: 15px;
+    margin-left: 40px;
+}
+
+.usr_info .usr_rank {
+    height: 40px;
+    position: absolute;
+    bottom: 200px;
+    left: 150px;
+    font: 25px/20px 'bankgothic_md_btmedium';
+    line-height: 40px;
+}
+
+.usr_info .usr_percent {
+    height: 40px;
+    width: 200px;
+    opacity: 0.50;
+    position: absolute;
+    bottom: 140px;
+    left: 155px;
+    font: 20px/18px 'bankgothic_md_btmedium';
+    color: #f4ab20;
+    line-height: 40px;
+}
+
+.usr_info .usr_count {
+    height: 40px;
+    width: 200px;
+    opacity: 0.50;
+    position: absolute;
+    bottom: 90px;
+    left: 155px;
+    font: 20px/18px 'bankgothic_md_btmedium';
+    color: #f4ab20;
+    line-height: 40px;
+}
+
+
+/************HP*************/
+
+.panel .HP-bg {
+    width: 290px;
+    height: 100px;
+    background: url(../images/gif-9.png);
+    position: absolute;
+    bottom: 160px;
+    left: 345px;
+    z-index: 5;
+    margin-top: 20px;
+}
+
+.panel .HP-area {
+    width: 106px;
+    height: 35px;
+    overflow: hidden;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 179px;
+    left: 507px;
+    opacity: 0.8;
+}
+
+.panel .HP-area .HP-data {
+    width: 107px;
+    height: 35px;
+    position: relative;
+    background-color: #ff002a;
+    opacity: 0.7;
+}
+
+
+/************PP*************/
+
+.panel .pp-bg {
+    width: 290px;
+    height: 100px;
+    background: url(../images/gif-9.png);
+    position: absolute;
+    bottom: 50px;
+    left: 345px;
+    z-index: 5;
+    margin-top: 20px;
+}
+
+.panel .pp-area {
+    width: 106px;
+    height: 35px;
+    overflow: hidden;
+    border-radius: 20px;
+    position: absolute;
+    bottom: 69px;
+    left: 507px;
+    opacity: 0.8;
+}
+
+.panel .pp-area .pp-data {
+    width: 40px;
+    height: 35px;
+    position: relative;
+    background-color: #0099ff;
+    opacity: 0.7;
+}
+
+
+/************装备数值*************/
+
+.panel .level {
+    width: 180px;
+    height: 180px;
+    opacity: 0.50;
+    position: absolute;
+    bottom: 60px;
+    left: 720px;
+}
+
+.panel .equip {
+    width: 180px;
+    height: 180px;
+    z-index: 40;
+    opacity: 0.50;
+    position: absolute;
+    bottom: 60px;
+    left: 950px;
+}
+
+.panel .power {
+    width: 180px;
+    height: 180px;
+    z-index: 40;
+    opacity: 0.50;
+    position: absolute;
+    bottom: 60px;
+    left: 1190px;
+}
+
+.d-area {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+}
+
+.d-bg {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-size: 180px 180px;
+    border-radius: 90px;
+}
+
+.d-title {
+    width: 180px;
+    height: 30px;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+    margin: 55px auto 0 auto;
+    color: #19a9da;
+    font: 20px/18px '楷体';
+    text-align: center;
+}
+
+.d-data {
+    width: 180px;
+    height: 50px;
+    margin-top: 8px;
+    color: #9C0;
+    font: 40px/30px 'ds-digitalbold';
+    text-align: center;
+}
+
+.level-bg {
+    background: no-repeat url("../images/gif-14-1.png") left top;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+    -moz-animation: rotate 1s infinite linear;
+    -webkit-animation: rotate 1s infinite linear;
+    animation: rotate 1s infinite linear;
+}
+
+.equip-bg {
+    background: no-repeat url("../images/gif-14-3.png") left top;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+    -moz-animation: rotate 1s infinite linear;
+    -webkit-animation: rotate 1s infinite linear;
+    animation: rotate 1s infinite linear;
+}
+
+.power-bg {
+    background: no-repeat url("../images/gif-14-4.png") left top;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+    -moz-animation: rotate 1s infinite linear;
+    -webkit-animation: rotate 1s infinite linear;
+    animation: rotate 1s infinite linear;
+}
+
+
+/*************动画*************/
+
+.masked0 {
+    background-image: -webkit-linear-gradient(left, #0ee5ff, #0e84ff 25%, #0ee5ff 50%, #0e84ff 75%, #0ee5ff);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-background-size: 200% 100%;
+    -webkit-animation: masked-animation 0.8s infinite linear;
+}
+
+.masked1 {
+    background-image: -webkit-linear-gradient(left, #0ee5ff, #f4ab20 50%, #0ee5ff 50%, #f4ab20 100%, #0ee5ff);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-background-size: 200% 100%;
+    -webkit-animation: masked-animation 1.2s infinite linear;
+}
+
+.masked2 {
+    background-image: -webkit-linear-gradient(left, #0ee5ff, #f4ab20 50%, #0ee5ff 50%, #f4ab20 100%, #0ee5ff);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-background-size: 200% 100%;
+    -webkit-animation: masked-animation 1s infinite linear;
+}
+
+.masked3 {
+    background-image: -webkit-linear-gradient(left, #EE0000, #EE5C42 25%, #EE0000 50%, #EE5C42 75%, #F0F8FF);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-background-size: 200% 100%;
+    -webkit-animation: masked-animation 1s infinite linear;
+}
+
+@keyframes masked-animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pointRadius {
+    0% {
+        width: 10px;
+        height: 10px;
+        background: rgba(196, 149, 169, 0.8);
+    }
+    25% {
+        width: 30px;
+        height: 30px;
+        background: rgba(214, 5, 0, 0.6);
+    }
+    75% {
+        width: 40px;
+        height: 40px;
+        background: rgba(214, 5, 0, 0.0);
+    }
+    90% {
+        width: 20px;
+        height: 20px;
+        background: rgba(214, 5, 0, 0.6);
+    }
+    100% {
+        width: 10px;
+        height: 10px;
+        background: rgba(196, 149, 169, 0.8);
+    }
+}

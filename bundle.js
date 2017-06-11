@@ -505,7 +505,6 @@
     NetWorkManager._update = function(data) {
       var message, ref;
       message = JSON.parse(data.message);
-      console.log(message);
       if ((ref = NetWorkManager.gameObjects[data.objectId]) != null) {
         ref.broadcast(message);
       }
@@ -11317,11 +11316,14 @@ return jQuery;
 
     module.exports = AudioSource;
 
+    AudioSource.audioClips = {};
+
     function AudioSource(options) {
       var sound;
       if (options == null) {
         options = {};
       }
+      AudioSource.__super__.constructor.call(this, "AudioSource");
       this.audioclip = options.audioclip;
       this.loop = !options.loop ? options.loop : true;
       this.volume = options.volume ? options.volume : 0.5;
@@ -11336,10 +11338,28 @@ return jQuery;
           };
         })(this));
       }
-      this.play(audioclip)((function(_this) {
-        return function() {};
-      })(this));
     }
+
+    AudioSource.play = function(audioClip, volume) {
+      var sound;
+      if (volume == null) {
+        volume = 0.5;
+      }
+      if (AudioSource.audioClips[audioClip]) {
+        return AudioSource.audioClips[audioClip].play();
+      } else {
+        sound = new THREE.Audio(AudioListener._listener);
+        if (audioClip) {
+          return new THREE.AudioLoader().load(audioclip, function(buffer) {
+            sound.setBuffer(buffer);
+            sound.setLoop(false);
+            sound.setVolume(volume);
+            sound.play();
+            return AudioSource.audioClips[audioClip] = sound;
+          });
+        }
+      }
+    };
 
     return AudioSource;
 
@@ -12195,7 +12215,7 @@ var Data = __webpack_require__(3);
 // 场景1初始化方法
 function scene1(scene) {
     // sky box
-    scene.add(THREE.SkyBox(['img/Right.jpg', 'img/Left.jpg', 'img/Up.jpg', 'img/Down.jpg', 'img/Back.jpg', 'img/Front.jpg'], 100));
+    scene.add(THREE.SkyBox(['images/Right.jpg', 'images/Left.jpg', 'images/Up.jpg', 'images/Down.jpg', 'images/Back.jpg', 'images/Front.jpg'], 100));
     // light
     scene.add(new THREE.AmbientLight(0x000080,.2));
     var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.7);
