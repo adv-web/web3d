@@ -10,6 +10,9 @@ NetWorkComponent = require("./component/NetWorkComponent")
 NetWorkTransform = require("./component/NetWorkTransform")
 TreeCollision = require("./component/TreeCollision")
 BoxCollider = require("./component/colliders/BoxCollider")
+AudioListener = require('./component/AudioListener')
+AudioSource = require('./component/AudioSource')
+
 # The scene in game to contain game objects and other essential objects.
 #
 # To render the scene, it will auto detect cameras and save it to an array when add a game object to the scene.

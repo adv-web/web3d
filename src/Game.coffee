@@ -38,8 +38,8 @@ class Game
     Game.nowTime = Date.now()
     deltaTime = Game.nowTime - Game.prevTime
     scene = Game.scene
-    scene?.update(deltaTime)
     Game.renderer.render(scene._scene, scene._cameras[0]) if scene?._cameras[0]?
+    scene?.update(deltaTime)
     requestAnimationFrame(@_loop)
     Game.prevTime = Game.nowTime
 

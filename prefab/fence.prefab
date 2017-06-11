@@ -1,0 +1,12 @@
+{
+  "name": "fence",
+  "meshType": "vox",
+  "mesh": "fence",
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y: 0.25, z: 0}}"
+    }
+  ]
+}

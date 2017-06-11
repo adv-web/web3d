@@ -90,6 +90,7 @@ class FirstPersonController extends NetWorkComponent
     hor = Input.getAxis(Input.axis.horizontal)
     distanceV = ver * @move_velocity * deltaTime / 1000
     distanceH = hor * @move_velocity * deltaTime / 1000
+
     @_yaw2.translateX(distanceH)
     @_yaw2.translateZ(distanceV)
 

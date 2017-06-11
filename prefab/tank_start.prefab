@@ -1,0 +1,12 @@
+{
+  "name": "tank_start",
+  "meshType": "vox",
+  "mesh": "tank_start",
+  "mass": 0.5,
+  "components": [
+  {
+    "name": "BoxCollider",
+    "param": "{isTrigger: false, center: {x: 0, y: 0.25, z: 0}}"
+  }
+]
+}

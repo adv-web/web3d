@@ -1,12 +1,12 @@
 {
   "name": "player",
-  "meshType": "code",
-  "mesh": "new Physijs.BoxMesh(new THREE.BoxGeometry(0.2, 0.2, 0.2), new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true}))",
-  "mass": -1,
+  "meshType": "vox",
+  "mesh": "tank_start",
+  "mass": 0.5,
   "components": [
     {
       "name": "Camera",
-      "param": "{y: 0.25}"
+      "param": "{y: 0.5}"
     },
     {
       "name": "FirstPersonController",

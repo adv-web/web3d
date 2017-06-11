@@ -2,5 +2,11 @@
   "name": "chest",
   "meshType": "vox",
   "mesh": "chest",
-  "mass": 0
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y: 0.2, z: 0}}"
+    }
+  ]
 }
