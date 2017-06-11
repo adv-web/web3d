@@ -71,9 +71,55 @@ function scene1(scene) {
 }
 
 // boot script
-Data.load(null, null, function() {
-    var scene = new Scene(scene1);
-    Game.setScene(scene).start();
+$(function() {
+    var loginPage = $("#loginPanel");
+    var preparePage = $("#preparePanel");
+    var gamePage = $("#gamePanel");
+    var startButton = preparePage.find("#start");
+    var sourceTag = preparePage.find(".coldtime-title");
+    var userNameBlock = gamePage.find(".usr_name");
+    var prepareUserInfoBlock = preparePage.find(".usr_info");
+    var gameUserInfoBlock = gamePage.find(".usr_info");
+
+    //hide game page
+    gamePage.hide();
+    //hide login page
+    loginPage.hide();
+
+    // load game source
+    Data.load(null, null, function() {
+        sourceTag.text("加载完成");
+        // start game
+        startButton.click(function () {
+            preparePage.hide();
+            gamePage.show();
+
+            document.addEventListener('keydown', Game.requestFullScreen, false);
+            var scene = new Scene(scene1);
+            Game.setScene(scene).start();
+        })
+    });
+
+    // change to login page
+    prepareUserInfoBlock.click(function () {
+        preparePage.hide();
+        loginPage.show();
+    });
+
+    // login
+    loginPage.find("#login").click(function () {
+        //do login
+        //change user info
+        loginPage.hide();
+        preparePage.show();
+    });
+
+    //register
+    loginPage.find("#register").click(function () {
+       // do register
+        // set user info
+        loginPage.hide();
+        preparePage.show();
+    });
 });
 
-document.addEventListener('keydown', Game.requestFullScreen, false);

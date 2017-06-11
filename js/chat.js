@@ -24,7 +24,7 @@ $(function() {
     var connected = false;
     var typing = false;
     var lastTypingTime;
-    var $currentInput = $inputMessage.focus();
+    var $currentInput = $inputMessage;
 
     var socket = io('http://120.76.125.35:5000/chat');
 
@@ -40,7 +40,7 @@ $(function() {
 
     // Sets the client's username
     function setUsername () {
-        username = cleanInput($(".usr_name").text());
+        username = cleanInput($("#gamePanel .usr_name").text());
 
         // If the username is valid
         if (username) {
@@ -201,9 +201,10 @@ $(function() {
         }
     });
     $window.keydown(function (event) {
-        // Auto-focus the current input when a key is typed
-        if (!(event.ctrlKey || event.metaKey || event.altKey)) {
+        // Auto-focus the current input when C key is typed
+        if (event.which === 67) {
             $currentInput.focus();
+            //$inputMessage.val(''); // clear c
         }
         // When the client hits ENTER on their keyboard
         if (event.which === 13) {

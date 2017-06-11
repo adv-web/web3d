@@ -40,7 +40,7 @@
 
 }
 
-body,div,q,iframe,form,ul,li,dl,dt,dd,{ margin: 0; padding: 0;}
+body,div,q,iframe,form,ul,li,dl,dt,dd{ margin: 0; padding: 0;}
 img,fieldset{border: none 0;}
 .font-yt{font-family: "microsoft yahei";}/*中文圆滑字体*/
 .font-ht{font-family: "黑体";}/*黑体字体*/
