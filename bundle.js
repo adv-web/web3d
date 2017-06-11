@@ -11523,6 +11523,7 @@ return jQuery;
       this.move_velocity = options.move_velocity != null ? options.move_velocity : 3;
       this.jump_velocity = options.jump_velocity != null ? options.jump_velocity : 3;
       this._canJump = true;
+      this.debug = true;
     }
 
     FirstPersonController.prototype._onMouseMove = function(event) {
@@ -11553,6 +11554,7 @@ return jQuery;
       (this._pitch = new THREE.Object3D()).add(this.camera._camera);
       (this._yaw = new THREE.Object3D()).add(this._pitch);
       this._yaw2 = new THREE.Object3D();
+      this._yaw2.position.set(1, 5, 1);
       geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5);
       material = new THREE.MeshBasicMaterial({
         color: 0xffcc99
@@ -11585,6 +11587,10 @@ return jQuery;
       this._yaw2.translateX(distanceH);
       this._yaw2.translateZ(distanceV);
       p = this._yaw2.getWorldPosition();
+      if (this.debug) {
+        console.log(p);
+        this.debug = false;
+      }
       this.gameObject.mesh.position.x = p.x;
       this.gameObject.mesh.position.z = p.z;
       this._yaw2.position.set(0, 0, 0);
@@ -11686,7 +11692,7 @@ return jQuery;
         position: pos
       }, (function(_this) {
         return function(obj) {
-          NetWorkManager.update(obj.id, {
+          NetWorkManager.update(obj, {
             method: "launch",
             x: vx,
             y: vy,

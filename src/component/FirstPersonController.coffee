@@ -39,6 +39,7 @@ class FirstPersonController extends NetWorkComponent
     @move_velocity = if options.move_velocity? then options.move_velocity else 3
     @jump_velocity = if options.jump_velocity? then options.jump_velocity else 3
     @_canJump = true
+    @debug = true
 
   # @private
   _onMouseMove: (event) =>
@@ -62,6 +63,7 @@ class FirstPersonController extends NetWorkComponent
     (@_pitch = new THREE.Object3D()).add(@camera._camera)
     (@_yaw = new THREE.Object3D()).add(@_pitch)
     @_yaw2 = new THREE.Object3D()
+    @_yaw2.position.set(1,5,1)
     geometry = new THREE.BoxGeometry(0.08, 0.08, 0.5)
     material = new THREE.MeshBasicMaterial({color: 0xffcc99})
     mesh = new THREE.Mesh(geometry, material)
@@ -92,6 +94,9 @@ class FirstPersonController extends NetWorkComponent
     @_yaw2.translateZ(distanceV)
 
     p = @_yaw2.getWorldPosition()
+    if @debug
+      console.log p
+      @debug = false
     @gameObject.mesh.position.x = p.x
     @gameObject.mesh.position.z = p.z
     @_yaw2.position.set(0, 0, 0)
@@ -101,5 +106,6 @@ class FirstPersonController extends NetWorkComponent
       @_canJump = false
       @gameObject.mesh.setLinearVelocity(new THREE.Vector3(0, @jump_velocity, 0))
     # important: 解决了移动卡顿还有人物会侧翻的问题
+    #console.log @gameObject.mesh.rotation
     @gameObject.mesh.rotation.set(0, 0, 0)
     @gameObject.mesh.__dirtyRotation = true

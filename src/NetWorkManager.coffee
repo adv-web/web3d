@@ -141,7 +141,7 @@ class NetWorkManager
   # @private
   @_spawn: (data) =>
     prefab = Data.prefab[data.prefab]
-    # console.log data
+    #console.log data
     message = JSON.parse(data.message)
     ps = if message.position then message.position else {x: 0, y: 0, z: 0}
     rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
@@ -162,6 +162,7 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
+    #console.log message
     @gameObjects[data.objectId]?.broadcast(message)
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)
