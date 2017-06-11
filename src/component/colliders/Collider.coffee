@@ -30,7 +30,7 @@ class Collider extends Component
   # detector the collision event
   _onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     # console.log("Collider _onCollision", @gameObject.name)
-    if @gameObject.mesh.name == 'player'
+    if @gameObject.mesh?.name == 'player'
       if other_mesh.name != 'ground'
         console.log("player on collision")
         # and if this collision is not just a trigger

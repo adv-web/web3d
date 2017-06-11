@@ -143,11 +143,11 @@
       Game.nowTime = Date.now();
       deltaTime = Game.nowTime - Game.prevTime;
       scene = Game.scene;
-      if (scene != null) {
-        scene.update(deltaTime);
-      }
       if ((scene != null ? scene._cameras[0] : void 0) != null) {
         Game.renderer.render(scene._scene, scene._cameras[0]);
+      }
+      if (scene != null) {
+        scene.update(deltaTime);
       }
       requestAnimationFrame(Game._loop);
       return Game.prevTime = Game.nowTime;
@@ -11692,6 +11692,8 @@ return jQuery;
       this._yaw2.translateX(distanceH);
       this._yaw2.translateZ(distanceV);
       p = this._yaw2.getWorldPosition();
+      this.gameObject.mesh.position.x = p.x;
+      this.gameObject.mesh.position.z = p.z;
       this._yaw2.position.set(0, 0, 0);
       this.gameObject.mesh.__dirtyPosition = true;
       if (this._canJump && Input.isPressed(32)) {
@@ -12140,8 +12142,8 @@ return jQuery;
     }
 
     Collider.prototype._onCollision = function(other_mesh, linear_velocity, angular_velocity) {
-      var comp, key, ref, results;
-      if (this.gameObject.mesh.name === 'player') {
+      var comp, key, ref, ref1, results;
+      if (((ref = this.gameObject.mesh) != null ? ref.name : void 0) === 'player') {
         if (other_mesh.name !== 'ground') {
           console.log("player on collision");
           if (!this.isTrigger && !other_mesh.isTrigger) {
@@ -12150,10 +12152,10 @@ return jQuery;
           }
         }
       }
-      ref = this.gameObject.components;
+      ref1 = this.gameObject.components;
       results = [];
-      for (key in ref) {
-        comp = ref[key];
+      for (key in ref1) {
+        comp = ref1[key];
         results.push(typeof comp.onCollision === "function" ? comp.onCollision(other_mesh, linear_velocity, angular_velocity) : void 0);
       }
       return results;
