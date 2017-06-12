@@ -77,9 +77,10 @@ $(function() {
     var gamePage = $("#gamePanel");
     var startButton = preparePage.find("#start");
     var sourceTag = preparePage.find(".coldtime-title");
-    var userNameBlock = gamePage.find(".usr_name");
     var prepareUserInfoBlock = preparePage.find(".usr_info");
     var gameUserInfoBlock = gamePage.find(".usr_info");
+    var server = "http://localhost:5000/";
+    var userInfo = {};
 
     //hide game page
     gamePage.hide();
@@ -108,18 +109,90 @@ $(function() {
 
     // login
     loginPage.find("#login").click(function () {
+
         //do login
-        //change user info
-        loginPage.hide();
-        preparePage.show();
+        var login = loginPage.find(".login");
+        var mess = {
+            username: login.find("input[name='username']").val(),
+            password: login.find("input[name='password']").val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: server + 'session',
+            data: mess,
+            dataType: 'JSON',
+            success: function(data){
+                if (data.success) {
+                    //change user info
+                    userInfo = JSON.parse(data.user);
+                    setUserInfo(userInfo);
+                    //show game
+                    loginPage.hide();
+                    preparePage.show();
+                }
+                else {
+                    alert(JSON.stringify(data.err));
+                }
+            },
+            error: function(data){
+                alert(JSON.stringify(data));
+            }
+        });
     });
 
     //register
     loginPage.find("#register").click(function () {
        // do register
-        // set user info
-        loginPage.hide();
-        preparePage.show();
+        var register = loginPage.find(".registe");
+        var mess = {
+            username: register.find("input[name='username']").val(),
+            nickname: register.find("input[name='nickname']").val(),
+            password: register.find("input[name='password']").val()
+        };
+        if (mess.password !== register.find("input[name='password2']").val()) {
+            alert("密码不一致");
+            return ;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: server + 'user',
+            data: mess,
+            dataType: 'JSON',
+            success: function(data){
+                if (data.success) {
+                    //change user info
+                    userInfo = JSON.parse(data.user);
+                    setUserInfo(userInfo);
+                    //show game
+                    loginPage.hide();
+                    preparePage.show();
+                }
+                else {
+                    alert(JSON.stringify(data.err));
+                }
+            },
+            error: function(data){
+                alert(JSON.stringify(data));
+            }
+        });
     });
+
+    function setUserInfo(user) {
+        console.log(user);
+        prepareUserInfoBlock.find(".usr_name").text(user.username);
+        prepareUserInfoBlock.find(".user_rank").text(user.rank);//军衔
+        prepareUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
+        prepareUserInfoBlock.find(".battle_number").text(user.battle_number);
+
+        gameUserInfoBlock.find(".usr_name").text(user.username);
+        gameUserInfoBlock.find(".user_rank").text(user.rank);//军衔
+        gameUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
+
+        gamePage.find(".battle_number").text(user.battle_number);
+        gamePage.find(".level .d-data").text(user.level);
+        gamePage.find(".equip .d-data").text(user.equipment);
+        gamePage.find(".power .d-data").text(user.power);
+    }
 });
 

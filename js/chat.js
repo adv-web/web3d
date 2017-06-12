@@ -1,9 +1,6 @@
 /**
  * Created by duocai on 2017/6/11.
  */
-/**
- * Created by duocai on 2017/5/13.
- */
 
 $(function() {
     var FADE_TIME = 150; // ms
@@ -13,6 +10,7 @@ $(function() {
         '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
         '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
     ];
+    var socket = io('http://120.76.125.35:5000/chat');
 
     // Initialize variables
     var $window = $(window);
@@ -25,8 +23,6 @@ $(function() {
     var typing = false;
     var lastTypingTime;
     var $currentInput = $inputMessage;
-
-    var socket = io('http://120.76.125.35:5000/chat');
 
     function addParticipantsMessage (data) {
         var message = '';
