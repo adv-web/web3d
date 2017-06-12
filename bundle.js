@@ -12271,7 +12271,7 @@ function scene1(scene) {
    // scene.spawn(Data.prefab.wall, new THREE.Vector3(-2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
     //scene.spawn(Data.prefab.tank_start);
 
-    NetWorkManager.init(scene, Data.prefab.player, 'http://localhost:5000/game');
+    NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5))
 
 }
@@ -12285,7 +12285,7 @@ $(function() {
     var sourceTag = preparePage.find(".coldtime-title");
     var prepareUserInfoBlock = preparePage.find(".usr_info");
     var gameUserInfoBlock = gamePage.find(".usr_info");
-    var server = "http://localhost:5000/";
+    var server = "http://120.76.125.35:5000/";
     var userInfo = {};
 
     //hide game page
@@ -12394,7 +12394,7 @@ $(function() {
         gameUserInfoBlock.find(".usr_name").text(user.username);
         gameUserInfoBlock.find(".user_rank").text(user.rank);//军衔
         gameUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
-        
+
         gamePage.find(".battle_number").text(user.battle_number);
         gamePage.find(".level .d-data").text(user.level);
         gamePage.find(".equip .d-data").text(user.equipment);

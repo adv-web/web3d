@@ -79,7 +79,7 @@ $(function() {
     var sourceTag = preparePage.find(".coldtime-title");
     var prepareUserInfoBlock = preparePage.find(".usr_info");
     var gameUserInfoBlock = gamePage.find(".usr_info");
-    var server = "http://localhost:5000/";
+    var server = "http://120.76.125.35:5000/";
     var userInfo = {};
 
     //hide game page
