@@ -301,11 +301,11 @@ button {
 
 .order #order-list {
     height: 40px;
-    width: 180px;
+    width: 240px;
     position: absolute;
     opacity: 0.6;
     top: 50px;
-    left: 45px;
+    left: 10px;
     font: 22px/20px 'bankgothic_md_btmedium';
     color: #f4ab20;
     line-height: 40px;

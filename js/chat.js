@@ -11,6 +11,7 @@ $(function() {
         '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
     ];
     var socket = io('http://120.76.125.35:5000/chat');
+    // var socket = io('http://localhost:5000/chat');
 
     // Initialize variables
     var $window = $(window);
@@ -36,7 +37,7 @@ $(function() {
 
     // Sets the client's username
     function setUsername () {
-        username = cleanInput($("#gamePanel .usr_name").text());
+        username = global.userInfo.nickname;
 
         // If the username is valid
         if (username) {
