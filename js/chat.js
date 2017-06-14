@@ -37,7 +37,7 @@ $(function() {
 
     // Sets the client's username
     function setUsername () {
-        username = global.userInfo.nickname;
+        username = document.userInfo.nickname;
 
         // If the username is valid
         if (username) {

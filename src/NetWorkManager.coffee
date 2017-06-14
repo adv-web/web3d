@@ -45,14 +45,21 @@ class NetWorkManager
 
 
   # set information of local player
+  #
   # @param [Object] userInfo message of local player
   # @param [Function] updateCallback callback function when the info is updated
   @setUserInfo: (@userInfo, @updateCallback) =>
 
+  # update the user information of the local player. this function will send a message
+  # the server and the server will tell other clients
+  #
+  # @param [Object] userInfo the information of the local player. you decide the format of it.
+  #   and you will revive it at the update callback function you have set.
   @updateUserInfo: (userInfo=@userInfo) =>
     @socket.emit(@userInfoUpdate, userInfo)
 
   # set the spawn point of the player
+  #
   # param [THREE.Vector3] spawnPoint the spawn point of player.
   @setSpawnPoint: (@spawnPoint) =>
 
@@ -239,7 +246,7 @@ class NetWorkManager
       
           when 'p' #server ping
             @_client_onping(commanddata)
-      # maybe some message else later
+    # maybe some message else later
 
   # @private
   @_client_onotherjoingame: (id) =>
@@ -250,7 +257,8 @@ class NetWorkManager
 
   # @private
   @_client_onotherleftgame: (id) =>
-    @scene.remove(@players.others[id])
+    if @players.others[id]
+      @scene.remove(@players.others[id])
     delete  @players.others[id]
     console.log(id+" left game")
 

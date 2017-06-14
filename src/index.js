@@ -68,12 +68,12 @@ function scene1(scene) {
     NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
     // NetWorkManager.init(scene, Data.prefab.player, 'http://localhost:5000/game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
-    NetWorkManager.setUserInfo(global.userInfo, global.updateScoreBoard);
+    NetWorkManager.setUserInfo(document.userInfo, document.updateScoreBoard);
 
     // simulate score update
     setInterval(function () {
-        global.userInfo.score += Math.round(Math.random()*10);
-        NetWorkManager.updateUserInfo(global.userInfo);
+        document.userInfo.score += Math.round(Math.random()*10);
+        NetWorkManager.updateUserInfo(document.userInfo);
     }, 1000);
 }
 
@@ -131,9 +131,9 @@ $(function() {
             success: function(data){
                 if (data.success) {
                     //change user info
-                    global.userInfo = JSON.parse(data.user);
-                    global.userInfo.score = 0;
-                    setUserInfo(global.userInfo);
+                    document.userInfo = JSON.parse(data.user);
+                    document.userInfo.score = 0;
+                    setUserInfo(document.userInfo);
                     //show game
                     loginPage.hide();
                     preparePage.show();
@@ -170,9 +170,9 @@ $(function() {
             success: function(data){
                 if (data.success) {
                     //change user info
-                    global.userInfo = JSON.parse(data.user);
-                    global.userInfo.score = 0;
-                    setUserInfo(global.userInfo);
+                    document.userInfo = JSON.parse(data.user);
+                    document.userInfo.score = 0;
+                    setUserInfo(document.userInfo);
                     //show game
                     loginPage.hide();
                     preparePage.show();
@@ -204,15 +204,16 @@ $(function() {
         gamePage.find(".power .d-data").text(user.power);
     }
 
-    global.updateScoreBoard = function (data) {
+    document.updateScoreBoard = function (data) {
         var infos = JSON.parse(data);
+
         // select sort
         for (var i = 0; i < infos.length-1; i++) {
-            var min = infos[i].score;
+            var min = infos[i];
             var minIndex = i;
             // select min
             for (var j = i+1; j < infos.length; j++) {
-                if (infos[j].score > min) {
+                if (infos[j].score > min.score) {
                     min = infos[j];
                     minIndex = j;
                 }
@@ -232,7 +233,7 @@ $(function() {
         orderList.html(inner);
     };
 
-    global.userInfo = {
+    document.userInfo = {
         username: "Guest"+ Math.ceil(Math.random()*500),
         nickname: "Guest"+ Math.ceil(Math.random()*500),
         rank: "新兵",
@@ -243,6 +244,6 @@ $(function() {
         equipment: "木甲",
         score: 0
     };
-    setUserInfo(global.userInfo);
+    setUserInfo(document.userInfo);
 });
 
