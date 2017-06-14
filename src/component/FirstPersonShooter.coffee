@@ -83,5 +83,3 @@ class FirstPersonShooter extends NetWorkComponent
     $("#coldtime-sec").text(Math.ceil(@cooldown / 1000))
     $("#aim").hide()
     $("#coldtime").show()
-
-
