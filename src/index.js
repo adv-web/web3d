@@ -8,6 +8,7 @@ var Data = require("./Data");
 var GameObject = require("./GameObject");
 var GameTimeCountdown = require("./component/GameTimeCountdown");
 
+// var SERVER = "http://localhost:5000/";
 var SERVER = "http://120.76.125.35:5000/";
 
 // 场景1初始化方法
@@ -165,6 +166,8 @@ $(function() {
                     //show game
                     loginPage.hide();
                     preparePage.show();
+                    //hide register
+                    loginPage.find(".box").hide();
                 } else {
                     alert(JSON.stringify(data.err));
                 }
