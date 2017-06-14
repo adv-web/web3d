@@ -31,5 +31,6 @@ class Bullet extends Component
   receive: (args...) =>
     data = args[0]
     return if data.method != "launch"
-    @gameObject.mesh.userData = data
+    console.log data
+    @gameObject.mesh?.userData = data
     @_launch(0.0006, new THREE.Vector3(data.x, data.y, data.z))

@@ -8,7 +8,7 @@
     var gameUserInfoBlock = gamePage.find(".usr_info");
     // 将用户信息显示在界面上的函数
     var maxHPAreaLength = $(".HP-data").width();
-    var setUserInfo = function(user) {
+    var setUserInfo = document.setUserInfo = function(user) {
         //console.log(user);
         prepareUserInfoBlock.find(".usr_name").text(user.nickname);
         prepareUserInfoBlock.find(".user_rank").text(user.rank);//军衔
@@ -23,6 +23,9 @@
         gamePage.find(".level .d-data").text(user.level);
         gamePage.find(".equip .d-data").text(user.equipment);
         gamePage.find(".power .d-data").text(user.power);
+        console.log(maxHPAreaLength);
+        console.log(user.hp);
+
         $(".HP-data").width(maxHPAreaLength * user.hp);
     };
 

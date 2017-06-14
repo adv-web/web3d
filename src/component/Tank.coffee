@@ -15,10 +15,16 @@ class Tank extends NetWorkComponent
   # @private
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     return if not @isLocal
+    console.log other_mesh
     return if other_mesh.name != "bullet"
     damage = Tank.DAMAGE[other_mesh.userData.type]
-    damage += damage * (Math.random() * 10 - 5)
+    damage += damage * (Math.random() * 10 - 5) / 100
+    console.log "damage" + damage
     realHP = Tank.HP[@userInfo.type] * @userInfo.hp - damage
-    @userInfo.hp = realHP < 0 ? 0 : realHP / Tank.HP[@userInfo.type]
+    console.log "realHP" + realHP
+    console.log "maxHP" + Tank.HP[@userInfo.type]
+    @userInfo.hp = if realHP < 0 then 0 else realHP / Tank.HP[@userInfo.type]
+
+    document.setUserInfo(@userInfo)
 
 

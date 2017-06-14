@@ -525,9 +525,7 @@
     NetWorkManager._update = function(data) {
       var message, ref;
       message = JSON.parse(data.message);
-      if (message.event !== "nwtc.player") {
-        console.log(message);
-      }
+      console.log(message);
       if ((ref = NetWorkManager.gameObjects[data.objectId]) != null) {
         ref.broadcast(message);
       }
@@ -11542,13 +11540,16 @@ return jQuery;
     };
 
     Bullet.prototype.receive = function() {
-      var args, data;
+      var args, data, ref;
       args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       data = args[0];
       if (data.method !== "launch") {
         return;
       }
-      this.gameObject.mesh.userData = data;
+      console.log(data);
+      if ((ref = this.gameObject.mesh) != null) {
+        ref.userData = data;
+      }
       return this._launch(0.0006, new THREE.Vector3(data.x, data.y, data.z));
     };
 
@@ -12151,19 +12152,22 @@ return jQuery;
     }
 
     Tank.prototype.onCollision = function(other_mesh, linear_velocity, angular_velocity) {
-      var damage, realHP, ref;
+      var damage, realHP;
       if (!this.isLocal) {
         return;
       }
+      console.log(other_mesh);
       if (other_mesh.name !== "bullet") {
         return;
       }
       damage = Tank.DAMAGE[other_mesh.userData.type];
-      damage += damage * (Math.random() * 10 - 5);
+      damage += damage * (Math.random() * 10 - 5) / 100;
+      console.log("damage" + damage);
       realHP = Tank.HP[this.userInfo.type] * this.userInfo.hp - damage;
-      return this.userInfo.hp = (ref = realHP < 0) != null ? ref : {
-        0: realHP / Tank.HP[this.userInfo.type]
-      };
+      console.log("realHP" + realHP);
+      console.log("maxHP" + Tank.HP[this.userInfo.type]);
+      this.userInfo.hp = realHP < 0 ? 0 : realHP / Tank.HP[this.userInfo.type];
+      return document.setUserInfo(this.userInfo);
     };
 
     return Tank;
