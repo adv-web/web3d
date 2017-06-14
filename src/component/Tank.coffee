@@ -38,7 +38,7 @@ class Tank extends NetWorkComponent
     # 计算奖励经验和分数
     profit = data.damage + (if data.killed then 100 else 0)
     realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + profit
-    @userInfo.score += profit
+    @userInfo.score += Math.floor(profit)
     # 是否升级
     if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
       realEXP -= Tank.HP[@userInfo.type]
@@ -49,15 +49,30 @@ class Tank extends NetWorkComponent
     NetWorkManager.updateUserInfo(@userInfo)
     document.setUserInfo(@userInfo)
 
+  update: =>
+    return if not @isLocal
+    # 检测本地玩家是否翻车或掉下悬崖
+    @_respawn() if @gameObject.mesh.position.y < -10
+    @_respawn() if @gameObject.mesh.up.y < -0.5
+    # 检测是否在房子周围回血
+    distanceToHouse = @gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0))
+    if distanceToHouse < 0.1 and @userInfo.hp < 1
+      @userInfo.hp += 0.01
+      document.setUserInfo(@userInfo)
+
   _respawn: =>
     pz = if Math.random() > 0.5 then 18 else -18
     @gameObject.mesh.position.set(0, 1, pz)
+    @gameObject.mesh.__dirtyPosition = true
+    @gameObject.mesh.rotation.set(0, 0, 0)
+    @gameObject.mesh.__dirtyRotation = true
     @userInfo.score -= Math.floor(Tank.HP[@userInfo.type] / 10) # 分数惩罚
     @userInfo.exp = 0 # 经验惩罚
     @userInfo.level -= 1;
     @userInfo.level = 1 if @userInfo.level < 1
     @_updateInfoByLevel()
     @_respawnTime = Date.now()
+    @userInfo.hp = 1
 
   _updateInfoByLevel: () =>
     type = @userInfo.type = Tank.LEVEL[@userInfo.level]
