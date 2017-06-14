@@ -200,6 +200,7 @@ class NetWorkManager
     console.log message
     @gameObjects[data.objectId]?.broadcast(message)
     @players.self.broadcast(message) if @players.self.id == data.objectId
+    @players.others[data.objectId]?.broadcast(message)
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)
       delete @_callbacks[data.createTime]

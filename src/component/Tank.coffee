@@ -29,29 +29,21 @@ class Tank extends NetWorkComponent
     realHP = Tank.HP[@userInfo.type] * @userInfo.hp - damage
     console.log realHP
     @userInfo.hp = if realHP < 0 then 0 else realHP / Tank.HP[@userInfo.type]
-    NetWorkManager.update(other_mesh.gameObject.reqPlayerId, {damage: damage, killed: @userInfo.hp == 0})
+    NetWorkManager.update(other_mesh.gameObject.reqPlayerId, {method: "deal_damage", damage: damage, killed: @userInfo.hp == 0})
     @_respawn() if @userInfo.hp == 0 # 打死了则复活
     NetWorkManager.updateUserInfo(@userInfo)
     document.setUserInfo(@userInfo)
 
   receive: (args...) =>
     data = args[0]  # 表示自己对他人造成了伤害
-    # 计算奖励经验和分数
-    profit = data.damage + (if data.killed then 100 else 0)
-    @getExp(profit)
-    @userInfo.score += Math.floor(profit)
-    # 是否升级
-    if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
-      realEXP -= Tank.HP[@userInfo.type]
-      @userInfo.level += 1
-      @_updateInfoByLevel()
-      @_changeMesh("tank_"+Tank.LEVEL[@userInfo.level].toLowerCase())
-
-    @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
-    @userInfo.exp = 1 if @userInfo.exp > 1
-
-    NetWorkManager.updateUserInfo(@userInfo)
-    document.setUserInfo(@userInfo)
+    if data.method == "deal_damage" # 计算奖励经验和分数
+      profit = data.damage + (if data.killed then 100 else 0)
+      @getExp(profit)
+      @userInfo.score += Math.floor(profit)
+      NetWorkManager.updateUserInfo(@userInfo)
+      document.setUserInfo(@userInfo)
+    else if data.method == "change_mesh"
+      @_changeMesh("tank_" + Tank.LEVEL[data.level].toLowerCase())
 
   update: =>
     return if not @isLocal
@@ -60,15 +52,10 @@ class Tank extends NetWorkComponent
     @_respawn() if Input.isPressed('R') and Date.now() - @_respawnTime > Tank.GOD_TIME  # 按 R 复活，5s cd
     # 检测是否在房子周围回血
     distanceToHouse = @gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0))
-    #console.log distanceToHouse
     if distanceToHouse < 3 and @userInfo.hp < 1
       console.log "recovering"
       @userInfo.hp += 0.0005
       document.setUserInfo(@userInfo)
-
-  _changeMesh: (meshName) =>
-    @gameObject.mesh.geometry = Data.vox[meshName].geometry
-    @gameObject.mesh.material = Data.vox[meshName].material
 
   getExp: (exp) =>
     realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + exp
@@ -77,9 +64,15 @@ class Tank extends NetWorkComponent
       realEXP -= Tank.HP[@userInfo.type]
       @userInfo.level += 1
       @_updateInfoByLevel()
+      @_changeMesh("tank_" + Tank.LEVEL[@userInfo.level].toLowerCase())
+      NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level})
     @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
     @userInfo.exp = 1 if @userInfo.exp > 1
     document.setUserInfo(@userInfo)
+
+  _changeMesh: (meshName) =>
+    @gameObject.mesh.geometry = Data.vox[meshName].geometry
+    @gameObject.mesh.material = Data.vox[meshName].material
 
   _respawn: =>
     pz = if Math.random() > 0.5 then 18 else -18
