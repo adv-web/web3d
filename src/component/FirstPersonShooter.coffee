@@ -8,6 +8,8 @@ AudioSource = require("./AudioSource")
 # when you click mouse, a small ball will be generated and fly to your first-person direction.
 # The ball has it collider, you can detect it by assert other_mesh.name = 'bullet'.
 #
+# It relies on Tank component in this version of game.
+#
 # name = "FirstPersonShooter"
 class FirstPersonShooter extends NetWorkComponent
   module.exports = this
@@ -15,7 +17,7 @@ class FirstPersonShooter extends NetWorkComponent
   # @property [boolean] tell whether the controller is enabled, initially true
   enabled: true
 
-  # @property [number] the cool down time (ms), initially 1000
+  # @property [number] the cool down time (ms), initially 5000
   cooldown: 5000
 
   # @property [number] the initial speed of bullet, initially 30

@@ -63,8 +63,12 @@ class NetWorkManager
   # param [THREE.Vector3] spawnPoint the spawn point of player.
   @setSpawnPoint: (@spawnPoint) =>
 
+  # set game time listener, it will be invoked every second when game time countdown
+  # param [Function] the function invoked when countdown
   @setGameTimeListener: (@_gameTimeListener) =>
 
+  # set game end listener, it will be invoked when game countdown is finish
+  # param [Function] the function invoked when game finish
   @setGameEndListener: (@_gameEndListener) =>
 
   # add GameObject to the scene and inform other clients

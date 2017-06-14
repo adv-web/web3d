@@ -25,11 +25,13 @@ class Bullet extends Component
   _onExplodeFinish: =>
     Game.scene.remove(@gameObject)
 
+  # @private
   _launch: (mass, velocity) =>
     AudioSource.play('/audio/fire.wav', 1) # source, volume
     @gameObject.mesh?.mass = mass
     @gameObject.mesh?.setLinearVelocity(velocity)
 
+  # @nodoc
   receive: (args...) =>
     data = args[0]
     return if data.method != "launch"

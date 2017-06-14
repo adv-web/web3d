@@ -1,10 +1,13 @@
 Component = require("../Component")
 ExplodeAnimation = require("./ExplodeAnimation")
 Game = require("../Game")
-
+# The pumpkin in game. Can triggered only by user(tank) and can explode and add exp.
+#
+# name = "Pumpkin"
 class Pumpkin extends Component
   module.exports = this
 
+  # Construct a pumpkin.
   constructor: () ->
     super("Pumpkin")
     @_explode = false

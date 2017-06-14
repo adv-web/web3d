@@ -60,6 +60,74 @@ are simply classified as follows:</p><ol>
   </li>
   <li>
     <span class='signature'>
+      <a href='#setUserInfo-static'>
+        .
+(void)
+<b>setUserInfo</b><span>(userInfo, updateCallback)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      set information of local player 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#updateUserInfo-static'>
+        .
+(void)
+<b>updateUserInfo</b><span>(userInfo = @userInfo)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      update the user information of the local player. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setSpawnPoint-static'>
+        .
+(void)
+<b>setSpawnPoint</b><span>(spawnPoint)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      set the spawn point of the player param [THREE.Vector3] spawnPoint the spawn point of player.
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setGameTimeListener-static'>
+        .
+(void)
+<b>setGameTimeListener</b><span>(_gameTimeListener)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      set game time listener, it will be invoked every second when game time countdown param [Function] the function invoked when countdown
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#setGameEndListener-static'>
+        .
+(void)
+<b>setGameEndListener</b><span>(_gameEndListener)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      set game end listener, it will be invoked when game countdown is finish param [Function] the function invoked when game finish
+
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#spawn-static'>
         .
 (void)
@@ -95,6 +163,19 @@ are simply classified as follows:</p><ol>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
       remove object from the scene 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_client_updateTime-static'>
+        .
+(void)
+<b>_client_updateTime</b><span>(time)</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      @ private 
     </span>
   </li>
 </ul>
@@ -150,6 +231,115 @@ are simply classified as follows:</p><ol>
       <span class='desc'>the server address </span>
     </li>
   </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setUserInfo-static'>
+      .
+(void)
+<b>setUserInfo</b><span>(userInfo, updateCallback)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>set information of local player</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>userInfo</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>message of local player </span>
+    </li>
+    <li>
+      <span class='name'>updateCallback</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>callback function when the info is updated </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='updateUserInfo-static'>
+      .
+(void)
+<b>updateUserInfo</b><span>(userInfo = @userInfo)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>update the user information of the local player. this function will send a message
+the server and the server will tell other clients</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>userInfo</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the information of the local player. you decide the format of it. and you will revive it at the update callback function you have set. </span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setSpawnPoint-static'>
+      .
+(void)
+<b>setSpawnPoint</b><span>(spawnPoint)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>set the spawn point of the player</p><p>param [THREE.Vector3] spawnPoint the spawn point of player.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setGameTimeListener-static'>
+      .
+(void)
+<b>setGameTimeListener</b><span>(_gameTimeListener)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>set game time listener, it will be invoked every second when game time countdown
+param [Function] the function invoked when countdown</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='setGameEndListener-static'>
+      .
+(void)
+<b>setGameEndListener</b><span>(_gameEndListener)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>set game end listener, it will be invoked when game countdown is finish
+param [Function] the function invoked when game finish</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -281,6 +471,20 @@ are simply classified as follows:</p><ol>
       <span class='desc'>callback function to show whether this operation is successful </span>
     </li>
   </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_client_updateTime-static'>
+      .
+(void)
+<b>_client_updateTime</b><span>(time)</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>@ private</p>
+</div>
+<div class='tags'>
 </div>
   </div>
 </div>

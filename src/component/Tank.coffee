@@ -2,6 +2,10 @@ NetWorkComponent = require("./NetWorkComponent")
 NetWorkManager = require("../NetWorkManager")
 Data = require("../Data")
 Input = require("../Input")
+# The tank component is important to deal with game logic.
+# It provides damage detecting and calculating, and update users' states
+#
+# name = "Tank"
 class Tank extends NetWorkComponent
   module.exports = this
 
@@ -12,6 +16,7 @@ class Tank extends NetWorkComponent
 
   @GOD_TIME = 5000 # 重生无敌时间
 
+  # Construct a tank.
   constructor: () ->
     super("Tank")
     @userInfo = document.userInfo
@@ -34,6 +39,7 @@ class Tank extends NetWorkComponent
     NetWorkManager.updateUserInfo(@userInfo)
     document.setUserInfo(@userInfo)
 
+  # @nodoc
   receive: (args...) =>
     data = args[0]  # 表示自己对他人造成了伤害
     if data.method == "deal_damage" # 计算奖励经验和分数
@@ -42,9 +48,10 @@ class Tank extends NetWorkComponent
       @userInfo.score += Math.floor(profit)
       NetWorkManager.updateUserInfo(@userInfo)
       document.setUserInfo(@userInfo)
-    else if data.method == "change_mesh"
+    else if data.method == "change_mesh"  # 更改别人的坦克模型
       @_changeMesh("tank_" + Tank.LEVEL[data.level].toLowerCase())
 
+  # @nodoc
   update: =>
     return if not @isLocal
     # 检测本地玩家是否翻车或掉下悬崖
@@ -57,6 +64,8 @@ class Tank extends NetWorkComponent
       @userInfo.hp += 0.0005
       document.setUserInfo(@userInfo)
 
+  # Get exp. User may level up by this.
+  # @param exp [number] the absolute exp user get, usually a positive number
   getExp: (exp) =>
     realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + exp
     # 是否升级
@@ -70,10 +79,12 @@ class Tank extends NetWorkComponent
     @userInfo.exp = 1 if @userInfo.exp > 1
     document.setUserInfo(@userInfo)
 
+  # @private
   _changeMesh: (meshName) =>
     @gameObject.mesh.geometry = Data.vox[meshName].geometry
     @gameObject.mesh.material = Data.vox[meshName].material
 
+  # @private
   _respawn: =>
     pz = if Math.random() > 0.5 then 18 else -18
     @gameObject.mesh.position.set(0, 1, pz)
@@ -89,6 +100,7 @@ class Tank extends NetWorkComponent
     @userInfo.hp = 1
     document.setUserInfo(@userInfo)
 
+  # @private
   _updateInfoByLevel: () =>
     type = @userInfo.type = Tank.LEVEL[@userInfo.level]
     @userInfo.power = Tank.DAMAGE[type]

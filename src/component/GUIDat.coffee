@@ -4,11 +4,14 @@ NetWorkComponent = require('./NetWorkComponent')
 # This component display some parameters such as velocity, jump power of the player.
 #
 # Notice: This component should be only added to the player Prefab
+#
+# name = "GUIDat"
 class GUIDat extends NetWorkComponent
-  module.exports = @
+  module.exports = this
 
+  # Construct a gui dat.
   constructor: () ->
-    super "GUIDat"
+    super("GUIDat")
 
   # override the onStartLocalPlayer function and
   # add gui display

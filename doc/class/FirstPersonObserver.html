@@ -19,66 +19,61 @@
       Index
     </a>
     &raquo;
-    <span class='title'>GUIDat</span>
+    <span class='title'>FirstPersonObserver</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        GUIDat
+        FirstPersonObserver
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>src\component\GUIDat.coffee</td>
+          <td>src\component\FirstPersonObserver.coffee</td>
         </tr>
         <tr>
           <td>Inherits:</td>
           <td>
-            <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+            <a href='../class/Component.html'>Component</a>
           </td>
         </tr>
       </table>
       <h2>Overview</h2>
       <div class='docstring'>
-  <p>This component display some parameters such as velocity, jump power of the player.</p><p>Notice: This component should be only added to the player Prefab</p><p>name = &quot;GUIDat&quot;</p>
+  <p>First person observer provides function that screen rotates as mouse move</p><p>name = &quot;FirstPersonObserver&quot;</p>
 </div>
 <div class='tags'>
 </div>
       <h2>Property Summary</h2>
+      <dl class='properties'>
+        <dt id='sensitivity-property'>
+          <span class='signature'>
+            (number)
+            <b>
+              sensitivity
+            </b>
+          </span>
+        </dt>
+        <dd class='desc'>
+          how fast the rotation when mouse move, initially 1 
+        </dd>
+      </dl>
       <h3 class='inherited'>
         Properties inherited from
-        <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+        <a href='../class/Component.html'>Component</a>
       </h3>
       <p class='inherited'>
         <a href='../class/Component.html#name-property'>name</a>
         <a href='../class/Component.html#gameObject-property'>gameObject</a>
       </p>
-      <h2>Instance Method Summary</h2>
-      <ul class='summary'>
-  <li>
-    <span class='signature'>
-      <a href='#onStartLocalPlayer-dynamic'>
-        #
-(void)
-<b>onStartLocalPlayer</b><span>()</span>
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      override the onStartLocalPlayer function and add gui display
-
-    </span>
-  </li>
-</ul>
       <h2>
         <small>Inherited Method Summary</small>
         <h3 class='inherited'>
           Methods inherited from
-          <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
+          <a href='../class/Component.html'>Component</a>
         </h3>
         <p class='inherited'>
-          <a href='../class/NetWorkComponent.html#onStartLocalPlayer-dynamic'>#onStartLocalPlayer</a>
           <a href='../class/Component.html#receive-dynamic'>#receive</a>
         </p>
       </h2>
@@ -88,31 +83,42 @@
     <p class='signature' id='constructor-dynamic'>
       #
 (void)
-<b>constructor</b><span>()</span>
+<b>constructor</b><span>(options = {})</span>
       <br>
     </p>
     <div class='docstring'>
-  <p>Construct a gui dat.</p>
+  <p>Construct a first person observer.</p>
 </div>
 <div class='tags'>
-</div>
-  </div>
-</div>
-      <h2>Instance Method Details</h2>
-      <div class='methods'>
-  <div class='method_details'>
-    <p class='signature' id='onStartLocalPlayer-dynamic'>
-      #
-(void)
-<b>onStartLocalPlayer</b><span>()</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    <div class='docstring'>
-  <p>override the onStartLocalPlayer function and
-add gui display</p>
-</div>
-<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>options</span>
+      <span class='type'>
+        (
+          <tt>Object</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the optional parameters </span>
+    </li>
+  </ul>
+  <h3>
+    Options Hash:
+    (options):
+  </h3>
+  <ul class='options'>
+    <li>
+      <span class='name'>sensitivity</span>
+      <span class='type'>
+        (
+          <tt>number</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>of mouse move, by default 1 </span>
+    </li>
+  </ul>
 </div>
   </div>
 </div>

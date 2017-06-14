@@ -16,6 +16,7 @@ AudioListener = require('./component/AudioListener')
 AudioSource = require('./component/AudioSource')
 Tank = require("./component/Tank")
 Pumpkin = require("./component/Pumpkin")
+PumpkinTree = require("./component/PumpkinTree")
 
 # The scene in game to contain game objects and other essential objects.
 #
