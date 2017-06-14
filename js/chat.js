@@ -1,9 +1,6 @@
 /**
  * Created by duocai on 2017/6/11.
  */
-/**
- * Created by duocai on 2017/5/13.
- */
 
 $(function() {
     var FADE_TIME = 150; // ms
@@ -13,6 +10,8 @@ $(function() {
         '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
         '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
     ];
+    var socket = io('http://120.76.125.35:5000/chat');
+    // var socket = io('http://localhost:5000/chat');
 
     // Initialize variables
     var $window = $(window);
@@ -26,8 +25,6 @@ $(function() {
     var lastTypingTime;
     var $currentInput = $inputMessage;
 
-    var socket = io('http://120.76.125.35:5000/chat');
-
     function addParticipantsMessage (data) {
         var message = '';
         if (data.numUsers === 1) {
@@ -40,7 +37,7 @@ $(function() {
 
     // Sets the client's username
     function setUsername () {
-        username = cleanInput($("#gamePanel .usr_name").text());
+        username = global.userInfo.nickname;
 
         // If the username is valid
         if (username) {

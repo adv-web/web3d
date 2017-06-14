@@ -29,7 +29,7 @@
             <div>
                 <div class="login">
                     <p>
-                        <input type="text" name="id" placeholder="用户名" value="">
+                        <input type="text" name="username" placeholder="用户名" value="">
                     </p>
                     <p>
                         <input type="password" name="password" placeholder="密码" value="">
@@ -44,16 +44,16 @@
         <div class="box">
             <div class="registe">
                 <p>
-                    <input type="text" id="username" placeholder="用户名">
+                    <input type="text" name="username" placeholder="用户名">
                 </p>
                 <p>
-                    <input type="text" id="nickname" placeholder="昵称">
+                    <input type="text" name="nickname" placeholder="昵称">
                 </p>
                 <p>
-                    <input type="password" id="password" placeholder="密码">
+                    <input type="password" name="password" placeholder="密码">
                 </p>
                 <p>
-                    <input type="password" id="finalPWD" placeholder="确认密码">
+                    <input type="password" name="password2" placeholder="确认密码">
                 </p>
                 <div id="btn2">
                     <input type="button" value="提交" id="register" class="submit"/>
@@ -87,10 +87,19 @@
                 <div class="usr_avatar"></div>
                 <div class="usr_name">Guest409</div>
                 <div class="usr_rank">
-                    <div class="masked2"><span class="masked2 rank">军衔: </span>上校</div>
+                    <div class="masked2">
+                        <span class="masked2 rank">军衔: </span>
+                        <span class="user_rank">新兵</span>
+                    </div>
                 </div>
-                <div class="usr_percent"> <span>胜率:</span>100% </div>
-                <div class="usr_count"> <span>局数:</span>100 </div>
+                <div class="usr_percent">
+                    <span>胜率:</span>
+                    <span class="win_rate"> 100% </span>
+                </div>
+                <div class="usr_count">
+                    <span>局数:</span>
+                    <span class="battle_number">0</span>
+                </div>
             </div>
 
             <!--加载资源-->
@@ -153,11 +162,11 @@
                     </div>
                 </div>
                 <ol id="order-list">
-                    <li>LTL<span>490</span></li>
-                    <li>LQT<span>480</span></li>
-                    <li>CZP<span>470</span></li>
-                    <li>WDC<span>400</span></li>
-                    <li>HPJ<span>10</span></li>
+                    <!--<li>LTL<span>490</span></li>-->
+                    <!--<li>LQT<span>480</span></li>-->
+                    <!--<li>CZP<span>470</span></li>-->
+                    <!--<li>WDC<span>400</span></li>-->
+                    <!--<li>HPJ<span>10</span></li>-->
                 </ol>
             </div>
             <!--地图-->
@@ -193,12 +202,21 @@
             <!--个人信息-->
             <div class="usr_info">
                 <div class="usr_avatar"></div>
-                <div class="usr_name">LTL</div>
+                <div class="usr_name">Guest409</div>
                 <div class="usr_rank">
-                    <div class="masked2"><span class="masked2 rank">军衔: </span>上校</div>
+                    <div class="masked2">
+                        <span class="masked2 rank">军衔: </span>
+                        <span class="user_rank">新兵</span>
+                    </div>
                 </div>
-                <div class="usr_percent"> <span>胜率:</span>100% </div>
-                <div class="usr_count"> <span>局数:</span>100 </div>
+                <div class="usr_percent">
+                    <span>胜率:</span>
+                    <span class="win_rate"> 100% </span>
+                </div>
+                <div class="usr_count">
+                    <span>局数:</span>
+                    <span class="battle_number">0</span>
+                </div>
             </div>
             <!--HP-->
             <div class="HP-bg"></div>
@@ -215,21 +233,21 @@
                 <div class="d-area">
                     <div class="d-bg level-bg"></div>
                     <div class="d-title">等级</div>
-                    <div class="d-data">04</div>
+                    <div class="d-data">01</div>
                 </div>
             </div>
             <div class="equip">
                 <div class="d-area">
                     <div class="d-bg equip-bg"></div>
                     <div class="d-title">装备</div>
-                    <div class="d-data">重甲</div>
+                    <div class="d-data">木甲</div>
                 </div>
             </div>
             <div class="power">
                 <div class="d-area">
                     <div class="d-bg power-bg"></div>
                     <div class="d-title">杀伤力</div>
-                    <div class="d-data">8000</div>
+                    <div class="d-data">100</div>
                 </div>
             </div>
         </div>

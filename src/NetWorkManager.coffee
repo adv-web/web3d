@@ -27,6 +27,7 @@ class NetWorkManager
   @init: (@scene, @playerPrefab, @serverAddress) =>
     @local_time = new Date().getTime()
     @objectUpdateEvent = "object.update"
+    @userInfoUpdate = "user.info.update"
     @gameObjects = {}
     @players =
       self: {}
@@ -41,6 +42,15 @@ class NetWorkManager
   @_client_start: () =>
     # connect to the server
     @_client_connect_to_server()
+
+
+  # set information of local player
+  # @param [Object] userInfo message of local player
+  # @param [Function] updateCallback callback function when the info is updated
+  @setUserInfo: (@userInfo, @updateCallback) =>
+
+  @updateUserInfo: (userInfo=@userInfo) =>
+    @socket.emit(@userInfoUpdate, userInfo)
 
   # set the spawn point of the player
   # param [THREE.Vector3] spawnPoint the spawn point of player.
@@ -135,12 +145,19 @@ class NetWorkManager
     # On message from the server, we parse the commands and send it to the handlers
     @socket.on('message', @_client_onnetmessage)
 
+    # on user information updated event
+    @socket.on(@userInfoUpdate, @_user_info_update)
+
     # receive the message about update game object
     @socket.on @objectUpdateEvent, (data) =>
       switch data.action
         when 's' then @_spawn(data)
         when 'd' then @_destroy(data)
         when 'u' then @_update(data)
+
+  # @private
+  @_user_info_update: (data) =>
+    @updateCallback(data)
 
   # @private
   @_spawn: (data) =>
@@ -180,6 +197,7 @@ class NetWorkManager
     @players.self.id = data.id;
     @players.self.state = 'connected'
     @players.self.online = true
+    @updateUserInfo()
 
   # @private
   @_client_ondisconnect: (data) =>

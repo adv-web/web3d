@@ -66,8 +66,15 @@ function scene1(scene) {
     //scene.spawn(Data.prefab.tank_start);
 
     NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
-    NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5))
+    // NetWorkManager.init(scene, Data.prefab.player, 'http://localhost:5000/game');
+    NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
+    NetWorkManager.setUserInfo(global.userInfo, global.updateScoreBoard);
 
+    // simulate score update
+    setInterval(function () {
+        global.userInfo.score += Math.round(Math.random()*10);
+        NetWorkManager.updateUserInfo(global.userInfo);
+    }, 1000);
 }
 
 // boot script
@@ -77,9 +84,10 @@ $(function() {
     var gamePage = $("#gamePanel");
     var startButton = preparePage.find("#start");
     var sourceTag = preparePage.find(".coldtime-title");
-    var userNameBlock = gamePage.find(".usr_name");
     var prepareUserInfoBlock = preparePage.find(".usr_info");
     var gameUserInfoBlock = gamePage.find(".usr_info");
+    var server = "http://120.76.125.35:5000/";
+    // var server = "http://localhost:5000/";
 
     //hide game page
     gamePage.hide();
@@ -108,18 +116,133 @@ $(function() {
 
     // login
     loginPage.find("#login").click(function () {
+
         //do login
-        //change user info
-        loginPage.hide();
-        preparePage.show();
+        var login = loginPage.find(".login");
+        var mess = {
+            username: login.find("input[name='username']").val(),
+            password: login.find("input[name='password']").val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: server + 'session',
+            data: mess,
+            dataType: 'JSON',
+            success: function(data){
+                if (data.success) {
+                    //change user info
+                    global.userInfo = JSON.parse(data.user);
+                    global.userInfo.score = 0;
+                    setUserInfo(global.userInfo);
+                    //show game
+                    loginPage.hide();
+                    preparePage.show();
+                }
+                else {
+                    alert(JSON.stringify(data.err));
+                }
+            },
+            error: function(data){
+                alert(JSON.stringify(data));
+            }
+        });
     });
 
     //register
     loginPage.find("#register").click(function () {
        // do register
-        // set user info
-        loginPage.hide();
-        preparePage.show();
+        var register = loginPage.find(".registe");
+        var mess = {
+            username: register.find("input[name='username']").val(),
+            nickname: register.find("input[name='nickname']").val(),
+            password: register.find("input[name='password']").val()
+        };
+        if (mess.password !== register.find("input[name='password2']").val()) {
+            alert("密码不一致");
+            return ;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: server + 'user',
+            data: mess,
+            dataType: 'JSON',
+            success: function(data){
+                if (data.success) {
+                    //change user info
+                    global.userInfo = JSON.parse(data.user);
+                    global.userInfo.score = 0;
+                    setUserInfo(global.userInfo);
+                    //show game
+                    loginPage.hide();
+                    preparePage.show();
+                }
+                else {
+                    alert(JSON.stringify(data.err));
+                }
+            },
+            error: function(data){
+                alert(JSON.stringify(data));
+            }
+        });
     });
+
+    function setUserInfo(user) {
+        //console.log(user);
+        prepareUserInfoBlock.find(".usr_name").text(user.nickname);
+        prepareUserInfoBlock.find(".user_rank").text(user.rank);//军衔
+        prepareUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
+        prepareUserInfoBlock.find(".battle_number").text(user.battle_number);
+
+        gameUserInfoBlock.find(".usr_name").text(user.nickname);
+        gameUserInfoBlock.find(".user_rank").text(user.rank);//军衔
+        gameUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
+
+        gamePage.find(".battle_number").text(user.battle_number);
+        gamePage.find(".level .d-data").text(user.level);
+        gamePage.find(".equip .d-data").text(user.equipment);
+        gamePage.find(".power .d-data").text(user.power);
+    }
+
+    global.updateScoreBoard = function (data) {
+        var infos = JSON.parse(data);
+        // select sort
+        for (var i = 0; i < infos.length-1; i++) {
+            var min = infos[i].score;
+            var minIndex = i;
+            // select min
+            for (var j = i+1; j < infos.length; j++) {
+                if (infos[j].score > min) {
+                    min = infos[j];
+                    minIndex = j;
+                }
+            }
+            //swap
+            infos[minIndex] = infos[i];
+            infos[i] = min;
+        }
+        //update score board
+        var orderList = gamePage.find("#order-list");
+        //<li>LTL<span>490</span></li>
+        var inner = "";
+        for (var i = 0; i < infos.length; i++) {
+            inner += "<li>" + infos[i].nickname +
+                    "<span>" + infos[i].score + "</span>" + "</li>";
+        }
+        orderList.html(inner);
+    };
+
+    global.userInfo = {
+        username: "Guest"+ Math.ceil(Math.random()*500),
+        nickname: "Guest"+ Math.ceil(Math.random()*500),
+        rank: "新兵",
+        battle_number: 0,
+        win_rate: 100,
+        level: 1,
+        power: 99,
+        equipment: "木甲",
+        score: 0
+    };
+    setUserInfo(global.userInfo);
 });
 
