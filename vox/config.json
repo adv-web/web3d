@@ -53,8 +53,23 @@
     "scale": 0.2
   },
   {
-    "name": "tank_start",
+    "name": "tank_td",
+    "filename":"td1",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_ht",
+    "filename":"ht2",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_mt",
     "filename":"veh_tank1",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_spg",
+    "filename":"SPG2",
     "scale": 0.02
   },
   {

@@ -63,6 +63,10 @@ class NetWorkManager
   # param [THREE.Vector3] spawnPoint the spawn point of player.
   @setSpawnPoint: (@spawnPoint) =>
 
+  @setGameTimeListener: (@_gameTimeListener) =>
+
+  @setGameEndListener: (@_gameEndListener) =>
+
   # add GameObject to the scene and inform other clients
   #
   # @param [String] prefab the prefab that you have set
@@ -220,10 +224,12 @@ class NetWorkManager
   # @private
   @_client_endGame: () => # 告诉你时间到了
     console.log("game end")
+    @_gameEndListener?()
 
   # @ private
   @_client_updateTime: (time) =>  # 更新游戏时间
     console.log("Time: ", time)
+    @_gameTimeListener?(time)
 
   # @private
   @_client_onnetmessage: (data) =>

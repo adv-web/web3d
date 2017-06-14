@@ -1,5 +1,6 @@
 NetWorkComponent = require("./NetWorkComponent")
 NetWorkManager = require("../NetWorkManager")
+Input = require("../Input")
 class Tank extends NetWorkComponent
   module.exports = this
 
@@ -10,19 +11,15 @@ class Tank extends NetWorkComponent
 
   @GOD_TIME = 5000 # 重生无敌时间
 
-  #type: "MT"
-
   constructor: () ->
     super("Tank")
     @userInfo = document.userInfo
     @_respawnTime = 0
-    #@type = "MT"
 
   # @private
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     return if not @isLocal
     return if other_mesh.name != "bullet"
-    console.log "bullet"
     return if Date.now() - @_respawnTime < Tank.GOD_TIME  # 无敌时间内不扣血
     # 计算伤害和血量
     damage = Tank.DAMAGE[other_mesh.userData.type]
@@ -55,7 +52,7 @@ class Tank extends NetWorkComponent
     return if not @isLocal
     # 检测本地玩家是否翻车或掉下悬崖
     @_respawn() if @gameObject.mesh.position.y < -10
-    @_respawn() if @gameObject.mesh.up.y < -0.5
+    @_respawn() if Input.isPressed('R') and Date.now() - @_respawnTime > Tank.GOD_TIME  # 按 R 复活，5s cd
     # 检测是否在房子周围回血
     distanceToHouse = @gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0))
     #console.log distanceToHouse

@@ -45,9 +45,10 @@ function scene1(scene) {
     ];
 
     var grounds = [];
-    for (var i=0; i<25; i++) {
+
+    for (i=0; i<25; i++) {
         grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3], ground_array[i*3+1], ground_array[i*3+2]));
-        grounds[i].mesh.receiveShadow = true;
+        //grounds[i].mesh.receiveShadow = true;
     }
     var contain_array = [
 
@@ -79,7 +80,7 @@ function scene1(scene) {
         10.5, 21,0.35,
         21,  -14,0.88,
         21, -7,0.5,
-        20,  0,0.5,
+        20,  0,0.5
 
 
     ];
@@ -199,7 +200,9 @@ function scene1(scene) {
     scene.add(treered);
 
     var gameManager = new GameObject();
-    gameManager.addComponent(new GameTimeCountdown());
+    var cd = new GameTimeCountdown();
+    cd.grounds = grounds;
+    gameManager.addComponent(cd);
 
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');

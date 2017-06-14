@@ -1,4 +1,5 @@
 Component = require("../Component")
+NetWorkMananger =require("../NetWorkManager")
 $ = require("jquery")
 class GameTimeCountdown extends Component
   module.exports = this
@@ -9,28 +10,42 @@ class GameTimeCountdown extends Component
 
   constructor: (@total = 180) ->
     super("GameTimeCountdown")
+    @grounds = []
 
   afterAdded: =>
-    @_timeLeft = @total
-    @_timer = setInterval(() =>
-      return if not @enabled
-      @_timeLeft -= 1 if @_timeLeft > 0
-      $(".gametime-data").html("#{@_timeLeft} <span>s</span>")
-    , 1000)
-    @enabled = true
+    NetWorkMananger.setGameTimeListener(@_onGameTimeChange)
+    NetWorkMananger.setGameEndListener(@_onGameEnd)
     
   beforeRemoved: =>
-    clearInterval(@_timer)
+    NetWorkMananger.setGameTimeListener(null)
+    NetWorkMananger.setGameEndListener(null)
 
-  start: =>
-    @enabled = true
+  _onGameTimeChange: (time) =>
+    time = parseInt(time)
+    $(".gametime-data").html("#{time} <span>s</span>")
+    if time <= 120
+      #19 18 9
+      @grounds[19].mesh.mass=0.5
+      @grounds[18].mesh.mass=0.5
+      @grounds[9].mesh.mass=0.5
+    if time<=80
+      #22 21 12
+      @grounds[22].mesh.mass=0.5
+      @grounds[21].mesh.mass=0.5
+      @grounds[12].mesh.mass=0.5
+    if time<=50
+      #17 16 7
+      @grounds[17].mesh.mass=0.5
+      @grounds[16].mesh.mass=0.5
+      @grounds[7].mesh.mass=0.5
+    if time<=20
+      #24 23 14
+      @grounds[24].mesh.mass=0.5
+      @grounds[23].mesh.mass=0.5
+      @grounds[14].mesh.mass=0.5
 
-  pause: =>
-    @enabled = false
+  _onGameEnd: =>
 
-  reset: =>
-    clearInterval(@_timer)
-    @afterAdded()
 
 
 
