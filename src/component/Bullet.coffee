@@ -26,8 +26,8 @@ class Bullet extends Component
     Game.scene.remove(@gameObject)
 
   _launch: (mass, velocity) =>
-    AudioSource.play('/aweb/audio/fire.wav', 1) # source, volume
-    @gameObject.mesh?.mass = mass
+    AudioSource.play('/audio/fire.wav', 1) # source, volume
+    @gameObject.mesh.mass = mass
     @gameObject.mesh.setLinearVelocity(velocity)
 
   receive: (args...) =>
