@@ -133,7 +133,7 @@
         antialias: true
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById("gamePanel").appendChild(renderer.domElement);
+      document.body.appendChild(renderer.domElement);
       Game.renderer = renderer;
       return window.addEventListener('resize', Game._onWindowResize, false);
     };
@@ -12305,7 +12305,7 @@ $(function() {
         startButton.click(function () {
             preparePage.hide();
             gamePage.show();
-            
+
             document.addEventListener('keydown', Game.requestFullScreen, false);
             var scene = new Scene(scene1);
             Game.setScene(scene).start();
