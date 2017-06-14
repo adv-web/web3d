@@ -50,6 +50,7 @@ function scene1(scene) {
             new THREE.Vector3(ground_array[i*3],
                 ground_array[i*3+1],
                 ground_array[i*3+2]));
+        grounds[i].mesh.receiveShadow=true;
     }
     var contain_array = [
 
