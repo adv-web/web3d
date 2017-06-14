@@ -11541,7 +11541,7 @@ return jQuery;
     };
 
     Bullet.prototype._launch = function(mass, velocity) {
-      AudioSource.play('/web3d/audio/fire.wav', 1);
+      AudioSource.play('/audio/fire.wav', 1);
       this.gameObject.mesh.mass = mass;
       return this.gameObject.mesh.setLinearVelocity(velocity);
     };
@@ -11911,7 +11911,7 @@ return jQuery;
             z: vz,
             type: _this._tank.userInfo.type
           });
-          AudioSource.play('/web3d/audio/fire.wav', 1);
+          AudioSource.play('/audio/fire.wav', 1);
           obj.mesh.mass = 0.0006;
           return obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz));
         };
@@ -12172,6 +12172,7 @@ return jQuery;
     function Tank() {
       this._updateInfoByLevel = bind(this._updateInfoByLevel, this);
       this._respawn = bind(this._respawn, this);
+      this.update = bind(this.update, this);
       this.receive = bind(this.receive, this);
       this.onCollision = bind(this.onCollision, this);
       Tank.__super__.constructor.call(this, "Tank");
@@ -12211,7 +12212,7 @@ return jQuery;
       data = args[0];
       profit = data.damage + (data.killed ? 100 : 0);
       realEXP = Tank.HP[this.userInfo.type] * this.userInfo.exp + profit;
-      this.userInfo.score += profit;
+      this.userInfo.score += Math.floor(profit);
       if (realEXP >= Tank.HP[this.userInfo.type] && this.userInfo.level < 5) {
         realEXP -= Tank.HP[this.userInfo.type];
         this.userInfo.level += 1;
@@ -12225,10 +12226,31 @@ return jQuery;
       return document.setUserInfo(this.userInfo);
     };
 
+    Tank.prototype.update = function() {
+      var distanceToHouse;
+      if (!this.isLocal) {
+        return;
+      }
+      if (this.gameObject.mesh.position.y < -10) {
+        this._respawn();
+      }
+      if (this.gameObject.mesh.up.y < -0.5) {
+        this._respawn();
+      }
+      distanceToHouse = this.gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0));
+      if (distanceToHouse < 0.1 && this.userInfo.hp < 1) {
+        this.userInfo.hp += 0.01;
+        return document.setUserInfo(this.userInfo);
+      }
+    };
+
     Tank.prototype._respawn = function() {
       var pz;
       pz = Math.random() > 0.5 ? 18 : -18;
       this.gameObject.mesh.position.set(0, 1, pz);
+      this.gameObject.mesh.__dirtyPosition = true;
+      this.gameObject.mesh.rotation.set(0, 0, 0);
+      this.gameObject.mesh.__dirtyRotation = true;
       this.userInfo.score -= Math.floor(Tank.HP[this.userInfo.type] / 10);
       this.userInfo.exp = 0;
       this.userInfo.level -= 1;
@@ -12236,7 +12258,8 @@ return jQuery;
         this.userInfo.level = 1;
       }
       this._updateInfoByLevel();
-      return this._respawnTime = Date.now();
+      this._respawnTime = Date.now();
+      return this.userInfo.hp = 1;
     };
 
     Tank.prototype._updateInfoByLevel = function() {
