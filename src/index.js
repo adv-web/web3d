@@ -45,7 +45,7 @@ function scene1(scene) {
     ];
 
     var grounds = [];
-    for (var i=0; i<25; i++){
+    for (var i=0; i<25; i++) {
         grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3], ground_array[i*3+1], ground_array[i*3+2]));
         grounds[i].mesh.receiveShadow = true;
     }
