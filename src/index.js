@@ -5,6 +5,8 @@ var Game = require("./Game");
 var Scene = require("./Scene");
 var NetWorkManager = require('./NetWorkManager');
 var Data = require("./Data");
+var GameObject = require("./GameObject");
+var GameTimeCountdown = require("./component/GameTimeCountdown");
 
 var SERVER = "http://120.76.125.35:5000/";
 
@@ -50,6 +52,8 @@ function scene1(scene) {
     scene.spawn(Data.prefab.statue_red, new THREE.Vector3(0, -0.8, 12), new THREE.Vector3(0, Math.PI, 0));
     scene.spawn(Data.prefab.statue_blue, new THREE.Vector3(0, -0.8, -12));
 
+    var gameManager = new GameObject();
+    gameManager.addComponent(new GameTimeCountdown());
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
@@ -190,9 +194,11 @@ $(function() {
 
     document.updateScoreBoard = function (data) {
         var infos = JSON.parse(data);
-
+        infos.sort(function (a, b) {
+            return b.score - a.score;
+        });
         // select sort
-        for (var i = 0; i < infos.length-1; i++) {
+        /*for (var i = 0; i < infos.length-1; i++) {
             var min = infos[i];
             var minIndex = i;
             // select min
@@ -205,7 +211,7 @@ $(function() {
             //swap
             infos[minIndex] = infos[i];
             infos[i] = min;
-        }
+        }*/
         //update score board
         var orderList = gamePage.find("#order-list");
         //<li>LTL<span>490</span></li>

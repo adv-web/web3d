@@ -14,7 +14,7 @@ class FirstPersonShooter extends NetWorkComponent
   enabled: true
 
   # @property [number] the cool down time (ms), initially 1000
-  cooldown: 1000
+  cooldown: 5000
 
   # @property [number] the initial speed of bullet, initially 30
   bullet_speed: 30
@@ -27,7 +27,7 @@ class FirstPersonShooter extends NetWorkComponent
     super("FirstPersonShooter")
     @enabled = false
     @_lastFireTime = 0
-    @cooldown = if options.cooldown? then options.cooldown else 1000
+    @cooldown = if options.cooldown? then options.cooldown else 5000
     @bullet_speed = if options.bullet_speed? then options.bullet_speed else 30
     @bullet_size = if options.bullet_size? then options.bullet_size else 0.05
     @bullet_color = if options.bullet_color? then options.bullet_color else 0xffff00
@@ -41,6 +41,18 @@ class FirstPersonShooter extends NetWorkComponent
   # @nodoc
   beforeRemoved: =>
     Input.removeClickResponse(@_onFire)
+
+  # @nodoc
+  update: =>  # 更新冷却时间计时器（setInterval 不准确）
+    timeleft = @cooldown - (Date.now() - @_lastFireTime)
+    return if timeleft < -100
+    if timeleft < 0
+      $("#coldtime").hide()
+      $("#aim").show()
+    else
+      $("#coldtime-sec").text(Math.ceil(timeleft / 1000))
+      $("#aim").hide()
+      $("#coldtime").show()
 
   # @private
   _onFire: =>
@@ -67,3 +79,9 @@ class FirstPersonShooter extends NetWorkComponent
       # 本地发射子弹（NetWorkManager 不发给自己）
       obj.mesh.mass = 0.0006
       obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz)) # 这里的设置速度是世界坐标系
+    # 显示计时器
+    $("#coldtime-sec").text(Math.ceil(@cooldown / 1000))
+    $("#aim").hide()
+    $("#coldtime").show()
+
+
