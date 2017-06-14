@@ -114,11 +114,12 @@
         battle_number: 0,
         win_rate: 100,
         level: 1,
-        power: 99,
-        equipment: "木甲",
+        power: 300,
+        equipment: "中坦",
         score: 0,
         hp: 1, // 百分比
-        type: "MT"
+        type: "MT",
+        exp: 0  // 百分比
     };
     setUserInfo(document.userInfo);
 

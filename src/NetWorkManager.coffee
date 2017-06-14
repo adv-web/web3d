@@ -100,7 +100,7 @@ class NetWorkManager
     time = Date.now()
     data =
       action: 'u'
-      objectId: object.id
+      objectId: if object.isGameObject then object.id else object
       message: JSON.stringify(message)
       createTime: time
     @_callbacks[time] = callback if callback?
@@ -194,6 +194,7 @@ class NetWorkManager
     message = JSON.parse(data.message)
     console.log message
     @gameObjects[data.objectId]?.broadcast(message)
+    @players.self.broadcast(message) if @players.self.id == data.objectId
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)
       delete @_callbacks[data.createTime]
@@ -216,11 +217,11 @@ class NetWorkManager
   @_client_onserverupdate_recieved: (data) =>
 
   # @private
-  @_client_endGame: () =>
+  @_client_endGame: () => # 告诉你时间到了
     console.log("game end")
 
   # @ private
-  @_client_updateTime: (time) =>
+  @_client_updateTime: (time) =>  # 更新游戏时间
     console.log("Time: ", time)
 
   # @private
