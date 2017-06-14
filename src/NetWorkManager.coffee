@@ -100,7 +100,7 @@ class NetWorkManager
     time = Date.now()
     data =
       action: 'u'
-      objectId: object.id
+      objectId: if object.isGameObject then object.id else object
       message: JSON.stringify(message)
       createTime: time
     @_callbacks[time] = callback if callback?
@@ -176,6 +176,7 @@ class NetWorkManager
     rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
     obj = @scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z))
     obj.id = data.objectId
+    obj.reqPlayerId = data.reqPlayerId
     @gameObjects[data.objectId] = obj # save to network objects' pool
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](obj, message)
@@ -194,6 +195,7 @@ class NetWorkManager
     message = JSON.parse(data.message)
     console.log message
     @gameObjects[data.objectId]?.broadcast(message)
+    @players.self.broadcast(message) if @players.self.id == data.objectId
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)
       delete @_callbacks[data.createTime]
@@ -216,11 +218,11 @@ class NetWorkManager
   @_client_onserverupdate_recieved: (data) =>
 
   # @private
-  @_client_endGame: () =>
+  @_client_endGame: () => # 告诉你时间到了
     console.log("game end")
 
   # @ private
-  @_client_updateTime: (time) =>
+  @_client_updateTime: (time) =>  # 更新游戏时间
     console.log("Time: ", time)
 
   # @private

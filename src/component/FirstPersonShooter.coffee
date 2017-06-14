@@ -2,6 +2,8 @@ NetWorkComponent = require("./NetWorkComponent")
 Input = require("../Input")
 NetWorkManager = require("../NetWorkManager")
 Data = require("../Data")
+AudioSource = require("./AudioSource")
+
 # The first-person shooter, give you the ability that,
 # when you click mouse, a small ball will be generated and fly to your first-person direction.
 # The ball has it collider, you can detect it by assert other_mesh.name = 'bullet'.
@@ -75,8 +77,9 @@ class FirstPersonShooter extends NetWorkComponent
     vy = -direction.y * @bullet_speed
     vz = -direction.z * @bullet_speed
     NetWorkManager.spawn Data.prefab.bullet, {position: pos}, (obj) =>
-      NetWorkManager.update(obj, {method: "launch", x: vx, y: vy, z: vz, type: @_tank.type}) # 通知其他玩家发射子弹
+      NetWorkManager.update(obj, {method: "launch", x: vx, y: vy, z: vz, type: @_tank.userInfo.type}) # 通知其他玩家发射子弹
       # 本地发射子弹（NetWorkManager 不发给自己）
+      AudioSource.play('/web3d/audio/fire.wav', 1) # source, volume
       obj.mesh.mass = 0.0006
       obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz)) # 这里的设置速度是世界坐标系
     # 显示计时器
