@@ -216,6 +216,14 @@ class NetWorkManager
   @_client_onserverupdate_recieved: (data) =>
 
   # @private
+  @_client_endGame: () =>
+    console.log("game end")
+
+  # @ private
+  @_client_updateTime: (time) =>
+    console.log("Time: ", time)
+
+  # @private
   @_client_onnetmessage: (data) =>
     # data is a string, and it has at most three parts
     commands = data.split('.');
@@ -243,8 +251,9 @@ class NetWorkManager
           when 's' # start game
             @_client_onstartgame(commanddata)
           when 'e' #end game requested
-            @_client_ondisconnect(commanddata)
-      
+            @_client_endGame(commanddata)
+          when 'ut' # update time request
+            @_client_updateTime(commanddata)
           when 'p' #server ping
             @_client_onping(commanddata)
     # maybe some message else later
