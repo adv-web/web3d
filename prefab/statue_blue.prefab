@@ -10,7 +10,7 @@
     },
     {
       "name": "AudioSource",
-      "param": "{audioclip: '/web3d/audio/bgm.wav', volume: 0.2}"
+      "param": "{audioclip: '/audio/bgm.mp3', volume: 0.05}"
     }
   ]
 }
