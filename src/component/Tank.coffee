@@ -36,15 +36,8 @@ class Tank extends NetWorkComponent
     data = args[0]  # 表示自己对他人造成了伤害
     # 计算奖励经验和分数
     profit = data.damage + (if data.killed then 100 else 0)
-    realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + profit
+    @getExp(profit)
     @userInfo.score += Math.floor(profit)
-    # 是否升级
-    if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
-      realEXP -= Tank.HP[@userInfo.type]
-      @userInfo.level += 1
-      @_updateInfoByLevel()
-    @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
-    @userInfo.exp = 1 if @userInfo.exp > 1
     NetWorkManager.updateUserInfo(@userInfo)
     document.setUserInfo(@userInfo)
 
@@ -61,6 +54,17 @@ class Tank extends NetWorkComponent
       @userInfo.hp += 0.0005
       document.setUserInfo(@userInfo)
 
+  getExp: (exp) =>
+    realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + exp
+    # 是否升级
+    if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
+      realEXP -= Tank.HP[@userInfo.type]
+      @userInfo.level += 1
+      @_updateInfoByLevel()
+    @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
+    @userInfo.exp = 1 if @userInfo.exp > 1
+    document.setUserInfo(@userInfo)
+
   _respawn: =>
     pz = if Math.random() > 0.5 then 18 else -18
     @gameObject.mesh.position.set(0, 1, pz)
@@ -74,6 +78,7 @@ class Tank extends NetWorkComponent
     @_updateInfoByLevel()
     @_respawnTime = Date.now()
     @userInfo.hp = 1
+    document.setUserInfo(@userInfo)
 
   _updateInfoByLevel: () =>
     type = @userInfo.type = Tank.LEVEL[@userInfo.level]
