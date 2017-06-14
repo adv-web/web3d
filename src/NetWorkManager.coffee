@@ -49,7 +49,7 @@ class NetWorkManager
   # @param [Function] updateCallback callback function when the info is updated
   @setUserInfo: (@userInfo, @updateCallback) =>
 
-  @updateUserInfo: (userInfo=@userInfo) =>
+  @updateUserInfo: (userInfo = @userInfo) =>
     @socket.emit(@userInfoUpdate, userInfo)
 
   # set the spawn point of the player

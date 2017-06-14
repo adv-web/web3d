@@ -9,8 +9,10 @@
       "param": "{y: 0.5}"
     },
     {
-      "name": "FirstPersonController",
-      "param": "{sensitivity: 1}"
+      "name": "FirstPersonObserver"
+    },
+    {
+      "name": "VehicleController"
     },
     {
       "name": "FirstPersonShooter"

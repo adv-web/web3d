@@ -20,8 +20,8 @@
     <link href="css/animate.css" rel="stylesheet" type="text/css">
 
 </head>
-<body>
-    <div id="loginPanel">
+<body style="overflow: hidden">
+    <div id="loginPanel" style="display: none">
         <canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;" width="1285" height="100%"></canvas>
         <h2 id="title" align="center">生死坦克</h2>
         <div class="login_frame"></div>
@@ -116,7 +116,7 @@
         </div>
     </div>
 
-    <div id="gamePanel">
+    <div id="gamePanel" style="display: none">
         <div class="HUD panel">
             <!--标题-->
             <div class="title">

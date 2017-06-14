@@ -16,8 +16,8 @@ class FirstPersonShooter extends NetWorkComponent
   # @property [number] the cool down time (ms), initially 1000
   cooldown: 1000
 
-  # @property [number] the initial speed of bullet, initially 10
-  bullet_speed: 10
+  # @property [number] the initial speed of bullet, initially 30
+  bullet_speed: 30
 
   # Constructor a first-person shooter.
   # @param options [Object] the optional parameters
@@ -28,13 +28,13 @@ class FirstPersonShooter extends NetWorkComponent
     @enabled = false
     @_lastFireTime = 0
     @cooldown = if options.cooldown? then options.cooldown else 1000
-    @bullet_speed = if options.bullet_speed? then options.bullet_speed else 10
+    @bullet_speed = if options.bullet_speed? then options.bullet_speed else 30
     @bullet_size = if options.bullet_size? then options.bullet_size else 0.05
     @bullet_color = if options.bullet_color? then options.bullet_color else 0xffff00
 
   # @nodoc
   afterAdded: =>
-    @_controller = @gameObject.getComponent("FirstPersonController")
+    #@_controller = @gameObject.getComponent("FirstPersonController")
     Input.registerClickResponse(@_onFire)
     @enabled = true
 
@@ -52,13 +52,16 @@ class FirstPersonShooter extends NetWorkComponent
     @_lastFireTime = currentTime
     # 创造子弹
     worldPosition = @gameObject.mesh.position
-    pos = new THREE.Vector3(worldPosition.x, worldPosition.y + 0.5, worldPosition.z)
-    rot_y = @_controller._yaw.rotation.y
-    rot_x = @_controller._pitch.rotation.x
+    direction = @gameObject.mesh.getWorldDirection()
+    # 计算子弹发射位置
+    px = worldPosition.x - direction.x * 0.9
+    py = worldPosition.y + 0.3 - direction.y * 0.9
+    pz = worldPosition.z - direction.z * 0.9
+    pos = new THREE.Vector3(px, py, pz)
     # 计算速度分量
-    vx = -Math.sin(rot_y) * Math.cos(rot_x) * @bullet_speed
-    vy = Math.sin(rot_x) * @bullet_speed
-    vz = -Math.cos(rot_y) * Math.cos(rot_x) * @bullet_speed
+    vx = -direction.x * @bullet_speed
+    vy = -direction.y * @bullet_speed
+    vz = -direction.z * @bullet_speed
     NetWorkManager.spawn Data.prefab.bullet, {position: pos}, (obj) =>
       NetWorkManager.update(obj, {method: "launch", x: vx, y: vy, z: vz}) # 通知其他玩家发射子弹
       # 本地发射子弹（NetWorkManager 不发给自己）

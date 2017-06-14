@@ -10,11 +10,15 @@ class Bullet extends Component
   # Constructor a bullet.
   constructor: () ->
     super("Bullet")
+    @_explode = false
 
   # @private
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
-    @gameObject.addComponent(new ExplodeAnimation(@_onExplodeFinish))
-    @gameObject.mesh = null
+    if not @_explode  # 保证只触发一次
+      @gameObject.addComponent(new ExplodeAnimation(@_onExplodeFinish))
+      @_explode = true
+      @gameObject.mesh = null
+
 
   # @private
   _onExplodeFinish: =>
