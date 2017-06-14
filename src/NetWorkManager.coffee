@@ -257,7 +257,9 @@ class NetWorkManager
   # @private
   @_get_player: =>
     if @spawnPoint
-      return Game.scene.spawn(@playerPrefab, @spawnPoint)
+      player=Game.scene.spawn(@playerPrefab, @spawnPoint)
+      player.mesh.castShadow=true
+      return player
     else
       return Game.scene.spawn(@playerPrefab)
 

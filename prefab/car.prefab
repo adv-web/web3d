@@ -2,11 +2,11 @@
   "name": "car",
   "meshType": "vox",
   "mesh": "car",
-  "mass": 0,
+  "mass": 0.5,
   "components": [
     {
       "name": "BoxCollider",
-      "param": "{isTrigger: false, center: {x: 0, y: 0.25, z: 0}}"
+      "param": "{isTrigger: false, center: {x: 0, y: 0.45, z: 0}}"
     }
   ]
 }

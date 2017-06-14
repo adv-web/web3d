@@ -11,238 +11,206 @@ function scene1(scene) {
     // sky box
     scene.add(THREE.SkyBox(['images/Right.jpg', 'images/Left.jpg', 'images/Up.jpg', 'images/Down.jpg', 'images/Back.jpg', 'images/Front.jpg'], 100));
     // light
-    scene.add(new THREE.AmbientLight(0x000080,.2));
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.7);
-    directionalLight.position.set(0, 0, 1);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
-    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.7);
-    directionalLightback.position.set(0, 0, -1);
-    directionalLightback.rotation.set(0, Math.PI, 0);
-    directionalLightback.castShadow = true;
-    scene.add(directionalLightback);
-    var hemiLight = new THREE.HemisphereLight(0xffff80, 0xffff80, .2);
-    hemiLight.position.set(0, -1, -1);
-    scene.add(hemiLight);
+
     // objects
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, 10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, 10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, 10));
-    scene.spawn(Data.prefab.house, new THREE.Vector3(0, -0.8, 0));
+    var ground_array =[
+        0, -1, 0,
+        0, -1, -10,
+        0, -1, -20,
+        0, -1, 10,
+        0, -1, 20,
+        10, -1, 0,
+        10, -1, -10,
+        10, -1, -20,
+        10, -1, 10,
+        10, -1, 20,
+        -10, -1, 0,
+        -10, -1, -10,
+        -10, -1, -20,
+        -10, -1, 10,
+        -10, -1, 20,
+        20, -1, 0,
+        20, -1, -10,
+        20, -1, -20,
+        20, -1, 10,
+        20, -1, 20,
+        -20, -1, 0,
+        -20, -1, -10,
+        -20, -1, -20,
+        -20, -1, 10,
+        -20, -1, 20,
+    ];
+
+    var grounds = [];
+    for (var i=0; i<25; i++){
+        grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3],ground_array[i*3+1],ground_array[i*3+2]));
+        grounds[i].mesh.receiveShadow=true;
+    }
+    var contain_array = [
+
+        -21,-14,0.78,
+        -21,7,0.75,
+        -21,14,0.4,
+
+        -10.5, -21,1,
+        -10.5,-14,0.38,
+        -12,-3.5,0.75,
+        -14, 3.5,0.14,
+        -7.5, -7,0.76,
+        -7.5, 0,0.24,
+        -7.5, 7,1,
+        -10.5, 14,0.43,
+        -10.5, 21,0.24,
+        0,  -10,0,
+        0,  10,0,
+        0,  -16,0,
+        0,  16,0,
+        10.5,  -21,0.91,
+        10.5,  -14,0.35,
+        7.5,  -7,0.25,
+        7.5,  0,0.81,
+        7.5, 7,0.91,
+        13,  -3.5,0.32,
+        15,  3.5,0.88,
+        10.5,  14,0.8,
+        10.5, 21,0.35,
+        21,  -14,0.88,
+        21, -7,0.5,
+        20,  0,0.5,
+
+
+    ];
+    var contains=[];
+    for (var i=0; i<28; i++){
+        contains[i]=scene.spawn(Data.prefab.container, new THREE.Vector3(contain_array[i*3],-0.8,contain_array[i*3+1]),new THREE.Vector3(0, Math.PI*contain_array[i*3+2], 0));
+        contains[i].mesh.castShadow=true;
+    }
+
+
+    var house_mesh=scene.spawn(Data.prefab.house, new THREE.Vector3(0, -0.8, 0)).mesh;
+    house_mesh.castShadow=true;
     //scene.spawn(Data.prefab.container, new THREE.Vector3(12, -0.8, 5));
     //scene.spawn(Data.prefab.container, new THREE.Vector3(5, -0.8, 5));
     //scene.spawn(Data.prefab.fence, new THREE.Vector3(8.5, -0.8, 5));
-    scene.spawn(Data.prefab.train_container, new THREE.Vector3(8.5, -0.8, 5),new THREE.Vector3(0, Math.PI / 2, 0));
+    scene.spawn(Data.prefab.train_container, new THREE.Vector3(-21, -0.8, -3.5),new THREE.Vector3(0, Math.PI, 0)).mesh.castShadow=true;
     //scene.spawn(Data.prefab.container, new THREE.Vector3(-12, -0.8, -5));
     //scene.spawn(Data.prefab.container, new THREE.Vector3(-5, -0.8, -5));
     //scene.spawn(Data.prefab.fence, new THREE.Vector3(-8.5, -0.8, -5));
 
-    scene.spawn(Data.prefab.train_empty, new THREE.Vector3(-8.5, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(12, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(-12, -0.8, 5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(5, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(-5, -0.8, 5));
+    scene.spawn(Data.prefab.train_empty_head, new THREE.Vector3(22, -0.8, 9),new THREE.Vector3(0, 0, 0)).mesh.castShadow=true;
+    scene.spawn(Data.prefab.train_empty_body, new THREE.Vector3(22, -0.8, 22),new THREE.Vector3(0, 0, 0)).mesh.castShadow=true;
+    scene.spawn(Data.prefab.train_empty_body, new THREE.Vector3(22, -0.8, 15.5),new THREE.Vector3(0, 0, 0)).mesh.castShadow=true;
 
-    scene.spawn(Data.prefab.fence, new THREE.Vector3(8.5, -0.8, -5));
-    scene.spawn(Data.prefab.fence, new THREE.Vector3(-8.5, -0.8, 5));
 
-    scene.spawn(Data.prefab.tree, new THREE.Vector3(12, -0.8, 0));
-    scene.spawn(Data.prefab.tree, new THREE.Vector3(-12, -0.8, 0));
+    scene.spawn(Data.prefab.pumpkin, new THREE.Vector3(8.5, -0.8, -5)).mesh.castShadow=true;
+    scene.spawn(Data.prefab.pumpkin, new THREE.Vector3(-8.5, -0.8, 5)).mesh.castShadow=true;
 
-    scene.spawn(Data.prefab.statue_red, new THREE.Vector3(0, -0.8, 12), new THREE.Vector3(0, Math.PI, 0));
-    scene.spawn(Data.prefab.statue_blue, new THREE.Vector3(0, -0.8, -12));
 
+    var tree_mesh=scene.spawn(Data.prefab.tree, new THREE.Vector3(24, -0.8, 0)).mesh;
+    tree_mesh.castShadow=true;
+    scene.spawn(Data.prefab.car, new THREE.Vector3(-3, -0.8, 0)).mesh.castShadow=true;
+
+    var green_mesh=scene.spawn(Data.prefab.statue_green, new THREE.Vector3(0, -0.8, 22), new THREE.Vector3(0, Math.PI, 0)).mesh;
+    green_mesh.castShadow=true;
+
+    var blue_mesh=scene.spawn(Data.prefab.statue_blue, new THREE.Vector3(0, -0.8, -22)).mesh;
+    blue_mesh.castShadow=true;
     //scene.spawn(Data.prefab.chest, new THREE.Vector3(0, -0.9, -4));
 
     //scene.spawn(Data.prefab.wall, new THREE.Vector3(0, -2.6, 3.2));
    // scene.spawn(Data.prefab.wall, new THREE.Vector3(3.2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
    // scene.spawn(Data.prefab.wall, new THREE.Vector3(-2, -2.6, 0), new THREE.Vector3(0, Math.PI / 2, 0));
     //scene.spawn(Data.prefab.tank_start);
+    scene.add(new THREE.AmbientLight(0x0c0c0c,.2));
+    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.4);
+    directionalLight.position.set(10, 10, 0);
+    directionalLight.rotation.set(0, Math.PI/2, 0);
+
+    directionalLight.castShadow = true;
+
+    directionalLight.shadowCameraNear = 2;
+    directionalLight.shadowCameraFar = 200;
+    directionalLight.shadowCameraLeft = -50;
+    directionalLight.shadowCameraRight = 50;
+    directionalLight.shadowCameraTop = 50;
+    directionalLight.shadowCameraBottom = -50;
+    directionalLight.shadowCameraVisible = true;
+    directionalLight.distance = 0;
+
+    directionalLight.shadowMapWidth = 1024;
+    directionalLight.shadowMapHeight = 1024;
+    directionalLight.shadowDarkness = 0.3;
+    scene.add(directionalLight);
+    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.4);
+    directionalLightback.position.set(-10, 10, 0);
+    directionalLightback.rotation.set(0, -Math.PI/2, 0);
+    scene.add(directionalLightback);
+    var hemiLight = new THREE.HemisphereLight(0xffffff,0xffffff, .2);
+    hemiLight.position.set(0, 10, 0);
+    scene.add(hemiLight);
+    var light = new THREE.SpotLight(0xffffff, .3);
+    light.position.set(0.5, -1, 5);
+    light.distance=0;
+    var light2 = new THREE.SpotLight(0xffffff, .3);
+    light2.position.set(0.5, -1, -5);
+    light2.distance=0;
+    scene.add(light);
+    scene.add(light2);
+    var lightgreen = new THREE.SpotLight(0x00ff00, 1);
+    lightgreen.target = green_mesh;
+    lightgreen.position.set(0, 3, 18);
+    lightgreen.distance=0;
+    //var lightblue = new THREE.SpotLight(0x0000ff, .7, 100, Math.PI, 25);
+    var lightblue = new THREE.SpotLight(0x0000ff, 1);
+    lightblue.rotation.set(0, -Math.PI, 0);
+    lightblue.target = blue_mesh;
+    lightblue.position.set(0, 3, -18);
+    lightblue.distance=0;
+    scene.add(lightgreen);
+    scene.add(lightblue);
+    var skygold = new THREE.SpotLight(0xFF4000, .7, 100, Math.PI, 5);
+    skygold.position.set(0, 7, 0);
+    skygold.distance=0;
+    skygold.target = grounds[0].mesh;
+    scene.add(skygold);
+    /*var skyyellow = new THREE.SpotLight(0xFF7000, .5);
+    skyyellow.position.set(0, 12, 0);
+    skyyellow.distance=0;
+    scene.add(skyyellow);
+    var housered = new THREE.SpotLight(0xFF4000, 2);
+    housered.position.set(0, 1.7, 0);
+    housered.distance=0;
+    scene.add(housered);*/
+    var housegold = new THREE.SpotLight(0xFF4000, 2,0,Math.PI/4);
+    //lightyellow.rotation.set(0, -Math.PI, 0);
+    housegold.position.set(0, 1.7, 0);
+    housegold.distance=0;
+    scene.add(housegold);
+    var treered = new THREE.SpotLight(0xFFB000, 2,0,Math.PI/6);
+    treered.shadowCameraFov=10;
+    treered.shadowCameraVisible=true;
+    //lightgold.rotation.set(0, -Math.PI, 0);
+    treered.position.set(24, 1.7, 0);
+    treered.distance=0;
+    treered.target=tree_mesh;
+    scene.add(treered);
 
     NetWorkManager.init(scene, Data.prefab.player, 'http://120.76.125.35:5000/game');
     // NetWorkManager.init(scene, Data.prefab.player, 'http://localhost:5000/game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
-    NetWorkManager.setUserInfo(global.userInfo, global.updateScoreBoard);
-
+    //NetWorkManager.setUserInfo(global.userInfo, global.updateScoreBoard);
     // simulate score update
-    setInterval(function () {
-        global.userInfo.score += Math.round(Math.random()*10);
-        NetWorkManager.updateUserInfo(global.userInfo);
-    }, 1000);
+
 }
 
 // boot script
 $(function() {
-    var loginPage = $("#loginPanel");
-    var preparePage = $("#preparePanel");
-    var gamePage = $("#gamePanel");
-    var startButton = preparePage.find("#start");
-    var sourceTag = preparePage.find(".coldtime-title");
-    var prepareUserInfoBlock = preparePage.find(".usr_info");
-    var gameUserInfoBlock = gamePage.find(".usr_info");
-    var server = "http://120.76.125.35:5000/";
-    // var server = "http://localhost:5000/";
 
-    //hide game page
-    gamePage.hide();
-    //hide login page
-    loginPage.hide();
-
-    // load game source
     Data.load(null, null, function() {
-        sourceTag.text("加载完成");
-        // start game
-        startButton.click(function () {
-            preparePage.hide();
-            gamePage.show();
-
-            document.addEventListener('keydown', Game.requestFullScreen, false);
-            var scene = new Scene(scene1);
-            Game.setScene(scene).start();
-        })
+        document.addEventListener('keydown', Game.requestFullScreen, false);
+        var scene = new Scene(scene1);
+        Game.setScene(scene).start();
     });
 
-    // change to login page
-    prepareUserInfoBlock.click(function () {
-        preparePage.hide();
-        loginPage.show();
-    });
-
-    // login
-    loginPage.find("#login").click(function () {
-
-        //do login
-        var login = loginPage.find(".login");
-        var mess = {
-            username: login.find("input[name='username']").val(),
-            password: login.find("input[name='password']").val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: server + 'session',
-            data: mess,
-            dataType: 'JSON',
-            success: function(data){
-                if (data.success) {
-                    //change user info
-                    global.userInfo = JSON.parse(data.user);
-                    global.userInfo.score = 0;
-                    setUserInfo(global.userInfo);
-                    //show game
-                    loginPage.hide();
-                    preparePage.show();
-                }
-                else {
-                    alert(JSON.stringify(data.err));
-                }
-            },
-            error: function(data){
-                alert(JSON.stringify(data));
-            }
-        });
-    });
-
-    //register
-    loginPage.find("#register").click(function () {
-       // do register
-        var register = loginPage.find(".registe");
-        var mess = {
-            username: register.find("input[name='username']").val(),
-            nickname: register.find("input[name='nickname']").val(),
-            password: register.find("input[name='password']").val()
-        };
-        if (mess.password !== register.find("input[name='password2']").val()) {
-            alert("密码不一致");
-            return ;
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: server + 'user',
-            data: mess,
-            dataType: 'JSON',
-            success: function(data){
-                if (data.success) {
-                    //change user info
-                    global.userInfo = JSON.parse(data.user);
-                    global.userInfo.score = 0;
-                    setUserInfo(global.userInfo);
-                    //show game
-                    loginPage.hide();
-                    preparePage.show();
-                }
-                else {
-                    alert(JSON.stringify(data.err));
-                }
-            },
-            error: function(data){
-                alert(JSON.stringify(data));
-            }
-        });
-    });
-
-    function setUserInfo(user) {
-        //console.log(user);
-        prepareUserInfoBlock.find(".usr_name").text(user.nickname);
-        prepareUserInfoBlock.find(".user_rank").text(user.rank);//军衔
-        prepareUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
-        prepareUserInfoBlock.find(".battle_number").text(user.battle_number);
-
-        gameUserInfoBlock.find(".usr_name").text(user.nickname);
-        gameUserInfoBlock.find(".user_rank").text(user.rank);//军衔
-        gameUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
-
-        gamePage.find(".battle_number").text(user.battle_number);
-        gamePage.find(".level .d-data").text(user.level);
-        gamePage.find(".equip .d-data").text(user.equipment);
-        gamePage.find(".power .d-data").text(user.power);
-    }
-
-    global.updateScoreBoard = function (data) {
-        var infos = JSON.parse(data);
-        // select sort
-        for (var i = 0; i < infos.length-1; i++) {
-            var min = infos[i].score;
-            var minIndex = i;
-            // select min
-            for (var j = i+1; j < infos.length; j++) {
-                if (infos[j].score > min) {
-                    min = infos[j];
-                    minIndex = j;
-                }
-            }
-            //swap
-            infos[minIndex] = infos[i];
-            infos[i] = min;
-        }
-        //update score board
-        var orderList = gamePage.find("#order-list");
-        //<li>LTL<span>490</span></li>
-        var inner = "";
-        for (var i = 0; i < infos.length; i++) {
-            inner += "<li>" + infos[i].nickname +
-                    "<span>" + infos[i].score + "</span>" + "</li>";
-        }
-        orderList.html(inner);
-    };
-
-    global.userInfo = {
-        username: "Guest"+ Math.ceil(Math.random()*500),
-        nickname: "Guest"+ Math.ceil(Math.random()*500),
-        rank: "新兵",
-        battle_number: 0,
-        win_rate: 100,
-        level: 1,
-        power: 99,
-        equipment: "木甲",
-        score: 0
-    };
-    setUserInfo(global.userInfo);
 });
 

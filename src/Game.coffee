@@ -28,7 +28,9 @@ class Game
     # set renderer, is it reasonable to put renderer here? or in scene?
     renderer = new THREE.WebGLRenderer({antialias: true})
     renderer.setSize(window.innerWidth, window.innerHeight)
-    document.getElementById("gamePanel").appendChild(renderer.domElement)
+    renderer.shadowMapEnabled = true
+    renderer.shadowMapSoft = true
+    document.getElementById("loginPanel").appendChild(renderer.domElement)
     Game.renderer = renderer
     # set event listener
     window.addEventListener('resize', @_onWindowResize, false)
