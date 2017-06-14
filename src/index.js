@@ -15,34 +15,6 @@ var SERVER = "http://120.76.125.35:5000/";
 function scene1(scene) {
     // sky box
     scene.add(THREE.SkyBox(['images/Right.jpg', 'images/Left.jpg', 'images/Up.jpg', 'images/Down.jpg', 'images/Back.jpg', 'images/Front.jpg'], 100));
-
-    // objects
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, 10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(10, -1, 10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, 0));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, -10));
-    scene.spawn(Data.prefab.ground, new THREE.Vector3(-10, -1, 10));
-    scene.spawn(Data.prefab.house, new THREE.Vector3(0, -0.8, 0));
-    scene.spawn(Data.prefab.train_container, new THREE.Vector3(8.5, -0.8, 5), new THREE.Vector3(0, Math.PI / 2, 0));
-    scene.spawn(Data.prefab.train_empty_head, new THREE.Vector3(-8.5, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(12, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(-12, -0.8, 5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(5, -0.8, -5));
-    scene.spawn(Data.prefab.container, new THREE.Vector3(-5, -0.8, 5));
-    scene.spawn(Data.prefab.fence, new THREE.Vector3(8.5, -0.8, -5));
-    scene.spawn(Data.prefab.fence, new THREE.Vector3(-8.5, -0.8, 5));
-    scene.spawn(Data.prefab.tree, new THREE.Vector3(12, -0.8, 0));
-    scene.spawn(Data.prefab.tree, new THREE.Vector3(-12, -0.8, 0));
-    scene.spawn(Data.prefab.statue_green, new THREE.Vector3(0, -0.8, 12), new THREE.Vector3(0, Math.PI, 0));
-    scene.spawn(Data.prefab.statue_blue, new THREE.Vector3(0, -0.8, -12));
-
-    var gameManager = new GameObject();
-    gameManager.addComponent(new GameTimeCountdown());
-
     // objects
     var ground_array =[
         0, -1, 0,
@@ -74,8 +46,10 @@ function scene1(scene) {
 
     var grounds = [];
     for (var i=0; i<25; i++){
-        grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3],ground_array[i*3+1],ground_array[i*3+2]));
-        grounds[i].mesh.receiveShadow=true;
+        grounds[i]=scene.spawn(Data.prefab.ground,
+            new THREE.Vector3(ground_array[i*3],
+                ground_array[i*3+1],
+                ground_array[i*3+2]));
     }
     var contain_array = [
 
@@ -225,6 +199,10 @@ function scene1(scene) {
     treered.distance=0;
     treered.target=tree_mesh;
     scene.add(treered);
+
+    var gameManager = new GameObject();
+    gameManager.addComponent(new GameTimeCountdown());
+
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
