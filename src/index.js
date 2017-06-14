@@ -202,7 +202,9 @@ function scene1(scene) {
     scene.add(treered);
 
     var gameManager = new GameObject();
-    gameManager.addComponent(new GameTimeCountdown());
+    var cd = new GameTimeCountdown();
+    cd.grounds = grounds;
+    gameManager.addComponent(cd);
 
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');

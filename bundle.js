@@ -11373,6 +11373,7 @@ return jQuery;
       this.beforeRemoved = bind(this.beforeRemoved, this);
       this.afterAdded = bind(this.afterAdded, this);
       GameTimeCountdown.__super__.constructor.call(this, "GameTimeCountdown");
+      this.grounds = [];
     }
 
     GameTimeCountdown.prototype.afterAdded = function() {
@@ -11385,7 +11386,24 @@ return jQuery;
           if (_this._timeLeft > 0) {
             _this._timeLeft -= 1;
           }
-          return $(".gametime-data").html(_this._timeLeft + " <span>s</span>");
+          $(".gametime-data").html(_this._timeLeft + " <span>s</span>");
+          if (_this._timeLeft === 120) {
+            _this.grounds[19].mesh.mass = 0.5;
+            _this.grounds[18].mesh.mass = 0.5;
+            return _this.grounds[9].mesh.mass = 0.5;
+          } else if (_this._timeLeft === 80) {
+            _this.grounds[22].mesh.mass = 0.5;
+            _this.grounds[21].mesh.mass = 0.5;
+            return _this.grounds[12].mesh.mass = 0.5;
+          } else if (_this._timeLeft === 50) {
+            _this.grounds[17].mesh.mass = 0.5;
+            _this.grounds[16].mesh.mass = 0.5;
+            return _this.grounds[7].mesh.mass = 0.5;
+          } else if (_this._timeLeft === 20) {
+            _this.grounds[24].mesh.mass = 0.5;
+            _this.grounds[23].mesh.mass = 0.5;
+            return _this.grounds[14].mesh.mass = 0.5;
+          }
         };
       })(this), 1000);
       return this.enabled = true;
@@ -12634,7 +12652,9 @@ function scene1(scene) {
     scene.add(treered);
 
     var gameManager = new GameObject();
-    gameManager.addComponent(new GameTimeCountdown());
+    var cd = new GameTimeCountdown();
+    cd.grounds = grounds;
+    gameManager.addComponent(cd);
 
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');

@@ -28,7 +28,7 @@
     },
     {
       "name": "BoxCollider",
-      "param": "{isTrigger: false}"
+      "param": "{isTrigger: false, center: {x: 0, y: 0, z: 0}}"
     }
   ]
 }
