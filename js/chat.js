@@ -37,7 +37,7 @@ $(function() {
 
     // Sets the client's username
     function setUsername () {
-        username = global.userInfo.nickname;
+        username = document.userInfo.nickname;
 
         // If the username is valid
         if (username) {
@@ -252,9 +252,9 @@ $(function() {
 
     // Whenever the server emits 'user left', log it in the chat body
     socket.on('user left', function (data) {
-        log(data.username + ' left');
-        addParticipantsMessage(data);
-        removeChatTyping(data);
+        // log(data.username + ' left');
+        // addParticipantsMessage(data);
+        // removeChatTyping(data);
     });
 
     // Whenever the server emits 'typing', show the typing message

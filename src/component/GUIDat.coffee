@@ -14,11 +14,12 @@ class GUIDat extends NetWorkComponent
   # add gui display
   onStartLocalPlayer: () =>
     @gui = new dat.GUI()
-    fpc = @gameObject.getComponent('FirstPersonController')
-    # dat
+    fpc = @gameObject.getComponent('FirstPersonObserver')
     @gui.add(fpc, 'sensitivity').min(0).step(0.5)
-    @gui.add(fpc, 'move_velocity').min(0).step(0.5)
-    @gui.add(fpc, 'jump_velocity').min(0).step(0.5)
+
+    vc = @gameObject.getComponent('VehicleController')
+    @gui.add(vc, 'move_velocity').min(0).step(0.5)
+    @gui.add(vc, 'rotate_velocity').min(0).step(0.5)
     # gui.add(fpc, 'activateMoveRate').min(1).max(20).step(1)
 
     nwtm = @gameObject.getComponent("NetWorkTransform")
