@@ -1,7 +1,7 @@
 {
-  "name": "train_empty",
+  "name": "train_empty_head",
   "meshType": "vox",
-  "mesh": "train_empty",
+  "mesh": "train_empty_head",
   "mass": 400,
   "components": [
     {

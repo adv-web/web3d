@@ -1,7 +1,7 @@
 {
   "name": "player",
   "meshType": "vox",
-  "mesh": "tank_start",
+  "mesh": "tank_lt",
   "mass": 0.5,
   "components": [
     {
