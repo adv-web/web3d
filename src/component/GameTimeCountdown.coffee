@@ -46,7 +46,27 @@ class GameTimeCountdown extends Component
 
   _onGameEnd: =>
 
+    # change view
+    $("#gamePanel canvas").remove()
+    $("#gamePanel").hide()
+    $("#preparePanel").show()
+    # sycn to the server
+    if document.userInfo.id
+      $.ajax({
+        type: 'PUT',
+        url:  "http://120.76.125.35:5000/user/" + document.userInfo.id,
+        data: document.userInfo,
+        dataType: 'JSON',
+        success: (data) =>
+          if data.success
+            # change user info
+            console.log("user info synchronized")
+          else
+            alert(JSON.stringify(data.err))
 
+        error: (data) =>
+          alert(JSON.stringify(data));
+      });
 
 
 

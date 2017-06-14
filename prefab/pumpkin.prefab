@@ -5,6 +5,9 @@
   "mass": 0.01,
   "components": [
     {
+      "name": "Pumpkin"
+    },
+    {
       "name": "BoxCollider",
       "param": "{isTrigger: false, center: {x: 0, y: 0.2, z: 0}}"
     }
