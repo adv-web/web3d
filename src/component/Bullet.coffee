@@ -1,6 +1,7 @@
 Component = require("../Component")
 ExplodeAnimation = require("./ExplodeAnimation")
 Game = require("../Game")
+AudioSource = require('./Bullet')
 # The bullet component. It will call an explode animation when collision and destroy itself.
 #
 # name = "Bullet"
@@ -25,6 +26,7 @@ class Bullet extends Component
     Game.scene.remove(@gameObject)
 
   _launch: (mass, velocity) =>
+    AudioSource.play('/web3d/audio/fire.wav', 1) # source, volume
     @gameObject.mesh.mass = mass
     @gameObject.mesh.setLinearVelocity(velocity)
 

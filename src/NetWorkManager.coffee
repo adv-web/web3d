@@ -176,6 +176,7 @@ class NetWorkManager
     rs = if message.rotation then message.rotation else {x: 0, y: 0, z: 0}
     obj = @scene.spawn(prefab, new THREE.Vector3(ps.x, ps.y, ps.z), new THREE.Vector3(rs.x, rs.y, rs.z))
     obj.id = data.objectId
+    obj.reqPlayerId = data.reqPlayerId
     @gameObjects[data.objectId] = obj # save to network objects' pool
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](obj, message)

@@ -7,6 +7,10 @@
     {
       "name": "BoxCollider",
       "param": "{isTrigger: true, center: {x: 0, y: 1.65, z: 0}}"
+    },
+    {
+      "name": "AudioSource",
+      "param": "{audioclip: '/web3d/audio/bgm.wav', volume: 0.2}"
     }
   ]
 }
