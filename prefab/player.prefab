@@ -15,6 +15,9 @@
       "name": "VehicleController"
     },
     {
+      "name": "Tank"
+    },
+    {
       "name": "FirstPersonShooter"
     },
     {

@@ -88,7 +88,7 @@ $(function() {
     var progress = 0;   // 当前进度
     var lastMajorPart = -1;  // 上一个大类的号码
     var minorPartDelta = 0; // 每加载一个项目增加的进度
-    Data.load(null, function (data) {
+    Data.load(null, function(data) {
         // 开始加载新的大类，重新计算 delta
         if (lastMajorPart !== data.major) minorPartDelta = 100 / Data.MAJOR / data.minorCount;
         progress += minorPartDelta;

@@ -14,6 +14,7 @@ TreeCollision = require("./component/TreeCollision")
 BoxCollider = require("./component/colliders/BoxCollider")
 AudioListener = require('./component/AudioListener')
 AudioSource = require('./component/AudioSource')
+Tank = require("./component/Tank")
 
 # The scene in game to contain game objects and other essential objects.
 #

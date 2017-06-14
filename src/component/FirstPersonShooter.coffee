@@ -34,7 +34,7 @@ class FirstPersonShooter extends NetWorkComponent
 
   # @nodoc
   afterAdded: =>
-    #@_controller = @gameObject.getComponent("FirstPersonController")
+    @_tank = @gameObject.getComponent("Tank") # 伤害根据 tank 类型来定，因此有耦合，prefab 中应该在 tank 后
     Input.registerClickResponse(@_onFire)
     @enabled = true
 
@@ -75,7 +75,7 @@ class FirstPersonShooter extends NetWorkComponent
     vy = -direction.y * @bullet_speed
     vz = -direction.z * @bullet_speed
     NetWorkManager.spawn Data.prefab.bullet, {position: pos}, (obj) =>
-      NetWorkManager.update(obj, {method: "launch", x: vx, y: vy, z: vz}) # 通知其他玩家发射子弹
+      NetWorkManager.update(obj, {method: "launch", x: vx, y: vy, z: vz, type: @_tank.type}) # 通知其他玩家发射子弹
       # 本地发射子弹（NetWorkManager 不发给自己）
       obj.mesh.mass = 0.0006
       obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz)) # 这里的设置速度是世界坐标系

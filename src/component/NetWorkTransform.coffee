@@ -35,9 +35,9 @@ class NetWorkTransform extends NetWorkComponent
     @event = "nwtc."+ @gameObject.mesh.name
     socket = NetWorkManager.socket
     socket.on(@event, (data) =>
-      console.log(data)
+      #console.log(data)
       player = NetWorkManager.players.others[data.id]
-      console.log(player)
+      #console.log(player)
       if player # player
         player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
         player.mesh.rotation.set(data.rot[0],data.rot[1],data.rot[2])

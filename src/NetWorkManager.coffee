@@ -168,7 +168,7 @@ class NetWorkManager
 
   # @private
   @_spawn: (data) =>
-    # console.log(data)
+    #console.log(data)
     prefab = Data.prefab[data.prefab]
     #console.log data
     message = JSON.parse(data.message)
@@ -183,6 +183,7 @@ class NetWorkManager
 
   # @private
   @_destroy: (data) =>
+    #console.log data
     id = data.objectId
     if @gameObjects[id]?
       @scene.remove(@gameObjects[id])
@@ -191,6 +192,7 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
+    console.log message if message.event != "nwtc.player"
     @gameObjects[data.objectId]?.broadcast(message)
     if @_callbacks[data.createTime]?
       @_callbacks[data.createTime](message)

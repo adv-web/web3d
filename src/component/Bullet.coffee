@@ -15,8 +15,9 @@ class Bullet extends Component
   # @private
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     if not @_explode  # 保证只触发一次
+      @_explode = true # 已触发
+      # 爆炸效果
       @gameObject.addComponent(new ExplodeAnimation(@_onExplodeFinish))
-      @_explode = true
       @gameObject.mesh = null
 
   # @private
@@ -30,4 +31,5 @@ class Bullet extends Component
   receive: (args...) =>
     data = args[0]
     return if data.method != "launch"
+    @gameObject.mesh.userData = data
     @_launch(0.0006, new THREE.Vector3(data.x, data.y, data.z))
