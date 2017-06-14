@@ -23,10 +23,9 @@
         gamePage.find(".level .d-data").text(user.level);
         gamePage.find(".equip .d-data").text(user.equipment);
         gamePage.find(".power .d-data").text(user.power);
-        console.log(maxHPAreaLength);
-        console.log(user.hp);
 
         $(".HP-data").width(maxHPAreaLength * user.hp);
+        $(".pp-data").width(maxHPAreaLength * user.exp);
     };
 
     // 显示登录界面
