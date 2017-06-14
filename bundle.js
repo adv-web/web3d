@@ -11541,12 +11541,12 @@ return jQuery;
     };
 
     Bullet.prototype._launch = function(mass, velocity) {
-      var ref;
+      var ref, ref1;
       AudioSource.play('/aweb/audio/fire.wav', 1);
       if ((ref = this.gameObject.mesh) != null) {
         ref.mass = mass;
       }
-      return this.gameObject.mesh.setLinearVelocity(velocity);
+      return (ref1 = this.gameObject.mesh) != null ? ref1.setLinearVelocity(velocity) : void 0;
     };
 
     Bullet.prototype.receive = function() {
@@ -12191,12 +12191,14 @@ return jQuery;
       if (other_mesh.name !== "bullet") {
         return;
       }
+      console.log("bullet");
       if (Date.now() - this._respawnTime < Tank.GOD_TIME) {
         return;
       }
       damage = Tank.DAMAGE[other_mesh.userData.type];
       damage += damage * (Math.random() * 10 - 5) / 100;
       realHP = Tank.HP[this.userInfo.type] * this.userInfo.hp - damage;
+      console.log(realHP);
       this.userInfo.hp = realHP < 0 ? 0 : realHP / Tank.HP[this.userInfo.type];
       NetWorkManager.update(other_mesh.gameObject.reqPlayerId, {
         damage: damage,
@@ -12230,6 +12232,7 @@ return jQuery;
     };
 
     Tank.prototype.update = function() {
+      var distanceToHouse;
       if (!this.isLocal) {
         return;
       }
@@ -12237,7 +12240,13 @@ return jQuery;
         this._respawn();
       }
       if (this.gameObject.mesh.up.y < -0.5) {
-        return this._respawn();
+        this._respawn();
+      }
+      distanceToHouse = this.gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0));
+      if (distanceToHouse < 3 && this.userInfo.hp < 1) {
+        console.log("recovering");
+        this.userInfo.hp += 0.0005;
+        return document.setUserInfo(this.userInfo);
       }
     };
 

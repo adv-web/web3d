@@ -22,11 +22,13 @@ class Tank extends NetWorkComponent
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     return if not @isLocal
     return if other_mesh.name != "bullet"
+    console.log "bullet"
     return if Date.now() - @_respawnTime < Tank.GOD_TIME  # 无敌时间内不扣血
     # 计算伤害和血量
     damage = Tank.DAMAGE[other_mesh.userData.type]
     damage += damage * (Math.random() * 10 - 5) / 100
     realHP = Tank.HP[@userInfo.type] * @userInfo.hp - damage
+    console.log realHP
     @userInfo.hp = if realHP < 0 then 0 else realHP / Tank.HP[@userInfo.type]
     NetWorkManager.update(other_mesh.gameObject.reqPlayerId, {damage: damage, killed: @userInfo.hp == 0})
     @_respawn() if @userInfo.hp == 0 # 打死了则复活
@@ -56,8 +58,10 @@ class Tank extends NetWorkComponent
     @_respawn() if @gameObject.mesh.up.y < -0.5
     # 检测是否在房子周围回血
     distanceToHouse = @gameObject.mesh.position.distanceTo(new THREE.Vector3(0, 0, 0))
-    if distanceToHouse < 0.1 and @userInfo.hp < 1
-      @userInfo.hp += 0.01
+    #console.log distanceToHouse
+    if distanceToHouse < 3 and @userInfo.hp < 1
+      console.log "recovering"
+      @userInfo.hp += 0.0005
       document.setUserInfo(@userInfo)
 
   _respawn: =>

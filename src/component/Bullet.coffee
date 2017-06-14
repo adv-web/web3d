@@ -28,7 +28,7 @@ class Bullet extends Component
   _launch: (mass, velocity) =>
     AudioSource.play('/aweb/audio/fire.wav', 1) # source, volume
     @gameObject.mesh?.mass = mass
-    @gameObject.mesh.setLinearVelocity(velocity)
+    @gameObject.mesh?.setLinearVelocity(velocity)
 
   receive: (args...) =>
     data = args[0]
