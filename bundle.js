@@ -11609,7 +11609,33 @@ return jQuery;
       }
     };
 
-    GameTimeCountdown.prototype._onGameEnd = function() {};
+    GameTimeCountdown.prototype._onGameEnd = function() {
+      $("#gamePanel canvas").remove();
+      $("#gamePanel").hide();
+      $("#preparePanel").show();
+      if (document.userInfo.id) {
+        return $.ajax({
+          type: 'PUT',
+          url: "http://120.76.125.35:5000/user/" + document.userInfo.id,
+          data: document.userInfo,
+          dataType: 'JSON',
+          success: (function(_this) {
+            return function(data) {
+              if (data.success) {
+                return console.log("user info synchronized");
+              } else {
+                return alert(JSON.stringify(data.err));
+              }
+            };
+          })(this),
+          error: (function(_this) {
+            return function(data) {
+              return alert(JSON.stringify(data));
+            };
+          })(this)
+        });
+      }
+    };
 
     return GameTimeCountdown;
 
@@ -11668,7 +11694,7 @@ return jQuery;
 
     Bullet.prototype._launch = function(mass, velocity) {
       var ref, ref1;
-      AudioSource.play('/aweb/audio/fire.wav', 1);
+      AudioSource.play('/audio/fire.wav', 1);
       if ((ref = this.gameObject.mesh) != null) {
         ref.mass = mass;
       }
@@ -11932,7 +11958,7 @@ return jQuery;
             z: vz,
             type: _this._tank.userInfo.type
           });
-          AudioSource.play('/audio/fire.wav', 1);
+          AudioSource.play('/audio/fire.mp3', 1);
           obj.mesh.mass = 0.0006;
           return obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz));
         };
@@ -12345,7 +12371,8 @@ return jQuery;
       }
       this._updateInfoByLevel();
       this._respawnTime = Date.now();
-      return this.userInfo.hp = 1;
+      this.userInfo.hp = 1;
+      return document.setUserInfo(this.userInfo);
     };
 
     Tank.prototype._updateInfoByLevel = function() {
