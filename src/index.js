@@ -15,20 +15,81 @@ var SERVER = "http://120.76.125.35:5000/";
 function scene1(scene) {
     // sky box
     scene.add(THREE.SkyBox(['images/Right.jpg', 'images/Left.jpg', 'images/Up.jpg', 'images/Down.jpg', 'images/Back.jpg', 'images/Front.jpg'], 100));
+
+    // objects
+    var ground_array =[
+        0, -1, 0,
+        0, -1, -10,
+        0, -1, -20,
+        0, -1, 10,
+        0, -1, 20,
+        10, -1, 0,
+        10, -1, -10,
+        10, -1, -20,
+        10, -1, 10,
+        10, -1, 20,
+        -10, -1, 0,
+        -10, -1, -10,
+        -10, -1, -20,
+        -10, -1, 10,
+        -10, -1, 20,
+        20, -1, 0,
+        20, -1, -10,
+        20, -1, -20,
+        20, -1, 10,
+        20, -1, 20,
+        -20, -1, 0,
+        -20, -1, -10,
+        -20, -1, -20,
+        -20, -1, 10,
+        -20, -1, 20,
+    ];
+
+    
     // light
-    scene.add(new THREE.AmbientLight(0x000080,.2));
-    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.7);
-    directionalLight.position.set(0, 0, 1);
+    scene.add(new THREE.AmbientLight(0x0c0c0c,.2));
+    var directionalLight = new THREE.DirectionalLight(0xFFFFFF,.4);
+    directionalLight.position.set(10, 10, 0);
+    directionalLight.rotation.set(0, Math.PI/2, 0);
+
     directionalLight.castShadow = true;
+
+    directionalLight.shadowCameraNear = 2;
+    directionalLight.shadowCameraFar = 200;
+    directionalLight.shadowCameraLeft = -50;
+    directionalLight.shadowCameraRight = 50;
+    directionalLight.shadowCameraTop = 50;
+    directionalLight.shadowCameraBottom = -50;
+    directionalLight.shadowCameraVisible = true;
+    directionalLight.distance = 0;
+
+    directionalLight.shadowMapWidth = 1024;
+    directionalLight.shadowMapHeight = 1024;
+    directionalLight.shadowDarkness = 0.3;
     scene.add(directionalLight);
-    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.7);
-    directionalLightback.position.set(0, 0, -1);
-    directionalLightback.rotation.set(0, Math.PI, 0);
-    directionalLightback.castShadow = true;
+    var directionalLightback = new THREE.DirectionalLight(0xFFFFFF,.4);
+    directionalLightback.position.set(-10, 10, 0);
+    directionalLightback.rotation.set(0, -Math.PI/2, 0);
     scene.add(directionalLightback);
-    var hemiLight = new THREE.HemisphereLight(0xffff80, 0xffff80, .2);
+    var hemiLight = new THREE.HemisphereLight(0xffffff,0xffffff, .2);
     hemiLight.position.set(0, 10, 0);
     scene.add(hemiLight);
+    var light = new THREE.SpotLight(0xffffff, .3);
+    light.position.set(0.5, -1, 5);
+    light.distance=0;
+    var light2 = new THREE.SpotLight(0xffffff, .3);
+    light2.position.set(0.5, -1, -5);
+    light2.distance=0;
+    scene.add(light);
+    scene.add(light2);
+
+
+    var housegold = new THREE.SpotLight(0xFF4000, 2,0,Math.PI/4);
+    //lightyellow.rotation.set(0, -Math.PI, 0);
+    housegold.position.set(0, 1.7, 0);
+    housegold.distance=0;
+    scene.add(housegold);
+
     // objects
     scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, -10));
     scene.spawn(Data.prefab.ground, new THREE.Vector3(0, -1, 0));
