@@ -1,0 +1,12 @@
+{
+  "name": "train_empty_body",
+  "meshType": "vox",
+  "mesh": "train_empty_body",
+  "mass": 400,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y:0.3, z: 0}}"
+    }
+  ]
+}

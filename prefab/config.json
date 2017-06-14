@@ -33,6 +33,9 @@
     "name": "tank_start"
   },
   {
+    "name": "tank_lt"
+  },
+  {
     "name":"fence"
   },
   {
@@ -42,7 +45,7 @@
     "name":"car"
   },
   {
-    "name":"statue_red"
+    "name":"statue_green"
   },
   {
     "name":"statue_blue"
@@ -51,6 +54,9 @@
     "name":"train_container"
   },
   {
-    "name":"train_empty"
+    "name":"train_empty_head"
+  },
+  {
+    "name":"train_empty_body"
   }
 ]

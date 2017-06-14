@@ -2,11 +2,11 @@
   "name": "tree",
   "meshType": "vox",
   "mesh": "tree",
-  "mass": 0,
+  "mass": 0.5,
   "components": [
     {
         "name": "BoxCollider",
-        "param": "{isTrigger: true, center: {x: 0, y: 0.2, z: 0}}"
+        "param": "{isTrigger: true, center: {x: 0, y: 0.6, z: 0}}"
     }
   ]
 }

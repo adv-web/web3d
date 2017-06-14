@@ -29,8 +29,13 @@
     "scale": 0.1
   },
   {
-    "name":"train_empty",
-    "filename": "train_empty",
+    "name":"train_empty_head",
+    "filename": "veh_train2",
+    "scale": 0.1
+  },
+  {
+    "name":"train_empty_body",
+    "filename": "veh_train3",
     "scale": 0.1
   },
   {
@@ -38,7 +43,7 @@
     "scale": 0.02
   },
   {
-    "name": "statue_red",
+    "name": "statue_green",
     "filename":"obj_statue1",
     "scale": 0.2
   },
@@ -53,6 +58,11 @@
     "scale": 0.02
   },
   {
+    "name": "tank_lt",
+    "filename":"LT1",
+    "scale": 0.02
+  },
+  {
     "name": "fence",
     "filename":"fence",
     "scale": 0.02
@@ -60,11 +70,11 @@
   {
     "name": "car",
     "filename":"veh_car3",
-    "scale": 0.02
+    "scale": 0.1
   },
   {
     "name": "pumpkin",
     "filename":"obj_pumpkin",
-    "scale": 0.02
+    "scale": 0.1
   }
 ]
