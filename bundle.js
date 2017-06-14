@@ -12645,7 +12645,7 @@ function scene1(scene) {
     //scene.spawn(Data.prefab.container, new THREE.Vector3(12, -0.8, 5));
     //scene.spawn(Data.prefab.container, new THREE.Vector3(5, -0.8, 5));
     //scene.spawn(Data.prefab.fence, new THREE.Vector3(8.5, -0.8, 5));
-    scene.spawn(Data.prefab.train_container, new THREE.Vector3(-21, -0.8, -3.5),new THREE.Vector3(0, Math.PI, 0)).mesh.castShadow=true;
+    scene.spawn(Data.prefab.train_container, new THREE.Vector3(-21, -0.8, -3.5),new THREE.Vector3(0, Math.PI/2, 0)).mesh.castShadow=true;
     //scene.spawn(Data.prefab.container, new THREE.Vector3(-12, -0.8, -5));
     //scene.spawn(Data.prefab.container, new THREE.Vector3(-5, -0.8, -5));
     //scene.spawn(Data.prefab.fence, new THREE.Vector3(-8.5, -0.8, -5));
