@@ -29,6 +29,8 @@ class Game
     renderer = new THREE.WebGLRenderer({antialias: true})
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.getElementById("gamePanel").appendChild(renderer.domElement)
+    renderer.shadowMapEnabled = true
+    renderer.shadowMapSoft = true
     Game.renderer = renderer
     # set event listener
     window.addEventListener('resize', @_onWindowResize, false)

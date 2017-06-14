@@ -134,6 +134,8 @@
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.getElementById("gamePanel").appendChild(renderer.domElement);
+      renderer.shadowMapEnabled = true;
+      renderer.shadowMapSoft = true;
       Game.renderer = renderer;
       return window.addEventListener('resize', Game._onWindowResize, false);
     };
