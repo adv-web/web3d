@@ -1,5 +1,6 @@
 NetWorkComponent = require("./NetWorkComponent")
 NetWorkManager = require("../NetWorkManager")
+Data = require("../Data")
 Input = require("../Input")
 class Tank extends NetWorkComponent
   module.exports = this
@@ -22,6 +23,7 @@ class Tank extends NetWorkComponent
     return if other_mesh.name != "bullet"
     return if Date.now() - @_respawnTime < Tank.GOD_TIME  # 无敌时间内不扣血
     # 计算伤害和血量
+    console.log("be hit")
     damage = Tank.DAMAGE[other_mesh.userData.type]
     damage += damage * (Math.random() * 10 - 5) / 100
     realHP = Tank.HP[@userInfo.type] * @userInfo.hp - damage
@@ -43,6 +45,8 @@ class Tank extends NetWorkComponent
       realEXP -= Tank.HP[@userInfo.type]
       @userInfo.level += 1
       @_updateInfoByLevel()
+      @_changeMesh("tank_"+Tank.LEVEL[@userInfo.level].toLowerCase())
+
     @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
     @userInfo.exp = 1 if @userInfo.exp > 1
     NetWorkManager.updateUserInfo(@userInfo)
@@ -60,6 +64,11 @@ class Tank extends NetWorkComponent
       console.log "recovering"
       @userInfo.hp += 0.0005
       document.setUserInfo(@userInfo)
+
+  _changeMesh: (meshName) =>
+    @gameObject.mesh.geometry = Data.vox[meshName].geometry
+    @gameObject.mesh.material = Data.vox[meshName].material
+
 
   _respawn: =>
     pz = if Math.random() > 0.5 then 18 else -18
