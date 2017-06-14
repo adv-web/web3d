@@ -19,7 +19,6 @@ class Bullet extends Component
       @_explode = true
       @gameObject.mesh = null
 
-
   # @private
   _onExplodeFinish: =>
     Game.scene.remove(@gameObject)

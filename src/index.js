@@ -58,7 +58,18 @@ function scene1(scene) {
 
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
-    NetWorkManager.setUserInfo(document.userInfo, document.updateScoreBoard);
+    NetWorkManager.setUserInfo(document.userInfo, function(data) {
+        var info = JSON.parse(data);
+        info.sort(function(a, b) {
+            return b.score - a.score;
+        });
+        var orderList = $("#gamePanel").find("#order-list");
+        var inner = "";
+        for (var i = 0; i < info.length; i++) {
+            inner += "<li>" + info[i].nickname + "<span>" + info[i].score + "</span>" + "</li>";
+        }
+        orderList.html(inner);
+    });
 
     // simulate score update
     setInterval(function () {
@@ -70,13 +81,8 @@ function scene1(scene) {
 
 // boot script
 $(function() {
-    var loginPage = $("#loginPanel");
     var preparePage = $("#preparePanel");
-    var gamePage = $("#gamePanel");
-    var startButton = preparePage.find("#start");
     var sourceTag = preparePage.find(".coldtime-title");
-    var prepareUserInfoBlock = preparePage.find(".usr_info");
-    var gameUserInfoBlock = gamePage.find(".usr_info");
 
     // load game source
     var progress = 0;   // 当前进度
@@ -90,153 +96,14 @@ $(function() {
     }, function() {
         sourceTag.text("加载完成");
         // start game
-        startButton.click(function () {
+        preparePage.find("#start").click(function() {
             document.addEventListener('keydown', Game.requestFullScreen, false);
             var scene = new Scene(scene1);
             Game.setScene(scene).start();
             preparePage.hide();
-            gamePage.show();
+            $("#gamePanel").show();
         })
     });
 
-    // change to login page
-    prepareUserInfoBlock.click(function () {
-        preparePage.hide();
-        loginPage.show();
-    });
-
-    // login
-    loginPage.find("#login").click(function () {
-
-        //do login
-        var login = loginPage.find(".login");
-        var mess = {
-            username: login.find("input[name='username']").val(),
-            password: login.find("input[name='password']").val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: SERVER + 'session',
-            data: mess,
-            dataType: 'JSON',
-            success: function(data) {
-                if (data.success) {
-                    //change user info
-                    document.userInfo = JSON.parse(data.user);
-                    document.userInfo.score = 0;
-                    setUserInfo(document.userInfo);
-                    //show game
-                    loginPage.hide();
-                    preparePage.show();
-                } else {
-                    alert(JSON.stringify(data.err));
-                }
-            },
-            error: function(data) {
-                alert(JSON.stringify(data));
-            }
-        });
-    });
-
-    //register
-    loginPage.find("#register").click(function() {
-       // do register
-        var register = loginPage.find(".registe");
-        var mess = {
-            username: register.find("input[name='username']").val(),
-            nickname: register.find("input[name='nickname']").val(),
-            password: register.find("input[name='password']").val()
-        };
-        if (mess.password !== register.find("input[name='password2']").val()) {
-            alert("密码不一致");
-            return;
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: SERVER + 'user',
-            data: mess,
-            dataType: 'JSON',
-            success: function(data) {
-                if (data.success) {
-                    //change user info
-                    document.userInfo = JSON.parse(data.user);
-                    document.userInfo.score = 0;
-                    setUserInfo(document.userInfo);
-                    //show game
-                    loginPage.hide();
-                    preparePage.show();
-                    //hide register
-                    loginPage.find(".box").hide();
-                } else {
-                    alert(JSON.stringify(data.err));
-                }
-            },
-            error: function(data) {
-                alert(JSON.stringify(data));
-            }
-        });
-    });
-
-    function setUserInfo(user) {
-        //console.log(user);
-        prepareUserInfoBlock.find(".usr_name").text(user.nickname);
-        prepareUserInfoBlock.find(".user_rank").text(user.rank);//军衔
-        prepareUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
-        prepareUserInfoBlock.find(".battle_number").text(user.battle_number);
-
-        gameUserInfoBlock.find(".usr_name").text(user.nickname);
-        gameUserInfoBlock.find(".user_rank").text(user.rank);//军衔
-        gameUserInfoBlock.find(".win_rate").text(user.win_rate+"%");
-
-        gamePage.find(".battle_number").text(user.battle_number);
-        gamePage.find(".level .d-data").text(user.level);
-        gamePage.find(".equip .d-data").text(user.equipment);
-        gamePage.find(".power .d-data").text(user.power);
-    }
-
-    document.updateScoreBoard = function (data) {
-        var infos = JSON.parse(data);
-        infos.sort(function (a, b) {
-            return b.score - a.score;
-        });
-        // select sort
-        /*for (var i = 0; i < infos.length-1; i++) {
-            var min = infos[i];
-            var minIndex = i;
-            // select min
-            for (var j = i+1; j < infos.length; j++) {
-                if (infos[j].score > min.score) {
-                    min = infos[j];
-                    minIndex = j;
-                }
-            }
-            //swap
-            infos[minIndex] = infos[i];
-            infos[i] = min;
-        }*/
-        //update score board
-        var orderList = gamePage.find("#order-list");
-        //<li>LTL<span>490</span></li>
-        var inner = "";
-        for (i = 0; i < infos.length; i++) {
-            inner += "<li>" + infos[i].nickname +
-                    "<span>" + infos[i].score + "</span>" + "</li>";
-        }
-        orderList.html(inner);
-    };
-
-    document.userInfo = {
-        username: "Guest"+ Math.ceil(Math.random()*500),
-        nickname: "Guest"+ Math.ceil(Math.random()*500),
-        rank: "新兵",
-        battle_number: 0,
-        win_rate: 100,
-        level: 1,
-        power: 99,
-        equipment: "木甲",
-        score: 0
-    };
-    setUserInfo(document.userInfo);
 });
 
