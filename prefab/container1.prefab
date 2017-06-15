@@ -1,7 +1,7 @@
 {
-  "name": "container",
+  "name": "container1",
   "meshType": "vox",
-  "mesh": "container",
+  "mesh": "container1",
   "mass": 500,
   "components": [
     {

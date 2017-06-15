@@ -24,7 +24,16 @@
     "name": "player"
   },
   {
-    "name": "container"
+    "name": "container0"
+  },
+  {
+    "name": "container1"
+  },
+  {
+    "name": "container2"
+  },
+  {
+    "name": "container3"
   },
   {
     "name": "house"

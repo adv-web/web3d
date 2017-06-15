@@ -87,7 +87,7 @@ function scene1(scene) {
     ];
     var contains = [];
     for (i = 0; i < 28; i++){
-        contains[i]=scene.spawn(Data.prefab.container, new THREE.Vector3(contain_array[i*3],-0.8,contain_array[i*3+1]),new THREE.Vector3(0, Math.PI*contain_array[i*3+2], 0));
+        contains[i] = scene.spawn(Data.prefab["container" + (i % 4)], new THREE.Vector3(contain_array[i*3],-0.8,contain_array[i*3+1]),new THREE.Vector3(0, Math.PI*contain_array[i*3+2], 0));
         contains[i].mesh.castShadow = true;
     }
 

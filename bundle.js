@@ -502,10 +502,11 @@
     NetWorkManager._update = function(data) {
       var message, ref, ref1;
       message = JSON.parse(data.message);
-      console.log(message);
       if (data.objectId === "global-message") {
         return NetWorkManager._onGlobalMessage(message);
       } else {
+        console.log(data.objectId);
+        console.log(message);
         if ((ref = NetWorkManager.gameObjects[data.objectId]) != null) {
           ref.broadcast(message);
         }
@@ -12404,8 +12405,8 @@ return jQuery;
         this.userInfo.score += Math.floor(profit);
         NetWorkManager.updateUserInfo(this.userInfo);
         return document.setUserInfo(this.userInfo);
-      } else if (data.method === "change_mesh") {
-        return this._changeMesh("tank_" + Tank.LEVEL[data.level].toLowerCase());
+      } else if (data.method === "change_mesh" && !this.isLocal) {
+        return this._changeMesh(data.level);
       }
     };
 
@@ -12436,7 +12437,7 @@ return jQuery;
         this.userInfo.level += 1;
         this._updateInfoByLevel();
         console.log("lv" + this.userInfo.level);
-        this._changeMesh("tank_" + Tank.LEVEL[this.userInfo.level].toLowerCase());
+        this._changeMesh(this.userInfo.level);
         NetWorkManager.update(this.gameObject, {
           method: "change_mesh",
           level: this.userInfo.level
@@ -12449,7 +12450,9 @@ return jQuery;
       return document.setUserInfo(this.userInfo);
     };
 
-    Tank.prototype._changeMesh = function(meshName) {
+    Tank.prototype._changeMesh = function(level) {
+      var meshName;
+      meshName = "tank_" + Tank.LEVEL[level].toLowerCase();
       this.gameObject.mesh.geometry = Data.vox[meshName].geometry;
       return this.gameObject.mesh.material = Data.vox[meshName].material;
     };
@@ -12468,6 +12471,10 @@ return jQuery;
         this.userInfo.level = 1;
       }
       this._updateInfoByLevel();
+      NetWorkManager.update(this.gameObject, {
+        method: "change_mesh",
+        level: this.userInfo.level
+      });
       this._respawnTime = Date.now();
       this.userInfo.hp = 1;
       return document.setUserInfo(this.userInfo);
@@ -12837,7 +12844,7 @@ function scene1(scene) {
     ];
     var contains = [];
     for (i = 0; i < 28; i++){
-        contains[i]=scene.spawn(Data.prefab.container, new THREE.Vector3(contain_array[i*3],-0.8,contain_array[i*3+1]),new THREE.Vector3(0, Math.PI*contain_array[i*3+2], 0));
+        contains[i] = scene.spawn(Data.prefab["container" + (i % 4)], new THREE.Vector3(contain_array[i*3],-0.8,contain_array[i*3+1]),new THREE.Vector3(0, Math.PI*contain_array[i*3+2], 0));
         contains[i].mesh.castShadow = true;
     }
 

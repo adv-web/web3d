@@ -50,8 +50,9 @@ class Tank extends NetWorkComponent
       @userInfo.score += Math.floor(profit)
       NetWorkManager.updateUserInfo(@userInfo)
       document.setUserInfo(@userInfo)
-    else if data.method == "change_mesh"  # 更改别人的坦克模型
+    else if data.method == "change_mesh" and not @isLocal # 更改别人的坦克模型
       @_changeMesh(data.level)
+      #document.setUserInfo(@userInfo)
 
   # @nodoc
   update: =>
@@ -70,6 +71,7 @@ class Tank extends NetWorkComponent
   # Get exp. User may level up by this.
   # @param exp [number] the absolute exp user get, usually a positive number
   getExp: (exp) =>
+    return if not @isLocal
     realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + exp
     # 是否升级
     if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
@@ -77,7 +79,7 @@ class Tank extends NetWorkComponent
       @userInfo.level += 1
       @_updateInfoByLevel()
       console.log "lv" + @userInfo.level
-      #@_changeMesh("tank_" + Tank.LEVEL[@userInfo.level].toLowerCase())
+      @_changeMesh(@userInfo.level)
       NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level})
     @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
     @userInfo.exp = 1 if @userInfo.exp > 1
@@ -101,6 +103,7 @@ class Tank extends NetWorkComponent
     @userInfo.level -= 1;
     @userInfo.level = 1 if @userInfo.level < 1
     @_updateInfoByLevel()
+    @_changeMesh(@userInfo.level)
     NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level}) # 降级通知换 mesh
     @_respawnTime = Date.now()
     @userInfo.hp = 1

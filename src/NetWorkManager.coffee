@@ -205,10 +205,11 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
-    console.log message
     if data.objectId == "global-message"
       NetWorkManager._onGlobalMessage(message)
     else
+      console.log data.objectId
+      console.log message
       @gameObjects[data.objectId]?.broadcast(message)
       @players.self.broadcast(message) if @players.self.id == data.objectId
       @players.others[data.objectId]?.broadcast(message)

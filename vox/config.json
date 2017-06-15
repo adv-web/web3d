@@ -24,6 +24,21 @@
     "scale": 0.1
   },
   {
+    "name":"container1",
+    "filename": "obj_container1",
+    "scale": 0.1
+  },
+  {
+    "name":"container2",
+    "filename": "obj_container2",
+    "scale": 0.1
+  },
+  {
+    "name":"container3",
+    "filename": "obj_container4",
+    "scale": 0.1
+  },
+  {
     "name":"train_container",
     "filename": "train_container",
     "scale": 0.1

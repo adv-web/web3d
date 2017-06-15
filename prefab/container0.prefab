@@ -1,0 +1,12 @@
+{
+  "name": "container0",
+  "meshType": "vox",
+  "mesh": "container",
+  "mass": 500,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y: 0.67, z: 0}}"
+    }
+  ]
+}
