@@ -27,7 +27,7 @@ class Bullet extends Component
 
   # @private
   _launch: (mass, velocity) =>
-    AudioSource.play('/client/audio/fire.wav', 1) # source, volume
+    AudioSource.play('/client/audio/fire.mp3', 1) # source, volume
     @gameObject.mesh?.mass = mass
     @gameObject.mesh?.setLinearVelocity(velocity)
 
