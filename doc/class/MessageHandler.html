@@ -19,98 +19,99 @@
       Index
     </a>
     &raquo;
-    <span class='title'>GUIDat</span>
+    <span class='title'>MessageHandler</span>
   </div>
 </div>
     <div id='content'>
       <h1>
         Class:
-        GUIDat
+        MessageHandler
       </h1>
       <table class='box'>
         <tr>
           <td>Defined in:</td>
-          <td>src\component\GUIDat.coffee</td>
-        </tr>
-        <tr>
-          <td>Inherits:</td>
-          <td>
-            <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
-          </td>
+          <td>node_modules\weinre\lib-src\messageHandler.coffee</td>
         </tr>
       </table>
-      <h2>Overview</h2>
-      <div class='docstring'>
-  <p>This component display some parameters such as velocity, jump power of the player.</p><p>Notice: This component should be only added to the player Prefab</p><p>name = &quot;GUIDat&quot;</p>
-</div>
-<div class='tags'>
-</div>
-      <h2>Property Summary</h2>
-      <h3 class='inherited'>
-        Properties inherited from
-        <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
-      </h3>
-      <p class='inherited'>
-        <a href='../class/Component.html#name-property'>name</a>
-        <a href='../class/Component.html#gameObject-property'>gameObject</a>
-      </p>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
     <span class='signature'>
-      <a href='#onStartLocalPlayer-dynamic'>
+      <a href='#handleMessage-dynamic'>
         #
 (void)
-<b>onStartLocalPlayer</b><span>()</span>
+<b>handleMessage</b><span>(channel, message)</span>
       </a>
     </span>
-    <span class='bound note title'>Bound</span>
     <span class='desc'>
-      override the onStartLocalPlayer function and add gui display
-
+      <hr> 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_serviceMethodInvoker-dynamic'>
+        #
+(void)
+<b>_serviceMethodInvoker</b><span>(channel, intfName, method, args)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      <hr> 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#_redirectToConnections-dynamic'>
+        #
+(void)
+<b>_redirectToConnections</b><span>(channel, intfName, method, args)</span>
+      </a>
+    </span>
+    <span class='desc'>
+      <hr> 
     </span>
   </li>
 </ul>
-      <h2>
-        <small>Inherited Method Summary</small>
-        <h3 class='inherited'>
-          Methods inherited from
-          <a href='../class/NetWorkComponent.html'>NetWorkComponent</a>
-        </h3>
-        <p class='inherited'>
-          <a href='../class/NetWorkComponent.html#onStartLocalPlayer-dynamic'>#onStartLocalPlayer</a>
-          <a href='../class/Component.html#receive-dynamic'>#receive</a>
-        </p>
-      </h2>
-      <h2>Constructor Details</h2>
+      <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='constructor-dynamic'>
+    <p class='signature' id='handleMessage-dynamic'>
       #
 (void)
-<b>constructor</b><span>()</span>
+<b>handleMessage</b><span>(channel, message)</span>
       <br>
     </p>
     <div class='docstring'>
-  <p>Construct a gui dat.</p>
+  <hr>
+
 </div>
 <div class='tags'>
 </div>
   </div>
-</div>
-      <h2>Instance Method Details</h2>
-      <div class='methods'>
   <div class='method_details'>
-    <p class='signature' id='onStartLocalPlayer-dynamic'>
+    <p class='signature' id='_serviceMethodInvoker-dynamic'>
       #
 (void)
-<b>onStartLocalPlayer</b><span>()</span>
-      <span class='bound note'>Bound</span>
+<b>_serviceMethodInvoker</b><span>(channel, intfName, method, args)</span>
       <br>
     </p>
     <div class='docstring'>
-  <p>override the onStartLocalPlayer function and
-add gui display</p>
+  <hr>
+
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='_redirectToConnections-dynamic'>
+      #
+(void)
+<b>_redirectToConnections</b><span>(channel, intfName, method, args)</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <hr>
+
 </div>
 <div class='tags'>
 </div>

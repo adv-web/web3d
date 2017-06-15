@@ -1,5 +1,6 @@
 Data = require("./Data")
 Game = require("./Game")
+$ = require("jquery")
 # Created by duocai on 2017/5/2.
 
 # Network Manager is unique in the client. It will do many works that
@@ -63,8 +64,12 @@ class NetWorkManager
   # param [THREE.Vector3] spawnPoint the spawn point of player.
   @setSpawnPoint: (@spawnPoint) =>
 
+  # set game time listener, it will be invoked every second when game time countdown
+  # param [Function] the function invoked when countdown
   @setGameTimeListener: (@_gameTimeListener) =>
 
+  # set game end listener, it will be invoked when game countdown is finish
+  # param [Function] the function invoked when game finish
   @setGameEndListener: (@_gameEndListener) =>
 
   # add GameObject to the scene and inform other clients
@@ -133,6 +138,9 @@ class NetWorkManager
     # send message to server
     @socket.emit(@objectUpdateEvent, data)
 
+  @sendGlobalMessage: (message) =>
+    NetWorkManager.update("global-message", {text: message})
+
   # @private
   @_client_connect_to_server: () =>
     # Store a local reference to our connection to the server
@@ -198,12 +206,19 @@ class NetWorkManager
   @_update: (data) =>
     message = JSON.parse(data.message)
     console.log message
-    @gameObjects[data.objectId]?.broadcast(message)
-    @players.self.broadcast(message) if @players.self.id == data.objectId
-    @players.others[data.objectId]?.broadcast(message)
-    if @_callbacks[data.createTime]?
-      @_callbacks[data.createTime](message)
-      delete @_callbacks[data.createTime]
+    if data.objectId == "global-message"
+      NetWorkManager._onGlobalMessage(message)
+    else
+      @gameObjects[data.objectId]?.broadcast(message)
+      @players.self.broadcast(message) if @players.self.id == data.objectId
+      @players.others[data.objectId]?.broadcast(message)
+      if @_callbacks[data.createTime]?
+        @_callbacks[data.createTime](message)
+        delete @_callbacks[data.createTime]
+
+  # @private
+  @_onGlobalMessage: (message) =>
+    $("#message").text(message.text)
 
   # @private
   @_client_onconnected: (data) =>
@@ -269,7 +284,7 @@ class NetWorkManager
 
   # @private
   @_client_onotherjoingame: (id) =>
-    player = @_get_player()
+    player = @_get_player(id)
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
@@ -282,13 +297,15 @@ class NetWorkManager
     console.log(id+" left game")
 
   # @private
-  @_get_player: =>
+  @_get_player: (name) =>
     if @spawnPoint
       player = Game.scene.spawn(@playerPrefab, @spawnPoint)
-      player.mesh.castShadow=true
-      return player
     else
-      return Game.scene.spawn(@playerPrefab)
+      player = Game.scene.spawn(@playerPrefab)
+    return player if not name
+    player.mesh.add(sprite = THREE.TextSprite(name))
+    sprite.position.y = -0.3
+    return player
 
   # @private
   @_client_onhostgame: (@game_id) =>

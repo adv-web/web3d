@@ -85,62 +85,7 @@
       </a>
     </span>
     <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_loadVox-static'>
-        .
-(void)
-<b>_loadVox</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-      注意：这里没有处理 config 不存在时的情况。需要还原为 $.ajax 并在 error 回调中调用 checkGame 
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_loadPrefab-static'>
-        .
-(void)
-<b>_loadPrefab</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_checkVox-static'>
-        .
-(void)
-<b>_checkVox</b><span>(data)</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_checkPrefab-static'>
-        .
-(void)
-<b>_checkPrefab</b><span>(data)</span>
-      </a>
-    </span>
-    <span class='desc'>
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#_checkGame-static'>
-        .
-(void)
-<b>_checkGame</b><span>()</span>
-      </a>
-    </span>
-    <span class='desc'>
+      Start loading data. 
     </span>
   </li>
 </ul>
@@ -153,56 +98,44 @@
 <b>load</b><span>(onStart, onUpdate, onReady)</span>
       <br>
     </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_loadVox-static'>
-      .
-(void)
-<b>_loadVox</b><span>()</span>
-      <br>
-    </p>
     <div class='docstring'>
-  <p>注意：这里没有处理 config 不存在时的情况。需要还原为 $.ajax 并在 error 回调中调用 checkGame</p>
+  <p>Start loading data.</p>
 </div>
 <div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='name'>onStart</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the function invoked when start </span>
+    </li>
+    <li>
+      <span class='name'>onUpdate</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the function invoked when loaded a new object </span>
+    </li>
+    <li>
+      <span class='name'>onReady</span>
+      <span class='type'>
+        (
+          <tt>Function</tt>
+        )
+      </span>
+      &mdash;
+      <span class='desc'>the function invoked when all loaded </span>
+    </li>
+  </ul>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_loadPrefab-static'>
-      .
-(void)
-<b>_loadPrefab</b><span>()</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_checkVox-static'>
-      .
-(void)
-<b>_checkVox</b><span>(data)</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_checkPrefab-static'>
-      .
-(void)
-<b>_checkPrefab</b><span>(data)</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='_checkGame-static'>
-      .
-(void)
-<b>_checkGame</b><span>()</span>
-      <br>
-    </p>
-    
   </div>
 </div>
     </div>

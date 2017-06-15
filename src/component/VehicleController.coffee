@@ -1,6 +1,8 @@
 NetWorkComponent = require("./NetWorkComponent")
 Input = require("../Input")
-
+# The vehicle controller allows to control something with W/S for moving and A/D for rotating
+#
+# name = "VehicleController"
 class VehicleController extends NetWorkComponent
   module.exports = this
 
@@ -13,15 +15,21 @@ class VehicleController extends NetWorkComponent
   # @property [number] the rotate velocity, initially 1
   rotate_velocity: 1
 
+  # Construct a vehicle controller.
+  # @param options [Object] the optional parameters
+  # @option options [number] move_velocity the move speed of vehicle, initially 3
+  # @option options [number] rotate_velocity the rotate speed of vehicle, initially 1
   constructor: (options = {}) ->
     super("VehicleController")
     @enabled = false;
     @move_velocity = if options.move_velocity? then options.move_velocity else 3
     @rotate_velocity = if options.rotate_velocity? then options.rotate_velocity else 1
 
+  # @nodoc
   afterAdded: =>
     @enabled = true
-    
+
+  # @nodoc
   update: (deltaTime) =>
     return if not @enabled
     return if not @isLocal
