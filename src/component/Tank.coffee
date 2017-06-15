@@ -51,7 +51,7 @@ class Tank extends NetWorkComponent
       NetWorkManager.updateUserInfo(@userInfo)
       document.setUserInfo(@userInfo)
     else if data.method == "change_mesh"  # 更改别人的坦克模型
-      @_changeMesh("tank_" + Tank.LEVEL[data.level].toLowerCase())
+      @_changeMesh(data.level)
 
   # @nodoc
   update: =>
@@ -64,7 +64,8 @@ class Tank extends NetWorkComponent
     if distanceToHouse < 3 and @userInfo.hp < 1
       console.log "recovering"
       @userInfo.hp += 0.0005
-      document.setUserInfo(@userInfo)
+      $(".HP-data").width(107 * @userInfo.hp); # 107 is hacking
+      #document.setUserInfo(@userInfo)
 
   # Get exp. User may level up by this.
   # @param exp [number] the absolute exp user get, usually a positive number
@@ -75,14 +76,16 @@ class Tank extends NetWorkComponent
       realEXP -= Tank.HP[@userInfo.type]
       @userInfo.level += 1
       @_updateInfoByLevel()
-      @_changeMesh("tank_" + Tank.LEVEL[@userInfo.level].toLowerCase())
+      console.log "lv" + @userInfo.level
+      #@_changeMesh("tank_" + Tank.LEVEL[@userInfo.level].toLowerCase())
       NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level})
     @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
     @userInfo.exp = 1 if @userInfo.exp > 1
     document.setUserInfo(@userInfo)
 
   # @private
-  _changeMesh: (meshName) =>
+  _changeMesh: (level) =>
+    meshName = "tank_" + Tank.LEVEL[level].toLowerCase()
     @gameObject.mesh.geometry = Data.vox[meshName].geometry
     @gameObject.mesh.material = Data.vox[meshName].material
 
@@ -98,6 +101,7 @@ class Tank extends NetWorkComponent
     @userInfo.level -= 1;
     @userInfo.level = 1 if @userInfo.level < 1
     @_updateInfoByLevel()
+    NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level}) # 降级通知换 mesh
     @_respawnTime = Date.now()
     @userInfo.hp = 1
     document.setUserInfo(@userInfo)
