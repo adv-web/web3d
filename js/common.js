@@ -124,13 +124,29 @@
     };
     setUserInfo(document.userInfo);
 
-    // 游戏内提示信息的左右滚动
+//     // 游戏内提示信息的左右滚动
+//     var marquee = document.getElementById('message');
+//     var offset = 0;
+//     var scrollwidth = marquee.offsetWidth;
+
+//     setInterval(function() {
+//         if (offset === 2 * scrollwidth) {
+//             offset = 0;
+//         }
+//         marquee.style.marginLeft = scrollwidth - offset + "px";
+//         offset += 2;
+//     }, 15);
+})();
+
+
+//提示信息的左右滚动
+(function() {
     var marquee = document.getElementById('message');
     var offset = 0;
     var scrollwidth = marquee.offsetWidth;
 
     setInterval(function() {
-        if (offset === 2 * scrollwidth) {
+        if (offset == 2 * scrollwidth) {
             offset = 0;
         }
         marquee.style.marginLeft = scrollwidth - offset + "px";
