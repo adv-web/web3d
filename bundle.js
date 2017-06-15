@@ -432,8 +432,10 @@
       return NetWorkManager.socket.emit(NetWorkManager.objectUpdateEvent, data);
     };
 
-    NetWorkManager.sendGlobalMessage = function(message) {
-      return NetWorkManager.update("global-message", {
+    NetWorkManager.sendGlobalMessage = function(id, message) {
+      $("#message").text(message);
+      return NetWorkManager.update(id, {
+        type: "global-message",
         text: message
       });
     };
@@ -502,7 +504,9 @@
     NetWorkManager._update = function(data) {
       var message, ref, ref1;
       message = JSON.parse(data.message);
-      if (data.objectId === "global-message") {
+      console.log(message);
+      if (message.type === "global-message") {
+        console.log(message);
         return NetWorkManager._onGlobalMessage(message);
       } else {
         console.log(data.objectId);
@@ -12357,6 +12361,7 @@ return jQuery;
     Tank.GOD_TIME = 5000;
 
     function Tank() {
+      this._benefitEffect = bind(this._benefitEffect, this);
       this._beHitEffect = bind(this._beHitEffect, this);
       this._updateInfoByLevel = bind(this._updateInfoByLevel, this);
       this._respawn = bind(this._respawn, this);
@@ -12439,6 +12444,7 @@ return jQuery;
       if (!this.isLocal) {
         return;
       }
+      this._benefitEffect();
       realEXP = Tank.HP[this.userInfo.type] * this.userInfo.exp + exp;
       if (realEXP >= Tank.HP[this.userInfo.type] && this.userInfo.level < 5) {
         realEXP -= Tank.HP[this.userInfo.type];
@@ -12470,6 +12476,7 @@ return jQuery;
       if (!this.isLocal) {
         return;
       }
+      NetWorkManager.sendGlobalMessage(this.gameObject, this.userInfo.nickname + " 已被击杀");
       pz = Math.random() > 0.5 ? 18 : -18;
       this.gameObject.mesh.position.set(0, 1, pz);
       this.gameObject.mesh.__dirtyPosition = true;
@@ -12501,6 +12508,16 @@ return jQuery;
     };
 
     Tank.prototype._beHitEffect = function() {
+      $("#twinkle").css("background-color", "red");
+      return $("#twinkle").fadeTo(100, 0.3, (function(_this) {
+        return function() {
+          return $("#twinkle").fadeOut(100);
+        };
+      })(this));
+    };
+
+    Tank.prototype._benefitEffect = function() {
+      $("#twinkle").css("background-color", "blue");
       return $("#twinkle").fadeTo(100, 0.3, (function(_this) {
         return function() {
           return $("#twinkle").fadeOut(100);
@@ -12989,7 +13006,6 @@ function scene1(scene) {
 $(function() {
     var preparePage = $("#preparePanel");
     var sourceTag = preparePage.find(".coldtime-title");
-
     // load game source
     var progress = 0;   // 当前进度
     var lastMajorPart = -1;  // 上一个大类的号码
@@ -13008,7 +13024,19 @@ $(function() {
             Game.setScene(new Scene(scene1)).start();
             preparePage.hide();
             $("#gamePanel").show();
-            $("#message").show();
+
+            // 消息滚动
+            var marquee = document.getElementById('message');
+            var offset = 0;
+            var scrollwidth = marquee.offsetWidth;
+
+            setInterval(function() {
+                if (offset === 2 * scrollwidth) {
+                    offset = 0;
+                }
+                marquee.style.marginLeft = scrollwidth - offset + "px";
+                offset += 2;
+            }, 15);
         })
     });
 

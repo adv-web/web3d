@@ -72,6 +72,7 @@ class Tank extends NetWorkComponent
   # @param exp [number] the absolute exp user get, usually a positive number
   getExp: (exp) =>
     return if not @isLocal
+    @_benefitEffect()
     realEXP = Tank.HP[@userInfo.type] * @userInfo.exp + exp
     # 是否升级
     if realEXP >= Tank.HP[@userInfo.type] && @userInfo.level < 5
@@ -94,6 +95,7 @@ class Tank extends NetWorkComponent
   # @private
   _respawn: =>
     return if not @isLocal
+    NetWorkManager.sendGlobalMessage(@gameObject, @userInfo.nickname + " 已被击杀")
     pz = if Math.random() > 0.5 then 18 else -18
     @gameObject.mesh.position.set(0, 1, pz)
     @gameObject.mesh.__dirtyPosition = true
@@ -119,4 +121,10 @@ class Tank extends NetWorkComponent
 
   # @private
   _beHitEffect: =>
+    $("#twinkle").css("background-color", "red")
+    $("#twinkle").fadeTo(100, 0.3, () => $("#twinkle").fadeOut(100))
+
+  # @private
+  _benefitEffect: =>
+    $("#twinkle").css("background-color", "blue")
     $("#twinkle").fadeTo(100, 0.3, () => $("#twinkle").fadeOut(100))
