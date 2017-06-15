@@ -191,11 +191,11 @@ function scene1(scene) {
     cd.grounds = grounds;
     gameManager.addComponent(cd);
 
-
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
     NetWorkManager.setUserInfo(document.userInfo, function(data) {
-        var info = JSON.parse(data);
+        var info = document.allUser = JSON.parse(data);
+        console.log(info);
         info.sort(function(a, b) {
             return b.score - a.score;
         });
@@ -238,6 +238,7 @@ $(function() {
             Game.setScene(new Scene(scene1)).start();
             preparePage.hide();
             $("#gamePanel").show();
+            $("#message").show();
         })
     });
 

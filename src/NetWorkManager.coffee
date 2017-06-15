@@ -298,15 +298,22 @@ class NetWorkManager
     console.log(id+" left game")
 
   # @private
-  @_get_player: (name) =>
+  @_get_player: (id) =>
     if @spawnPoint
       player = Game.scene.spawn(@playerPrefab, @spawnPoint)
     else
       player = Game.scene.spawn(@playerPrefab)
-    return player if not name
+    return player # if not id
+    ###
+    for user in document.allUser
+      if user.uuid == id
+        name = user.username
+        break
     player.mesh.add(sprite = THREE.TextSprite(name))
     sprite.position.y = -0.3
     return player
+
+###
 
   # @private
   @_client_onhostgame: (@game_id) =>

@@ -597,19 +597,24 @@
       return console.log(id + " left game");
     };
 
-    NetWorkManager._get_player = function(name) {
-      var player, sprite;
+    NetWorkManager._get_player = function(id) {
+      var player;
       if (NetWorkManager.spawnPoint) {
         player = Game.scene.spawn(NetWorkManager.playerPrefab, NetWorkManager.spawnPoint);
       } else {
         player = Game.scene.spawn(NetWorkManager.playerPrefab);
       }
-      if (!name) {
-        return player;
-      }
-      player.mesh.add(sprite = THREE.TextSprite(name));
-      sprite.position.y = -0.3;
       return player;
+
+      /*
+      for user in document.allUser
+        if user.uuid == id
+          name = user.username
+          break
+      player.mesh.add(sprite = THREE.TextSprite(name))
+      sprite.position.y = -0.3
+      return player
+       */
     };
 
     NetWorkManager._client_onhostgame = function(game_id) {
@@ -12439,7 +12444,7 @@ return jQuery;
         realEXP -= Tank.HP[this.userInfo.type];
         this.userInfo.level += 1;
         this._updateInfoByLevel();
-        console.log("lv" + this.userInfo.level);
+        console.log("lv up to：" + this.userInfo.level);
         this._changeMesh(this.userInfo.level);
         NetWorkManager.update(this.gameObject, {
           method: "change_mesh",
@@ -12462,6 +12467,9 @@ return jQuery;
 
     Tank.prototype._respawn = function() {
       var pz;
+      if (!this.isLocal) {
+        return;
+      }
       pz = Math.random() > 0.5 ? 18 : -18;
       this.gameObject.mesh.position.set(0, 1, pz);
       this.gameObject.mesh.__dirtyPosition = true;
@@ -12474,6 +12482,7 @@ return jQuery;
         this.userInfo.level = 1;
       }
       this._updateInfoByLevel();
+      console.log("lv down to：" + this.userInfo.level);
       this._changeMesh(this.userInfo.level);
       NetWorkManager.update(this.gameObject, {
         method: "change_mesh",
@@ -12952,11 +12961,11 @@ function scene1(scene) {
     cd.grounds = grounds;
     gameManager.addComponent(cd);
 
-
     NetWorkManager.init(scene, Data.prefab.player, SERVER + 'game');
     NetWorkManager.setSpawnPoint(new THREE.Vector3(-0.5, -0.5, -5));
     NetWorkManager.setUserInfo(document.userInfo, function(data) {
-        var info = JSON.parse(data);
+        var info = document.allUser = JSON.parse(data);
+        console.log(info);
         info.sort(function(a, b) {
             return b.score - a.score;
         });
@@ -12999,6 +13008,7 @@ $(function() {
             Game.setScene(new Scene(scene1)).start();
             preparePage.hide();
             $("#gamePanel").show();
+            $("#message").show();
         })
     });
 
