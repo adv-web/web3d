@@ -78,7 +78,7 @@ class Tank extends NetWorkComponent
       realEXP -= Tank.HP[@userInfo.type]
       @userInfo.level += 1
       @_updateInfoByLevel()
-      console.log "lv" + @userInfo.level
+      console.log "lv up to：" + @userInfo.level
       @_changeMesh(@userInfo.level)
       NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level})
     @userInfo.exp = realEXP / Tank.HP[@userInfo.type]
@@ -93,6 +93,7 @@ class Tank extends NetWorkComponent
 
   # @private
   _respawn: =>
+    return if not @isLocal
     pz = if Math.random() > 0.5 then 18 else -18
     @gameObject.mesh.position.set(0, 1, pz)
     @gameObject.mesh.__dirtyPosition = true
@@ -103,6 +104,7 @@ class Tank extends NetWorkComponent
     @userInfo.level -= 1;
     @userInfo.level = 1 if @userInfo.level < 1
     @_updateInfoByLevel()
+    console.log "lv down to：" + @userInfo.level
     @_changeMesh(@userInfo.level)
     NetWorkManager.update(@gameObject, {method: "change_mesh", level: @userInfo.level}) # 降级通知换 mesh
     @_respawnTime = Date.now()
