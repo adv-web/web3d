@@ -12424,7 +12424,7 @@ return jQuery;
       if (distanceToHouse < 3 && this.userInfo.hp < 1) {
         console.log("recovering");
         this.userInfo.hp += 0.0005;
-        return document.setUserInfo(this.userInfo);
+        return $(".HP-data").width(107 * this.userInfo.hp);
       }
     };
 
@@ -12435,6 +12435,7 @@ return jQuery;
         realEXP -= Tank.HP[this.userInfo.type];
         this.userInfo.level += 1;
         this._updateInfoByLevel();
+        console.log("lv" + this.userInfo.level);
         this._changeMesh("tank_" + Tank.LEVEL[this.userInfo.level].toLowerCase());
         NetWorkManager.update(this.gameObject, {
           method: "change_mesh",
