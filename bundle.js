@@ -11718,7 +11718,7 @@ return jQuery;
 
     Bullet.prototype._launch = function(mass, velocity) {
       var ref, ref1;
-      AudioSource.play('/audio/fire.wav', 1);
+      AudioSource.play('/client/audio/fire.mp3', 1);
       if ((ref = this.gameObject.mesh) != null) {
         ref.mass = mass;
       }
@@ -11982,7 +11982,7 @@ return jQuery;
             z: vz,
             type: _this._tank.userInfo.type
           });
-          AudioSource.play('/audio/fire.mp3', 1);
+          AudioSource.play('/client/audio/fire.mp3', 1);
           obj.mesh.mass = 0.0006;
           return obj.mesh.setLinearVelocity(new THREE.Vector3(vx, vy, vz));
         };
@@ -12431,6 +12431,9 @@ return jQuery;
 
     Tank.prototype.getExp = function(exp) {
       var realEXP;
+      if (!this.isLocal) {
+        return;
+      }
       realEXP = Tank.HP[this.userInfo.type] * this.userInfo.exp + exp;
       if (realEXP >= Tank.HP[this.userInfo.type] && this.userInfo.level < 5) {
         realEXP -= Tank.HP[this.userInfo.type];
@@ -12471,6 +12474,7 @@ return jQuery;
         this.userInfo.level = 1;
       }
       this._updateInfoByLevel();
+      this._changeMesh(this.userInfo.level);
       NetWorkManager.update(this.gameObject, {
         method: "change_mesh",
         level: this.userInfo.level

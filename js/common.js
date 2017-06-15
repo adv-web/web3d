@@ -124,7 +124,7 @@
     };
     setUserInfo(document.userInfo);
 
-    // m-3-id-1 游戏内提示信息的左右滚动
+    // 游戏内提示信息的左右滚动
     var marquee = document.getElementById('message');
     var offset = 0;
     var scrollwidth = marquee.offsetWidth;
