@@ -10,7 +10,7 @@
     },
     {
       "name": "AudioSource",
-      "param": "{audioclip: '/audio/bgm.mp3', volume: 0.05}"
+      "param": "{audioclip: '/client/audio/bgm.mp3', volume: 0.05}"
     }
   ]
 }
