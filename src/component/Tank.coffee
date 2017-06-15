@@ -2,6 +2,7 @@ NetWorkComponent = require("./NetWorkComponent")
 NetWorkManager = require("../NetWorkManager")
 Data = require("../Data")
 Input = require("../Input")
+$ = require("jquery")
 # The tank component is important to deal with game logic.
 # It provides damage detecting and calculating, and update users' states
 #
@@ -29,6 +30,7 @@ class Tank extends NetWorkComponent
     return if Date.now() - @_respawnTime < Tank.GOD_TIME  # 无敌时间内不扣血
     # 计算伤害和血量
     console.log("be hit")
+    @_beHitEffect()
     damage = Tank.DAMAGE[other_mesh.userData.type]
     damage += damage * (Math.random() * 10 - 5) / 100
     realHP = Tank.HP[@userInfo.type] * @userInfo.hp - damage
@@ -101,7 +103,11 @@ class Tank extends NetWorkComponent
     document.setUserInfo(@userInfo)
 
   # @private
-  _updateInfoByLevel: () =>
+  _updateInfoByLevel: =>
     type = @userInfo.type = Tank.LEVEL[@userInfo.level]
     @userInfo.power = Tank.DAMAGE[type]
     @userInfo.equipment = Tank.NAME[type]
+
+  # @private
+  _beHitEffect: =>
+    $("#twinkle").fadeTo(100, 0.3, () => $("#twinkle").fadeOut(100))

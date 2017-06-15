@@ -2,13 +2,18 @@ Component = require("../Component")
 $ = require("jquery")
 Data = require("../Data")
 Game = require("../Game")
+# The pumpkin tree spawns a pumpkin every xx seconds
+#
+# name = "PumpkinTree"
 class PumpkinTree extends Component
   module.exports = this
 
+  # Construct a pumpkin tree.
   constructor: () ->
     super("PumpkinTree")
     @_nextSpawnTime = 150
 
+  # @nodoc
   update: () =>
     time = parseInt($(".gametime-data").html())
     return if time != @_nextSpawnTime
