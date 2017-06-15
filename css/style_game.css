@@ -42,7 +42,7 @@ button {
     height: 90px;
     position: absolute;
     top: 120px;
-    left: 41%;
+    left: 40%;
     background: no-repeat url("../images/gif-8-1.png") left top;
     opacity: 0.30;
 }
@@ -52,7 +52,7 @@ button {
     height: 90px;
     position: absolute;
     top: 120px;
-    left: 41%;
+    left: 40%;
     font: 80px/18px 'ds-digitalbold';
     color: #f4ab20;
     text-align: center;
