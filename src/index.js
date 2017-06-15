@@ -219,7 +219,7 @@ function scene1(scene) {
 $(function() {
     var preparePage = $("#preparePanel");
     var sourceTag = preparePage.find(".coldtime-title");
-
+    $("#message").show();
     // load game source
     var progress = 0;   // 当前进度
     var lastMajorPart = -1;  // 上一个大类的号码
@@ -238,7 +238,7 @@ $(function() {
             Game.setScene(new Scene(scene1)).start();
             preparePage.hide();
             $("#gamePanel").show();
-            $("#message").show();
+
         })
     });
 
