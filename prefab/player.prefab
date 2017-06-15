@@ -1,7 +1,7 @@
 {
   "name": "player",
   "meshType": "vox",
-  "mesh": "tank_start",
+  "mesh": "tank_mt",
   "mass": 0.5,
   "components": [
     {
@@ -9,8 +9,13 @@
       "param": "{y: 0.5}"
     },
     {
-      "name": "FirstPersonController",
-      "param": "{sensitivity: 1}"
+      "name": "FirstPersonObserver"
+    },
+    {
+      "name": "VehicleController"
+    },
+    {
+      "name": "Tank"
     },
     {
       "name": "FirstPersonShooter"
@@ -22,8 +27,11 @@
       "name": "NetWorkTransform"
     },
     {
+      "name": "AudioListener"
+    },
+    {
       "name": "BoxCollider",
-      "param": "{isTrigger: false}"
+      "param": "{isTrigger: false, center: {x: 0, y: 0, z: 0}}"
     }
   ]
 }

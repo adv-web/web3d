@@ -23,7 +23,7 @@ class NetWorkTransform extends NetWorkComponent
 
   constructor: () ->
     super "NetWorkTransform"
-    @networkSendRate = 10
+    @networkSendRate = 1
     @_networkSend =0
 
   # override the onStartLocalPlayer function and
@@ -32,10 +32,12 @@ class NetWorkTransform extends NetWorkComponent
     if @networkSendRate <= 0
       return
 
-    @event = "nwtc."+ @gameObject.name
+    @event = "nwtc."+ @gameObject.mesh.name
     socket = NetWorkManager.socket
     socket.on(@event, (data) =>
+      # console.log(data)
       player = NetWorkManager.players.others[data.id]
+      # console.log(player)
       if player # player
         player.mesh.position.set(data.pos[0],data.pos[1],data.pos[2])
         player.mesh.rotation.set(data.rot[0],data.rot[1],data.rot[2])
@@ -52,6 +54,8 @@ class NetWorkTransform extends NetWorkComponent
 
   # send message to the server automatically.
   update: () =>
+    return if not @isLocal
+
     @_networkSend++
     if @_networkSend >= @networkSendRate
       @networkSend()
@@ -69,4 +73,5 @@ class NetWorkTransform extends NetWorkComponent
       pos: [pos1.x,pos1.y,pos1.z],
       rot: [rot1.x,rot1.y,rot1.z]
 #    console.log(pos1)
+#    console.log(data)
     socket.emit("nwtc",data)

@@ -598,12 +598,18 @@ button {
     background-size:40px 50px;
 }
 
+#submitarea {
+    position: absolute;
+    height: 50px;
+    width: 300px;
+    bottom: 25px;
+}
 
 .usr_input{
     height: 30px;
     width: 200px;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 15px;
     margin-top: 15px;
     background-color: rgba(255,255,255,0.2);
     border-color: #a3f7bf;
@@ -621,7 +627,7 @@ button {
   opacity: 0.8;
 }
 .send:hover {
-  background-size: 100% 100%;
+  background-size: 110% 110%;
   color: #27323A;
 }
 

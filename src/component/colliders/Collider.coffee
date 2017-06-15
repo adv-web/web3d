@@ -15,7 +15,7 @@ Input = require("../../Input")
 # you can extend this class to implement you own collider, but never to use it
 # directly. use it's subclass instead
 class Collider extends Component
-  module.exports = @
+  module.exports = this
 
   # @param {String} name the name of this Collider
   # @param {Boolean} isTrigger isTrigger If enabled, this Collider is used only
@@ -45,9 +45,9 @@ class Collider extends Component
   # @nodoc
   afterAdded: =>
     # console.log("Collider afterAdded")
-    @gameObject.mesh.addEventListener('collision', @_onCollision.bind(@))
+    @gameObject.mesh.addEventListener('collision', @_onCollision.bind(this))
     @gameObject.mesh.isTrigger = @isTrigger
 
   # @nodoc
   beforeRemoved: =>
-    @gameObject.mesh?.removeEventListener('collision', @_onCollision.bind(@))
+    @gameObject.mesh?.removeEventListener('collision', @_onCollision.bind(this))

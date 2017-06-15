@@ -10,12 +10,12 @@ class AudioSource extends Component
   constructor: (options = {}) ->
     super "AudioSource"
     @audioclip = options.audioclip
-    @loop = if !options.loop then options.loop else true
+    @loop = if options.loop isnt undefined then options.loop else true
     @volume = if options.volume then options.volume else 0.5
 
     sound = new THREE.Audio(AudioListener._listener);
-    if audioclip
-      new THREE.AudioLoader().load(audioclip, ( buffer ) =>
+    if @audioclip
+      new THREE.AudioLoader().load(@audioclip, ( buffer ) =>
         sound.setBuffer(buffer)
         sound.setLoop(@loop)
         sound.setVolume(@volume)
@@ -31,7 +31,7 @@ class AudioSource extends Component
     else
       sound = new THREE.Audio(AudioListener._listener);
       if audioClip
-        new THREE.AudioLoader().load(audioclip, ( buffer ) =>
+        new THREE.AudioLoader().load(audioClip, ( buffer ) =>
           sound.setBuffer(buffer)
           sound.setLoop(false)
           sound.setVolume(volume)

@@ -17,7 +17,5 @@ class TreeCollision extends Component
   onCollision: (other_mesh, linear_velocity, angular_velocity) =>
     if other_mesh.name == "bullet"
       PlayerInfo.hitCount += 1 # client predict
-      NetWorkManager.remove(@gameObject,(result) =>
-        if not result
-          PlayerInfo.hitCount -= 1 # predict error and roll back
-      )
+      NetWorkManager.remove @gameObject, (result) =>
+          PlayerInfo.hitCount -= 1 if not result # predict error and roll back

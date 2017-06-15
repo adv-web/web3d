@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>web3D</title>
+    <title>生死坦克</title>
     <style>
         body { margin: 0; }
         canvas { width: 100%; height: 100% }
@@ -20,8 +20,8 @@
     <link href="css/animate.css" rel="stylesheet" type="text/css">
 
 </head>
-<body>
-    <div id="loginPanel">
+<body style="overflow: hidden">
+    <div id="loginPanel" style="display: none">
         <canvas id="christmasCanvas" style="top: 0px; left: 0px; z-index: 5000; position: fixed; pointer-events: none;" width="1285" height="100%"></canvas>
         <h2 id="title" align="center">生死坦克</h2>
         <div class="login_frame"></div>
@@ -116,32 +116,32 @@
         </div>
     </div>
 
-    <div id="gamePanel">
+    <div id="gamePanel" style="display: none">
         <div class="HUD panel">
-            <!--标题-->
-            <div class="title">
-                <div class="masked0">
-                    <h4>目标积分</h4>
-                </div>
-            </div>
-            <!--对战积分-->
-            <div class="score-bg"></div>
-            <div class="score">
-                <div class="masked1">50 / 200</div>
-            </div>
+            <!--&lt;!&ndash;标题&ndash;&gt;-->
+            <!--<div class="title">-->
+                <!--<div class="masked0">-->
+                    <!--<h4>目标积分</h4>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;对战积分&ndash;&gt;-->
+            <!--<div class="score-bg"></div>-->
+            <!--<div class="score">-->
+                <!--<div class="masked1">50 / 200</div>-->
+            <!--</div>-->
             <!--瞄准器-->
             <div id="aim">
                 <div class="aim1"></div>
                 <div class="aim2"></div>
             </div>
             <!--炮弹冷却倒计时-->
-            <div id="coldtime">
+            <div id="coldtime" style="display: none">
                 <div class="coldtime-bg">
                     <div class=coldtime-bg1></div>
                     <div class="coldtime-bg2"></div>
                     <div class="coldtime-bg3"></div>
                     <div class="coldtime-title">冷却时间</div>
-                    <div class="coldtime-data"><span>5</span><span>'</span><span>59</span><span>''</span></div>
+                    <div class="coldtime-data"><!--<span>5</span><span>'</span>--><span id="coldtime-sec">59</span><span>''</span></div>
                 </div>
             </div>
             <!--游戏倒计时-->
@@ -196,8 +196,10 @@
                     <!--<li>卓立还是"博"学啊!</li>-->
                     <!--<li>我还是垃圾啊!</li>-->
                 </ul>
-                <input class="usr_input" placeholder="Type Here..." type="text"/>
-                <button class="send">发送</button>
+                <div id="submitarea">
+                    <input class="usr_input" placeholder="Type Here..." type="text"/>
+                    <button class="send">发送</button>
+                </div>
             </div>
             <!--个人信息-->
             <div class="usr_info">
@@ -250,6 +252,7 @@
                     <div class="d-data">100</div>
                 </div>
             </div>
+            <div id="twinkle" style="height: 1080px;background-color: red;display: none"></div>
         </div>
     </div>
 
@@ -257,8 +260,6 @@
     <script type="text/javascript" src="lib/jquery-1.8.3.min.js"></script>
     <!-- Load socket.io client side contents. -->
     <script src="lib/socket.io.js"></script>
-    <script src="js/login_animate.js"></script>
-    <script src="lib/common.min.js"></script>
     <script src="lib/three.min.js"></script>
     <script src="lib/physi.js"></script>
     <script src="lib/vox.min.js"></script>
@@ -268,6 +269,8 @@
         Physijs.scripts.worker = './lib/physijs_worker.js';
         Physijs.scripts.ammo = '../lib/ammo.js';
     </script>
+    <script src="js/login_animate.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/chat.js"></script>
     <script src="bundle.js"></script>
 </body>

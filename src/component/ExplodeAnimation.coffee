@@ -45,7 +45,7 @@ class ExplodeAnimation extends Component
       @_dirs.push(@_randomSpherePoint())
     material = new THREE.PointsMaterial({size: @size, color: 0xffcc00})
     @_particles = new THREE.Points(geometry, material)
-    @_startTime = new Date()
+    @_startTime = Date.now()
     Game.scene.add(@_particles)
 
   # @nodoc
@@ -60,7 +60,7 @@ class ExplodeAnimation extends Component
       particle.x += @_dirs[i].x
       particle.z += @_dirs[i].z
     @_particles.geometry.verticesNeedUpdate = true
-    if new Date() - @_startTime > @duration
+    if Date.now() - @_startTime > @duration
       @onExplodeFinish?()
       Game.scene.remove(@_particles)
 

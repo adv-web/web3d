@@ -24,13 +24,33 @@
     "scale": 0.1
   },
   {
+    "name":"container1",
+    "filename": "obj_container1",
+    "scale": 0.1
+  },
+  {
+    "name":"container2",
+    "filename": "obj_container2",
+    "scale": 0.1
+  },
+  {
+    "name":"container3",
+    "filename": "obj_container4",
+    "scale": 0.1
+  },
+  {
     "name":"train_container",
     "filename": "train_container",
     "scale": 0.1
   },
   {
-    "name":"train_empty",
-    "filename": "train_empty",
+    "name":"train_empty_head",
+    "filename": "veh_train2",
+    "scale": 0.1
+  },
+  {
+    "name":"train_empty_body",
+    "filename": "veh_train3",
     "scale": 0.1
   },
   {
@@ -38,7 +58,7 @@
     "scale": 0.02
   },
   {
-    "name": "statue_red",
+    "name": "statue_green",
     "filename":"obj_statue1",
     "scale": 0.2
   },
@@ -48,8 +68,28 @@
     "scale": 0.2
   },
   {
-    "name": "tank_start",
+    "name": "tank_td",
+    "filename":"td1",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_ht",
+    "filename":"ht2",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_mt",
     "filename":"veh_tank1",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_spg",
+    "filename":"SPG2",
+    "scale": 0.02
+  },
+  {
+    "name": "tank_lt",
+    "filename":"LT1",
     "scale": 0.02
   },
   {
@@ -60,11 +100,11 @@
   {
     "name": "car",
     "filename":"veh_car3",
-    "scale": 0.02
+    "scale": 0.1
   },
   {
     "name": "pumpkin",
     "filename":"obj_pumpkin",
-    "scale": 0.02
+    "scale": 0.1
   }
 ]

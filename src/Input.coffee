@@ -78,8 +78,8 @@ class Input
 
   # @private
   @_onclick: () =>
-    for res in @_clickResponses
-      res()
+    res() for res in @_clickResponses
+
 
   # add response to click event
   # @param [Function] res a callback function that response to click event

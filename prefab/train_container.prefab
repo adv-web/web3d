@@ -2,11 +2,11 @@
   "name": "train_container",
   "meshType": "vox",
   "mesh": "train_container",
-  "mass": 0,
+  "mass": 500,
   "components": [
     {
       "name": "BoxCollider",
-      "param": "{isTrigger: false, center: {x: 0, y: 0.3, z: 0}}"
+      "param": "{isTrigger: false, center: {x: 0, y: 0.7, z: 0}}"
     }
   ]
 }

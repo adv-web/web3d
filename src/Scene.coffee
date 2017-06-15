@@ -2,7 +2,9 @@ Data = require("./Data")
 GameObject = require("./GameObject")
 Bullet = require("./component/Bullet")
 Camera = require("./component/Camera")
-FirstPersonController = require("./component/FirstPersonController")
+#FirstPersonController = require("./component/FirstPersonController")
+FirstPersonObserver = require("./component/FirstPersonObserver")
+VehicleController = require("./component/VehicleController")
 FirstPersonShooter = require("./component/FirstPersonShooter")
 GUIDat = require("./component/GUIDat")
 HUD = require("./component/HUD")
@@ -12,6 +14,9 @@ TreeCollision = require("./component/TreeCollision")
 BoxCollider = require("./component/colliders/BoxCollider")
 AudioListener = require('./component/AudioListener')
 AudioSource = require('./component/AudioSource')
+Tank = require("./component/Tank")
+Pumpkin = require("./component/Pumpkin")
+PumpkinTree = require("./component/PumpkinTree")
 
 # The scene in game to contain game objects and other essential objects.
 #
@@ -60,6 +65,7 @@ class Scene
   #   Remove a light/skybox or any not GameObject or Mesh to the scene.
   #   @param [Object] object the object to be removed
   remove: (object) =>
+    return if not object
     return @_removeGameObject(object) if object.isGameObject
     return @_removeGameObject(object.gameObject) if object.isMesh
     @_scene.remove(object)  # not game object or mesh
