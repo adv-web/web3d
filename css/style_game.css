@@ -627,7 +627,7 @@ button {
   opacity: 0.8;
 }
 .send:hover {
-  background-size: 100% 100%;
+  background-size: 110% 110%;
   color: #27323A;
 }
 
