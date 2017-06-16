@@ -138,8 +138,9 @@ class NetWorkManager
     # send message to server
     @socket.emit(@objectUpdateEvent, data)
 
-  @sendGlobalMessage: (message) =>
-    NetWorkManager.update("global-message", {text: message})
+  @sendGlobalMessage: (id, message) =>
+    $("#message").text(message)
+    NetWorkManager.update(id, {type: "global-message",text: message})
 
   # @private
   @_client_connect_to_server: () =>
@@ -205,7 +206,9 @@ class NetWorkManager
   # @private
   @_update: (data) =>
     message = JSON.parse(data.message)
-    if data.objectId == "global-message"
+    console.log message
+    if message.type == "global-message" #data.objectId == "global-message"
+      console.log message
       NetWorkManager._onGlobalMessage(message)
     else
       console.log data.objectId

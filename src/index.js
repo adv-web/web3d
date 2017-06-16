@@ -49,7 +49,7 @@ function scene1(scene) {
 
     for (var i = 0; i < 25; i++) {
         grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3], ground_array[i*3+1], ground_array[i*3+2]));
-        grounds[i].mesh.receiveShadow = true;
+        // grounds[i].mesh.receiveShadow = true;
     }
     var contain_array = [
 
@@ -219,7 +219,6 @@ function scene1(scene) {
 $(function() {
     var preparePage = $("#preparePanel");
     var sourceTag = preparePage.find(".coldtime-title");
-    $("#message").show();
     // load game source
     var progress = 0;   // 当前进度
     var lastMajorPart = -1;  // 上一个大类的号码
@@ -239,6 +238,18 @@ $(function() {
             preparePage.hide();
             $("#gamePanel").show();
 
+            // 消息滚动
+            var marquee = document.getElementById('message');
+            var offset = 0;
+            var scrollwidth = marquee.offsetWidth;
+
+            setInterval(function() {
+                if (offset === 2 * scrollwidth) {
+                    offset = 0;
+                }
+                marquee.style.marginLeft = scrollwidth - offset + "px";
+                offset += 2;
+            }, 15);
         })
     });
 

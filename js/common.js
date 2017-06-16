@@ -140,7 +140,7 @@
 
 
 //提示信息的左右滚动
-(function() {
+/*(function() {
     var marquee = document.getElementById('message');
     var offset = 0;
     var scrollwidth = marquee.offsetWidth;
@@ -152,4 +152,4 @@
         marquee.style.marginLeft = scrollwidth - offset + "px";
         offset += 2;
     }, 15);
-})();
+})();*/
