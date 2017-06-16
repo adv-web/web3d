@@ -35,6 +35,7 @@ class Collider extends Component
         console.log("player on collision")
         # and if this collision is not just a trigger
         # then stop move the player
+        console.log(other_mesh.isTrigger);
         if !@isTrigger and !other_mesh.isTrigger
           Input.stopMove()
           setTimeout(Input.activeMove, @activateMoveTime)

@@ -8,7 +8,7 @@ $(function() {
         var height = ($(window).height() * (1 - 0.5)) / 2;
         $(".box").addClass("animated bounceIn").show().css({
             left: left,
-            top: top
+            top: height
         });
         $(".opacity_bg").css("opacity", "0.3").show();
     });
@@ -24,13 +24,7 @@ $(function() {
             left: "-" + left + "px",
             top: "-" + top + "px"
         }, 1000, function() {
-            var width1 = $(window).width() * 0.35;
-            var height1 = $(window).height() * 0.5;
-            console.log(width1);
-            $(this).css({
-                width: width1,
-                height: height1
-            }).hide();
+            $(this).hide();
         });
 
     });
