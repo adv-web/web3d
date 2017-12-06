@@ -4,7 +4,7 @@
 web 3d game framework
 
 ## How to run
-[Click Here to Play Online Version](http://120.76.125.35:5000/client/)
+[Click Here to Play Online Version](http://52.11.196.12:5000/client/)
 
 [Click Here to See the Doc](https://adv-web.github.io/web3d/doc/)
 

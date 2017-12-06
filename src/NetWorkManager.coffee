@@ -287,8 +287,11 @@ class NetWorkManager
     # maybe some message else later
 
   # @private
-  @_client_onotherjoingame: (id) =>
-    player = @_get_player(id)
+  @_client_onotherjoingame: (id2) =>
+    arr = id2.split("_")
+    id = arr[0]
+    name = arr[1]
+    player = @_get_player(name)
     player.id = id
     @players.others[id] = player
     console.log(id+" joined game")
@@ -301,22 +304,15 @@ class NetWorkManager
     console.log(id+" left game")
 
   # @private
-  @_get_player: (id) =>
+  @_get_player: (name) =>
     if @spawnPoint
       player = Game.scene.spawn(@playerPrefab, @spawnPoint)
     else
       player = Game.scene.spawn(@playerPrefab)
-    return player # if not id
-    ###
-    for user in document.allUser
-      if user.uuid == id
-        name = user.username
-        break
-    player.mesh.add(sprite = THREE.TextSprite(name))
-    sprite.position.y = -0.3
+    #return player # if not id
+    #player.mesh.add(sprite = THREE.TextSprite(name))
+    #sprite.position.y = -0.3
     return player
-
-###
 
   # @private
   @_client_onhostgame: (@game_id) =>

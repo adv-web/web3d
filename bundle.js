@@ -585,9 +585,12 @@
       }
     };
 
-    NetWorkManager._client_onotherjoingame = function(id) {
-      var player;
-      player = NetWorkManager._get_player(id);
+    NetWorkManager._client_onotherjoingame = function(id2) {
+      var arr, id, name, player;
+      arr = id2.split("_");
+      id = arr[0];
+      name = arr[1];
+      player = NetWorkManager._get_player(name);
       player.id = id;
       NetWorkManager.players.others[id] = player;
       return console.log(id + " joined game");
@@ -601,7 +604,7 @@
       return console.log(id + " left game");
     };
 
-    NetWorkManager._get_player = function(id) {
+    NetWorkManager._get_player = function(name) {
       var player;
       if (NetWorkManager.spawnPoint) {
         player = Game.scene.spawn(NetWorkManager.playerPrefab, NetWorkManager.spawnPoint);
@@ -609,16 +612,6 @@
         player = Game.scene.spawn(NetWorkManager.playerPrefab);
       }
       return player;
-
-      /*
-      for user in document.allUser
-        if user.uuid == id
-          name = user.username
-          break
-      player.mesh.add(sprite = THREE.TextSprite(name))
-      sprite.position.y = -0.3
-      return player
-       */
     };
 
     NetWorkManager._client_onhostgame = function(game_id) {
@@ -11649,7 +11642,7 @@ return jQuery;
       if (document.userInfo.id) {
         return $.ajax({
           type: 'PUT',
-          url: "http://120.76.125.35:5000/user/" + document.userInfo.id,
+          url: "http://52.11.196.12:5000/user/" + document.userInfo.id,
           data: document.userInfo,
           dataType: 'JSON',
           success: (function(_this) {
@@ -12797,7 +12790,7 @@ var GameObject = __webpack_require__(8);
 var GameTimeCountdown = __webpack_require__(12);
 
 // var SERVER = "http://localhost:5000/";
-var SERVER = "http://120.76.125.35:5000/";
+var SERVER = "http://52.11.196.12:5000/";
 
 // 场景1初始化方法
 function scene1(scene) {
