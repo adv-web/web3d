@@ -49,7 +49,7 @@ function scene1(scene) {
 
     for (var i = 0; i < 25; i++) {
         grounds[i]=scene.spawn(Data.prefab.ground, new THREE.Vector3(ground_array[i*3], ground_array[i*3+1], ground_array[i*3+2]));
-        grounds[i].mesh.receiveShadow = true;
+        // grounds[i].mesh.receiveShadow = true;
     }
     var contain_array = [
 
@@ -164,23 +164,12 @@ function scene1(scene) {
     skygold.distance=0;
     skygold.target = grounds[0].mesh;
     scene.add(skygold);
-    /*var skyyellow = new THREE.SpotLight(0xFF7000, .5);
-    skyyellow.position.set(0, 12, 0);
-    skyyellow.distance=0;
-    scene.add(skyyellow);
-    var housered = new THREE.SpotLight(0xFF4000, 2);
-    housered.position.set(0, 1.7, 0);
-    housered.distance=0;
-    scene.add(housered);*/
     var housegold = new THREE.SpotLight(0xFF4000, 2,0,Math.PI/4);
-    //lightyellow.rotation.set(0, -Math.PI, 0);
     housegold.position.set(0, 1.7, 0);
     housegold.distance=0;
     scene.add(housegold);
     var treered = new THREE.SpotLight(0xFFB000, 2,0,Math.PI/6);
     treered.shadow.camera.fov = 10;
-    //treered.shadowCameraVisible = true;
-    //lightgold.rotation.set(0, -Math.PI, 0);
     treered.position.set(24, 1.7, 0);
     treered.distance = 0;
     treered.target = tree_mesh;
@@ -206,13 +195,6 @@ function scene1(scene) {
         }
         orderList.html(inner);
     });
-
-    // simulate score update
-    /*setInterval(function () {
-        document.userInfo.score += Math.round(Math.random()*10);
-        NetWorkManager.updateUserInfo(document.userInfo);
-    }, 1000);*/
-
 }
 
 // boot script
@@ -230,10 +212,11 @@ $(function() {
         sourceTag.text("加载中…… " + Math.floor(progress) + "%");
     }, function() {
         sourceTag.text("加载完成");
-        // start game
-        Input.registerClickResponse(Game.requestFullScreen);
+
+        preparePage.find("#start").click(Game.requestFullScreen);
         preparePage.find("#start").click(function() {
-            //document.addEventListener('keydown', Game.requestFullScreen, false);
+            // start game
+            Input.registerClickResponse(Game.requestFullScreen);
             Game.setScene(new Scene(scene1)).start();
             preparePage.hide();
             $("#gamePanel").show();

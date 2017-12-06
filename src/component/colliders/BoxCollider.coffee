@@ -17,8 +17,8 @@ class BoxCollider extends Collider
   # build a Box Collider
   #
   # @option options {Boolean} isTrigger If enabled, this Collider is used only
-  # for triggering events, and is ignored by the physics engine which simply
-  # means the player can go through it.
+  #   for triggering events, and is ignored by the physics engine which simply
+  #   means the player can go through it.
   # @option options {Object} center The position of the Collider
   #   in the object’s local space.
   #   default is undefined.

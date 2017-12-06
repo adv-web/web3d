@@ -2,5 +2,11 @@
   "name": "ground",
   "meshType": "vox",
   "mesh": "ground",
-  "mass": 0
+  "mass": 0,
+  "components": [
+    {
+      "name": "BoxCollider",
+      "param": "{isTrigger: false, center: {x: 0, y: 0, z: 0}}"
+    }
+  ]
 }
