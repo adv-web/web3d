@@ -1,6 +1,6 @@
 
 (function() {
-    var SERVER = "http://52.11.196.12:5000/";
+    var SERVER = "https://52.11.196.12:5000/";
     var loginPage = $("#loginPanel");
     var preparePage = $("#preparePanel");
     var gamePage = $("#gamePanel");

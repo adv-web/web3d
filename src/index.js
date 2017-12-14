@@ -10,7 +10,7 @@ var GameObject = require("./GameObject");
 var GameTimeCountdown = require("./component/GameTimeCountdown");
 
 // var SERVER = "http://localhost:5000/";
-var SERVER = "http://52.11.196.12:5000/";
+var SERVER = "https://52.11.196.12:5000/";
 
 // 场景1初始化方法
 function scene1(scene) {

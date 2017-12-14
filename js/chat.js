@@ -10,7 +10,7 @@ $(function() {
         '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
         '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
     ];
-    var socket = io('http://52.11.196.12:5000/chat');
+    var socket = io('https://52.11.196.12:5000/chat');
     // var socket = io('http://localhost:5000/chat');
 
     // Initialize variables

@@ -62,7 +62,7 @@ class GameTimeCountdown extends Component
     if document.userInfo.id
       $.ajax({
         type: 'PUT',
-        url:  "http://52.11.196.12:5000/user/" + document.userInfo.id,
+        url:  "https://52.11.196.12:5000/user/" + document.userInfo.id,
         data: document.userInfo,
         dataType: 'JSON',
         success: (data) =>
