@@ -11642,7 +11642,7 @@ return jQuery;
       if (document.userInfo.id) {
         return $.ajax({
           type: 'PUT',
-          url: "https://52.11.196.12:5000/user/" + document.userInfo.id,
+          url: "http://52.11.196.12:5000/user/" + document.userInfo.id,
           data: document.userInfo,
           dataType: 'JSON',
           success: (function(_this) {
@@ -12791,7 +12791,7 @@ var GameObject = __webpack_require__(8);
 var GameTimeCountdown = __webpack_require__(12);
 
 // var SERVER = "http://localhost:5000/";
-var SERVER = "https://52.11.196.12:5000/";
+var SERVER = "http://52.11.196.12:5000/";
 
 // 场景1初始化方法
 function scene1(scene) {
